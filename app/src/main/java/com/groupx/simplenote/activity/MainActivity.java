@@ -1,8 +1,10 @@
-package com.groupx.simplenote;
+package com.groupx.simplenote.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.groupx.simplenote.R;
 
 public class MainActivity extends AppCompatActivity {
 
