@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.groupx.simplenote.R;
-import com.groupx.simplenote.database.SimpleNoteDatabase;
+import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.database.SimpleNoteDatabase_Impl;
 import com.groupx.simplenote.entity.Note;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
             @Override
             protected List<Note> doInBackground(Void... voids) {
-                return SimpleNoteDatabase_Impl.getSNoteDatabase(getApplicationContext()).noteDao().getAllMyNote();
+                return NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().getAllMyNote();
             }
 
             @Override
