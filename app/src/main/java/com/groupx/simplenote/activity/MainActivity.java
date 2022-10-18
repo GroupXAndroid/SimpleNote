@@ -1,14 +1,13 @@
 package com.groupx.simplenote.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.database.NoteDatabase;
-import com.groupx.simplenote.database.SimpleNoteDatabase_Impl;
 import com.groupx.simplenote.entity.Note;
 
 import java.util.List;

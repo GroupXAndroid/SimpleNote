@@ -13,4 +13,27 @@ public class NoteStatus implements Serializable {
     private int statusKey;
     private String statusValue;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getStatusKey() {
+        return statusKey;
+    }
+
+    public void setStatusKey(int statusKey) {
+        this.statusKey = statusKey;
+    }
+
+    public String getStatusValue() {
+        return statusValue;
+    }
+
+    public void setStatusValue(String statusValue) {
+        this.statusValue = statusValue;
+    }
 }
