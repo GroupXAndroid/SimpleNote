@@ -1,8 +1,11 @@
 package com.groupx.simplenote.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +21,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getNotes();
+
+        runtestFeature();
+    }
+
+    private void runtestFeature(){
+
+
+        // Open noteDetail Activity
+        Button buttonTestNote = findViewById(R.id.buttonTestNoteDetail);
+        buttonTestNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NoteDetail.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void getNotes(){
