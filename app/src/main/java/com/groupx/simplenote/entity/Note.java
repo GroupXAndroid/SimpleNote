@@ -11,6 +11,7 @@ public class Note implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
+    private String subTitle;
     private Date since;
     private Date lastUpdate;
     private String note;
@@ -27,6 +28,14 @@ public class Note implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public String getTitle() {

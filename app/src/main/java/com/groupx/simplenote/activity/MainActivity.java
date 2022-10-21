@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void runtestFeature(){
 
-
         // Open noteDetail Activity
         Button buttonTestNote = findViewById(R.id.buttonTestNoteDetail);
         buttonTestNote.setOnClickListener(new View.OnClickListener() {
@@ -37,23 +36,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-    }
-
-    private void getNotes(){
-        class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
-            @Override
-            protected List<Note> doInBackground(Void... voids) {
-                return NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().getAllMyNote();
-            }
-
-            @Override
-            protected void onPostExecute(List<Note> notes) {
-                super.onPostExecute(notes);
-                Log.d("Note", "a");
-            }
-        }
-
-        new GetNotesTask().execute();
     }
 }
