@@ -16,7 +16,8 @@
         android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/background_notedetail_headfooter">
 
         <ImageView
             android:id="@+id/imageNoteDetailBack"
@@ -89,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Note..."
+                android:hint="@string/note"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +108,8 @@
         android:paddingBottom="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/background_notedetail_headfooter">
 
         <LinearLayout
             android:id="@+id/linearLayoutNoteDetailQuickAction"
@@ -117,31 +119,39 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_color_lens"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_color_lens" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewNoteDetailDatetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Datetime"
+            android:gravity="center"
+            android:text="@string/datetime"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/linearLayoutNoteDetailOption"
-            app:layout_constraintStart_toEndOf="@id/linearLayoutNoteDetailQuickAction"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayoutNoteDetailOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_more_vert" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

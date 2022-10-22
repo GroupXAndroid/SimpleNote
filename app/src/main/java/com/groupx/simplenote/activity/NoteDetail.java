@@ -1,4 +1,5 @@
 package com.groupx.simplenote.activity;
+
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
@@ -12,11 +13,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class NoteDetail extends AppCompatActivity {
 
     private ImageView imageNoteDetailBack, imageNoteDetailSave;
     private EditText editTextNoteSubtitle, editTextNoteTitle, editTextNoteContent;
+    private TextView textViewNoteDetailDatetime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,13 @@ public class NoteDetail extends AppCompatActivity {
         editTextNoteSubtitle = findViewById(R.id.editTextNoteSubtitle);
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
 
+        textViewNoteDetailDatetime = findViewById(R.id.textViewNoteDetailDatetime);
+
+        Date currentTimer = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM HH:mm", Locale.getDefault());
+        StringBuilder dateBuilder = new StringBuilder("Edited ");
+        dateBuilder.append(formatter.format(currentTimer));
+        textViewNoteDetailDatetime.setText(dateBuilder);
         imageNoteDetailBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +53,7 @@ public class NoteDetail extends AppCompatActivity {
     }
 
 
-    private void saveNote(){
+    private void saveNote() {
         String title = editTextNoteTitle.getText().toString().trim();
         String subtitle = editTextNoteSubtitle.getText().toString().trim();
         String content = editTextNoteContent.getText().toString();
@@ -49,7 +63,7 @@ public class NoteDetail extends AppCompatActivity {
         note.setNote(content);
         note.setSubTitle(subtitle);
 
-        class SaveNoteTask extends AsyncTask<Void, Void, Void>{
+        class SaveNoteTask extends AsyncTask<Void, Void, Void> {
             @Override
             protected void onPostExecute(Void unused) {
                 super.onPostExecute(unused);
