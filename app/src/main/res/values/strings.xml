@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SimpleNote</string>
+    <string name="click_to_test">Click to Test!!!</string>
+    <string name="title">Title</string>
+    <string name="sub_title">Sub title</string>
+    <string name="datetime">Datetime</string>
+    <string name="color">Color</string>
+    <string name="note">Note...</string>
 </resources>
