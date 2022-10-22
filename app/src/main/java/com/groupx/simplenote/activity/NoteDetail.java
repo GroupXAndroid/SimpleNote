@@ -5,14 +5,20 @@ import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -21,9 +27,11 @@ import java.util.Locale;
 
 public class NoteDetail extends AppCompatActivity {
 
-    private ImageView imageNoteDetailBack, imageNoteDetailSave;
+    private ImageView imageNoteDetailBack, imageNoteDetailSave, imageNoteDetailColorOptionLens;
     private EditText editTextNoteSubtitle, editTextNoteTitle, editTextNoteContent;
     private TextView textViewNoteDetailDatetime;
+    private LinearLayout layoutChoosingColor;
+    private ConstraintLayout layoutNoteDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +40,16 @@ public class NoteDetail extends AppCompatActivity {
 
         imageNoteDetailBack = findViewById(R.id.imageNoteDetailBack);
         imageNoteDetailSave = findViewById(R.id.imageNoteDetailSave);
+        imageNoteDetailColorOptionLens = findViewById(R.id.imageViewColorOptionLens);
 
         editTextNoteSubtitle = findViewById(R.id.editTextNoteTitle);
         editTextNoteSubtitle = findViewById(R.id.editTextNoteSubtitle);
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
 
         textViewNoteDetailDatetime = findViewById(R.id.textViewNoteDetailDatetime);
+
+        layoutChoosingColor = findViewById(R.id.layoutNoteChooseColorOption);
+        layoutNoteDetail = findViewById(R.id.layoutNoteDetail);
 
         Date currentTimer = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM HH:mm", Locale.getDefault());
@@ -48,6 +60,26 @@ public class NoteDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        imageNoteDetailColorOptionLens.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layoutChoosingColor.setVisibility(View.VISIBLE);
+                final Drawable drawable = new ColorDrawable(0x81000000);
+                layoutNoteDetail.setForeground(drawable);
+            }
+        });
+
+        layoutNoteDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (layoutChoosingColor.getVisibility() == View.VISIBLE) {
+                    layoutChoosingColor.setVisibility(View.GONE);
+                    final Drawable drawable = new ColorDrawable();
+                    layoutNoteDetail.setForeground(drawable);
+                }
             }
         });
     }
