@@ -13,7 +13,21 @@
         android:theme="@style/Theme.SimpleNote"
         tools:targetApi="31">
         <activity
-            android:name=".activity.NoteDetail"
+            android:name=".activity.FolderActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.NoteListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.CreateNoteActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -9,4 +9,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#D0FFF6</color>
     <color name="blackMist">#81000000</color>
+    <color name="noteColorRed">#FFA8A8</color>
+    <color name="noteColorGreen">#B5FFA8</color>
+    <color name="noteColorDefault">#FFFFFFFF</color>
+    <color name="noteColor2">#faafa8</color>
+    <color name="noteColor3">#f39f76</color>
+    <color name="noteColor4">#fff8b8</color>
+    <color name="noteColor5">#e2f6d3</color>
+    <color name="noteColor6">#b4ddd3</color>
+    <color name="noteColorChooserBorder">#70777C</color>
+    <color name="noteColorChoiceIcon">#0003B3</color>
+
 </resources>

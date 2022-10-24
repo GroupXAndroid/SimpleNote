@@ -16,6 +16,7 @@ public class Folder implements Serializable {
     private boolean isBin;
     private boolean isArchive;
     private String key;
+    private int accountId;
 
     public int getId() {
         return id;
@@ -71,5 +72,13 @@ public class Folder implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

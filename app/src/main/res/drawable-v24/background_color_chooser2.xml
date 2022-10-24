@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <item>
+        <shape android:shape="oval">
+            <stroke
+                android:width="@dimen/_2sdp"
+                android:color="@color/noteColorChooserBorder" />
+        </shape>
+    </item>
+    <item
+        android:top="@dimen/_4sdp"
+        android:end="@dimen/_4sdp"
+        android:bottom="@dimen/_4sdp"
+        android:start="@dimen/_4sdp">
+        <shape android:shape="oval">
+            <solid android:color="@color/noteColor2"/>
+        </shape>
+    </item>
+</layer-list>
