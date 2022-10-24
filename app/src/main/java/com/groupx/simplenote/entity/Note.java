@@ -1,5 +1,6 @@
 package com.groupx.simplenote.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -116,5 +117,19 @@ public class Note implements Serializable {
 
     public void setReminderTime(Date reminderTime) {
         this.reminderTime = reminderTime;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", subTitle='" + subTitle + '\'' +
+                ", since=" + since +
+                ", lastUpdate=" + lastUpdate +
+                ", note='" + note + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

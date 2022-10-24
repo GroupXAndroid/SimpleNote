@@ -4,32 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity"
-    android:padding="@dimen/_6sdp">
+    android:padding="@dimen/_6sdp"
+    tools:context=".activity.MainActivity">
 
     <TextView
         android:id="@+id/click_to_test_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/click_to_test"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:textSize="@dimen/_14sdp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/click_to_test_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/click_to_test_title">
+
         <Button
             android:id="@+id/buttonTestNoteDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NoteDetail"/>
+            android:text="NoteDetail" />
+
+        <Button
+            android:id="@+id/buttonTestNoteListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NotesList" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

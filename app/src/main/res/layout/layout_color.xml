@@ -1,34 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutNoteChooseColorOption"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:background="@drawable/background_notedetail_headfooter"
+    android:orientation="vertical"
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:padding="@dimen/_6sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/color" />
 
     <HorizontalScrollView
         android:id="@+id/layoutPickColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/bottom_sheet_behavior">
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <TextView
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Red"
+                android:layout_margin="@dimen/_10sdp">
+                <View
+                    android:id="@+id/viewChooseColor1"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/background_color_chooser1"
+                    android:onClick="onClickColor"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheckColor1"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_check"
+                    app:tint="@color/noteColorChoiceIcon"/>
+            </FrameLayout>
 
-                />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+                <View
+                    android:id="@+id/viewChooseColor2"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/background_color_chooser2"
+                    android:onClick="onClickColor"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheckColor2"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    app:tint="@color/noteColorChoiceIcon"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+                <View
+                    android:id="@+id/viewChooseColor3"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/background_color_chooser3"
+                    android:onClick="onClickColor"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheckColor3"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    app:tint="@color/noteColorChoiceIcon"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+                <View
+                    android:id="@+id/viewChooseColor4"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/background_color_chooser4"
+                    android:onClick="onClickColor"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheckColor4"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    app:tint="@color/noteColorChoiceIcon"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+                <View
+                    android:id="@+id/viewChooseColor5"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/background_color_chooser5"
+                    android:onClick="onClickColor"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheckColor5"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    app:tint="@color/noteColorChoiceIcon"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+                <View
+                    android:id="@+id/viewChooseColor6"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/background_color_chooser6"
+                    android:onClick="onClickColor"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheckColor6"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    app:tint="@color/noteColorChoiceIcon"/>
+            </FrameLayout>
+
         </LinearLayout>
 
 
