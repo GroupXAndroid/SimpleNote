@@ -4,10 +4,12 @@
     android:id="@+id/viewFolderContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_10sdp"
-    app:cardElevation="@dimen/_10sdp"
-    android:layout_marginTop="@dimen/_10sdp"
-    android:layout_marginBottom="@dimen/_10sdp">
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -6,4 +6,7 @@
     <string name="datetime">Datetime</string>
     <string name="color">Color</string>
     <string name="note">Note...</string>
+    <string name="folder_name">Folder name</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

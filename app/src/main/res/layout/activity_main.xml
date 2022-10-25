@@ -36,6 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="NotesList" />
+
+        <Button
+            android:id="@+id/buttonTestManageFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ManageFolder" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
