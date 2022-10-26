@@ -5,6 +5,7 @@ import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -56,8 +57,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
 
         textViewNoteDetailDatetime = findViewById(R.id.textViewNoteDetailDatetime);
-
-        layoutChoosingColor = findViewById(R.id.layoutNoteChooseColorOption);
         layoutNoteDetail = findViewById(R.id.layoutNoteDetail);
 
 
@@ -88,17 +87,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
-        layoutNoteDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (layoutChoosingColor.getVisibility() == View.VISIBLE) {
-                    layoutChoosingColor.setVisibility(View.GONE);
-                    final Drawable drawable = new ColorDrawable();
-                    layoutNoteDetail.setForeground(drawable);
-                }
-            }
-        });
-
         if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
             alreadyNote = (Note) getIntent().getSerializableExtra("note");
             setViewOrUpdateNote();
@@ -111,27 +99,10 @@ public class CreateNoteActivity extends AppCompatActivity {
         imageNoteDetailColorOptionLens.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layoutChoosingColor.setVisibility(View.VISIBLE);
-                final Drawable drawable = new ColorDrawable(0x81000000);
-                layoutNoteDetail.setForeground(drawable);
+                ChoosingNoteColorFragment colorFragment = new ChoosingNoteColorFragment();
+                colorFragment.show(getSupportFragmentManager(), "colorFragment");
             }
         });
-
-        layoutNoteDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (layoutChoosingColor.getVisibility() == View.VISIBLE) {
-                    closeOptionMenu();
-
-                }
-            }
-        });
-    }
-
-    private void closeOptionMenu() {
-        layoutChoosingColor.setVisibility(View.GONE);
-        final Drawable drawable = new ColorDrawable();
-        layoutNoteDetail.setForeground(drawable);
     }
 
     private void saveNote() {
@@ -198,14 +169,5 @@ public class CreateNoteActivity extends AppCompatActivity {
         StringBuilder dateBuilder = new StringBuilder("Edited ");
         dateBuilder.append(Utils.DateTimeToString(alreadyNote.getLastUpdate()));
         textViewNoteDetailDatetime.setText(dateBuilder);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (layoutChoosingColor.getVisibility() == View.VISIBLE)
-            closeOptionMenu();
-        else {
-            super.onBackPressed();
-        }
     }
 }
