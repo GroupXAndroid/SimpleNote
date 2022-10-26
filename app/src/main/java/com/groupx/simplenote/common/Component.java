@@ -1,6 +1,8 @@
 package com.groupx.simplenote.common;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -84,5 +86,34 @@ public class Component {
                 break;
         }
         return color;
+    }
+
+    public void setSelectedColor(View view, String selectedColor, Context context){
+        if(view == null || selectedColor == null){
+            return;
+        }
+        final View viewChooseColor1 = view.findViewById(R.id.viewChooseColor1);
+        final View viewChooseColor2 = view.findViewById(R.id.viewChooseColor2);
+        final View viewChooseColor3 = view.findViewById(R.id.viewChooseColor3);
+        final View viewChooseColor4 = view.findViewById(R.id.viewChooseColor4);
+        final View viewChooseColor5 = view.findViewById(R.id.viewChooseColor5);
+        final View viewChooseColor6 = view.findViewById(R.id.viewChooseColor6);
+        int selectedColorInt = Color.parseColor(selectedColor);
+
+        if(selectedColorInt == context.getColor(R.color.noteColorDefault)){
+            viewChooseColor1.performClick();
+        }else if(selectedColorInt == context.getColor(R.color.noteColor2)){
+            viewChooseColor2.performClick();
+        }else if(selectedColorInt == context.getColor(R.color.noteColor3)){
+            viewChooseColor3.performClick();
+        }else if(selectedColorInt == context.getColor(R.color.noteColor4)){
+            viewChooseColor4.performClick();
+        }else if(selectedColorInt == context.getColor(R.color.noteColor5)){
+            viewChooseColor5.performClick();
+        }else if(selectedColorInt == context.getColor(R.color.noteColor6)){
+            viewChooseColor6.performClick();
+        } else {
+            viewChooseColor1.performClick();
+        }
     }
 }

@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -59,7 +60,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         textViewNoteDetailDatetime = findViewById(R.id.textViewNoteDetailDatetime);
         layoutNoteDetail = findViewById(R.id.layoutNoteDetail);
 
-
         selectedNoteColor = Utils.ColorIntToString(getColor(R.color.noteColorDefault));
 
         Date currentTimer = new Date();
@@ -95,11 +95,16 @@ public class CreateNoteActivity extends AppCompatActivity {
         initChooseColorOption();
     }
 
+
     private void initChooseColorOption() {
+        ChoosingNoteColorFragment colorFragment = new ChoosingNoteColorFragment();
+        Bundle args = new Bundle();
+        colorFragment.setArguments(args);
+
         imageNoteDetailColorOptionLens.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChoosingNoteColorFragment colorFragment = new ChoosingNoteColorFragment();
+                args.putString("selectedColor", selectedNoteColor);
                 colorFragment.show(getSupportFragmentManager(), "colorFragment");
             }
         });
@@ -151,12 +156,10 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private void setBackGroundNoteColor(int color) {
         layoutNoteDetail.setBackgroundColor(color);
-
         // Convert color from int to string hex
         selectedNoteColor = Utils.ColorIntToString(color);
     }
 
-    @SuppressLint("NonConstantResourceId")
     public void onClickColor(View view) {
         int color = new Component().getColorFromColorChooser(view, getApplicationContext());
         setBackGroundNoteColor(color);
@@ -166,6 +169,9 @@ public class CreateNoteActivity extends AppCompatActivity {
         editTextNoteTitle.setText(alreadyNote.getSubTitle());
         editTextNoteSubtitle.setText(alreadyNote.getSubTitle());
         editTextNoteContent.setText(alreadyNote.getNote());
+        selectedNoteColor = alreadyNote.getColor();
+        setBackGroundNoteColor(Color.parseColor(selectedNoteColor));
+
         StringBuilder dateBuilder = new StringBuilder("Edited ");
         dateBuilder.append(Utils.DateTimeToString(alreadyNote.getLastUpdate()));
         textViewNoteDetailDatetime.setText(dateBuilder);
