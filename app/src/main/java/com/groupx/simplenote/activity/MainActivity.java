@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.fragment.EditFolderFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +39,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NoteListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open manage folder activity
+        Button buttonTestManageFolder = findViewById(R.id.buttonTestManageFolder);
+        buttonTestManageFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FolderActivity.class);
                 startActivity(intent);
             }
         });

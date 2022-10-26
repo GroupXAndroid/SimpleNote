@@ -19,5 +19,6 @@
     <color name="noteColor6">#b4ddd3</color>
     <color name="noteColorChooserBorder">#70777C</color>
     <color name="noteColorChoiceIcon">#0003B3</color>
+    <color name="iconPrimary">#52575A</color>
 
 </resources>
