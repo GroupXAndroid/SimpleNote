@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class NoteAccount implements Serializable {
     private int accountId;
     private int noteId;
-    private int permission;
+    private String permission;
 
     public int getAccountId() {
         return accountId;
@@ -26,11 +26,11 @@ public class NoteAccount implements Serializable {
         this.noteId = noteId;
     }
 
-    public int getPermission() {
+    public String getPermission() {
         return permission;
     }
 
-    public void setPermission(int permission) {
+    public void setPermission(String permission) {
         this.permission = permission;
     }
 }

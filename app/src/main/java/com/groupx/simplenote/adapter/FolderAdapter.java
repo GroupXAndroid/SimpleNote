@@ -83,7 +83,6 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderView
                         break;
                     case R.id.menuFolderDelete:
                         //handle menu2 click
-
                         new AlertDialog.Builder(context)
                                 .setIcon(android.R.drawable.ic_delete)
                                 .setTitle("Delete Folder")

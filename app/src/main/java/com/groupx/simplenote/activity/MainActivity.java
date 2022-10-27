@@ -50,5 +50,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Open feedback activity
+        Button buttonTestFeedback = findViewById(R.id.buttonTestFeedback);
+        buttonTestFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FeedbackActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

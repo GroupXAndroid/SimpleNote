@@ -3,6 +3,7 @@ package com.groupx.simplenote.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,10 +16,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.common.Component;
+import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
+import com.groupx.simplenote.fragment.NoteDetailOptionFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +30,8 @@ import java.util.List;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
-    private ImageView imageNoteDetailBack, imageNoteDetailSave, imageNoteDetailColorOptionLens;
+    private ImageView imageNoteDetailBack, imageNoteDetailSave, imageNoteDetailColorOptionLens,
+    imageNoteDetailOption;
     private EditText editTextNoteSubtitle, editTextNoteTitle, editTextNoteContent;
     private TextView textViewNoteDetailDatetime;
     private LinearLayout layoutChoosingColor;
@@ -46,6 +51,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         imageNoteDetailBack = findViewById(R.id.imageNoteDetailBack);
         imageNoteDetailSave = findViewById(R.id.imageNoteDetailSave);
         imageNoteDetailColorOptionLens = findViewById(R.id.imageViewColorOptionLens);
+        imageNoteDetailOption = findViewById(R.id.imageNoteDetailOption);
 
         editTextNoteTitle = findViewById(R.id.editTextNoteTitle);
         editTextNoteSubtitle = findViewById(R.id.editTextNoteSubtitle);
@@ -65,7 +71,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
-
             }
         });
 
@@ -87,6 +92,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
 
         initChooseColorOption();
+        initOption();
     }
 
 
@@ -100,6 +106,17 @@ public class CreateNoteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 args.putString("selectedColor", selectedNoteColor);
                 colorFragment.show(getSupportFragmentManager(), "colorFragment");
+            }
+        });
+    }
+
+    private void initOption(){
+        NoteDetailOptionFragment optionFragment = new NoteDetailOptionFragment(this);
+
+        imageNoteDetailOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionFragment.show(getSupportFragmentManager(), "optionFragment");
             }
         });
     }
@@ -119,6 +136,16 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insert(note);
+        Note currentNote =  NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().getNewestNote();
+
+        NoteAccount noteAccount = new NoteAccount();
+        noteAccount.setNoteId(currentNote.getId());
+        noteAccount.setAccountId(1);
+        noteAccount.setPermission(Const.Status.CREATED.toString());
+
+        NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().insertWithNoteAccount(noteAccount);
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -142,6 +169,8 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().update(alreadyNote);
+
+
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -169,5 +198,15 @@ public class CreateNoteActivity extends AppCompatActivity {
         StringBuilder dateBuilder = new StringBuilder("Edited ");
         dateBuilder.append(Utils.DateTimeToString(alreadyNote.getLastUpdate()));
         textViewNoteDetailDatetime.setText(dateBuilder);
+    }
+
+    public void deleteNote(){
+        if(alreadyNote != null && getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+            NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().deleteNote(alreadyNote);
+        }
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
