@@ -25,8 +25,8 @@ import com.groupx.simplenote.entity.Tag;
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase database;
 
-    public static synchronized NoteDatabase getSNoteDatabase(Context context){
-        if(database == null){
+    public static synchronized NoteDatabase getSNoteDatabase(Context context) {
+        if (database == null) {
             database = Room.databaseBuilder(
                     context,
                     NoteDatabase.class,
@@ -37,7 +37,10 @@ public abstract class NoteDatabase extends RoomDatabase {
     }
 
     public abstract NoteDao noteDao();
+
     public abstract AccountDao accountDao();
+
     public abstract FolderDao folderDao();
+
     public abstract TagDao tagDao();
 }

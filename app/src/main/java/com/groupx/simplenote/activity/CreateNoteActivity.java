@@ -1,21 +1,7 @@
 package com.groupx.simplenote.activity;
 
-import com.groupx.simplenote.R;
-import com.groupx.simplenote.common.Component;
-import com.groupx.simplenote.common.Utils;
-import com.groupx.simplenote.database.NoteDatabase;
-import com.groupx.simplenote.entity.Note;
-import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,11 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.groupx.simplenote.R;
+import com.groupx.simplenote.common.Component;
+import com.groupx.simplenote.common.Utils;
+import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
@@ -41,7 +35,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private String selectedNoteColor;
     private Date noteSince;
 
-    private List<Note> noteList = new ArrayList<>();
+    private final List<Note> noteList = new ArrayList<>();
     private Note alreadyNote;
 
     @Override

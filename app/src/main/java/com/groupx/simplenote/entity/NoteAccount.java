@@ -1,7 +1,6 @@
 package com.groupx.simplenote.entity;
 
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 

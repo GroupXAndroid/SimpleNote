@@ -1,11 +1,11 @@
 package com.groupx.simplenote.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.adapter.NoteAdapter;
@@ -45,7 +45,7 @@ public class NoteListActivity extends AppCompatActivity implements NoteListener 
 
     @Override
     public void onNoteClicked(Note note, int position) {
-noteClickedPosition = position;
+        noteClickedPosition = position;
         Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
         intent.putExtra("note", note);
         intent.putExtra("isViewOrUpdate", true);
@@ -58,9 +58,9 @@ noteClickedPosition = position;
             noteList.addAll(NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().getAllMyNote());
             noteAdapter.notifyDataSetChanged();
-        }else {
-            noteList.add(0,NoteDatabase.getSNoteDatabase(getApplicationContext())
-                    .noteDao().getAllMyNote().get(0) );
+        } else {
+            noteList.add(0, NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().getAllMyNote().get(0));
             noteAdapter.notifyItemInserted(0);
 
         }

@@ -59,6 +59,7 @@
             android:text="@string/cancel"
             android:padding="@dimen/_5sdp"
             android:textSize="@dimen/_10ssp"
+            style="?android:borderlessButtonStyle"
             />
         <TextView
             android:id="@+id/textViewFolderDialogOk"
@@ -67,6 +68,7 @@
             android:text="@string/ok"
             android:padding="@dimen/_5sdp"
             android:textSize="@dimen/_10ssp"
+            style="?android:borderlessButtonStyle"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
