@@ -1,6 +1,5 @@
 package com.groupx.simplenote.common;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -10,11 +9,10 @@ import com.groupx.simplenote.R;
 
 public class Component {
 
-    public int getColorFromColorChooser(View view,Context context) {
+    public int getColorFromColorChooser(View view, Context context) {
         int color = context.getColor(R.color.noteColorDefault);
 
-        final ImageView imageNoteDetailBack, imageNoteDetailSave, imageNoteDetailColorOptionLens,
-                imageViewCheckColor1, imageViewCheckColor2, imageViewCheckColor3, imageViewCheckColor4,
+        final ImageView imageViewCheckColor1, imageViewCheckColor2, imageViewCheckColor3, imageViewCheckColor4,
                 imageViewCheckColor5, imageViewCheckColor6;
 
         imageViewCheckColor1 = view.getRootView().findViewById(R.id.imageCheckColor1);
@@ -88,8 +86,8 @@ public class Component {
         return color;
     }
 
-    public void setSelectedColor(View view, String selectedColor, Context context){
-        if(view == null || selectedColor == null){
+    public void setSelectedColor(View view, String selectedColor, Context context) {
+        if (view == null || selectedColor == null) {
             return;
         }
         final View viewChooseColor1 = view.findViewById(R.id.viewChooseColor1);
@@ -100,17 +98,17 @@ public class Component {
         final View viewChooseColor6 = view.findViewById(R.id.viewChooseColor6);
         int selectedColorInt = Color.parseColor(selectedColor);
 
-        if(selectedColorInt == context.getColor(R.color.noteColorDefault)){
+        if (selectedColorInt == context.getColor(R.color.noteColorDefault)) {
             viewChooseColor1.performClick();
-        }else if(selectedColorInt == context.getColor(R.color.noteColor2)){
+        } else if (selectedColorInt == context.getColor(R.color.noteColor2)) {
             viewChooseColor2.performClick();
-        }else if(selectedColorInt == context.getColor(R.color.noteColor3)){
+        } else if (selectedColorInt == context.getColor(R.color.noteColor3)) {
             viewChooseColor3.performClick();
-        }else if(selectedColorInt == context.getColor(R.color.noteColor4)){
+        } else if (selectedColorInt == context.getColor(R.color.noteColor4)) {
             viewChooseColor4.performClick();
-        }else if(selectedColorInt == context.getColor(R.color.noteColor5)){
+        } else if (selectedColorInt == context.getColor(R.color.noteColor5)) {
             viewChooseColor5.performClick();
-        }else if(selectedColorInt == context.getColor(R.color.noteColor6)){
+        } else if (selectedColorInt == context.getColor(R.color.noteColor6)) {
             viewChooseColor6.performClick();
         } else {
             viewChooseColor1.performClick();

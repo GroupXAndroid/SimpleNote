@@ -20,5 +20,6 @@
     <color name="noteColorChooserBorder">#70777C</color>
     <color name="noteColorChoiceIcon">#0003B3</color>
     <color name="iconPrimary">#52575A</color>
-
+    <color name="textBoxGray">#DDDDDD</color>
+    <color name="buttonBlack">#757575</color>
 </resources>

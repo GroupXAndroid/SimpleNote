@@ -1,19 +1,15 @@
 package com.groupx.simplenote.activity;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.adapter.FolderAdapter;
-import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Folder;
 import com.groupx.simplenote.fragment.EditFolderFragment;
@@ -23,21 +19,20 @@ import java.util.List;
 
 public class FolderActivity extends AppCompatActivity {
 
+    private EditFolderFragment editFolder;
+
+    public void setEditFolderFragment(EditFolderFragment fragment) {
+        this.editFolder = fragment;
+    }
+
     private ImageView imageFolderAdd;
     private RecyclerView recyclerviewFolder;
     private FolderAdapter folderAdapter;
-
-    private EditText edittextEditFolder;
-    private TextView textViewFolderDialogCancel;
-
-    private final int REQUEST_CODE_CREATE = 1;
-
-    private List<Folder> folderList = new ArrayList<>();
+    private final List<Folder> folderList = new ArrayList<>();
 
     private void findView() {
         recyclerviewFolder = findViewById(R.id.recyclerviewFolder);
         imageFolderAdd = findViewById(R.id.imageFolderAdd);
-
     }
 
     @Override
@@ -60,23 +55,23 @@ public class FolderActivity extends AppCompatActivity {
                         LinearLayoutManager.VERTICAL,
                         false)
         );
-        folderAdapter = new FolderAdapter(folderList);
+        folderAdapter = new FolderAdapter(folderList, this);
+
         recyclerviewFolder.setAdapter(folderAdapter);
 
         getFolders();
     }
 
-    private void initFolderDialog(){
-        EditFolderFragment editFolder = new EditFolderFragment();
+    private void initFolderDialog() {
+        editFolder = new EditFolderFragment();
         Bundle args = new Bundle();
-        args.putInt("mode", REQUEST_CODE_CREATE);
+        args.putBoolean("isEditing", false);
         editFolder.setArguments(args);
         editFolder.show(getSupportFragmentManager(), "folderEdit");
     }
 
     public void onClickColor(View view) {
-        Component component = new Component();
-        component.getColorFromColorChooser(view, getApplicationContext());
+        editFolder.onClickColor(view);
     }
 
     private void getFolders() {
@@ -92,5 +87,11 @@ public class FolderActivity extends AppCompatActivity {
             folderAdapter.notifyItemInserted(0);
         }
         recyclerviewFolder.smoothScrollToPosition(0);
+    }
+
+    public void deleteFolder(Folder folder) {
+        NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .folderDao().delete(folder);
+        recreate();
     }
 }

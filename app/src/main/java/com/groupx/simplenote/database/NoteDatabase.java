@@ -20,13 +20,13 @@ import com.groupx.simplenote.entity.NoteStatus;
 import com.groupx.simplenote.entity.Tag;
 
 @Database(entities = {Account.class, Folder.class, Note.class, NoteAccount.class,
-        NoteStatus.class, Tag.class}, version = 2, exportSchema = false)
+        NoteStatus.class, Tag.class}, version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase database;
 
-    public static synchronized NoteDatabase getSNoteDatabase(Context context){
-        if(database == null){
+    public static synchronized NoteDatabase getSNoteDatabase(Context context) {
+        if (database == null) {
             database = Room.databaseBuilder(
                     context,
                     NoteDatabase.class,
@@ -37,7 +37,10 @@ public abstract class NoteDatabase extends RoomDatabase {
     }
 
     public abstract NoteDao noteDao();
+
     public abstract AccountDao accountDao();
+
     public abstract FolderDao folderDao();
+
     public abstract TagDao tagDao();
 }

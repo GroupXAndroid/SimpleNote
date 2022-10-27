@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.util.StringUtil;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.entity.Note;
@@ -20,10 +19,10 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
-    private List<Note> notes;
-    private NoteListener noteListener;
+    private final List<Note> notes;
+    private final NoteListener noteListener;
 
-    public NoteAdapter(List<Note> notes, NoteListener noteListener){
+    public NoteAdapter(List<Note> notes, NoteListener noteListener) {
         this.notes = notes;
         this.noteListener = noteListener;
     }
@@ -76,7 +75,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         void setNote(Note note) {
             textTitle.setText(note.getTitle());
-            if(note.getColor() != null) {
+            if (note.getColor() != null) {
                 layoutNoteContainer.setBackgroundColor(Color.parseColor(note.getColor()));
             }
             if (note.getSubTitle().trim().isEmpty()) {

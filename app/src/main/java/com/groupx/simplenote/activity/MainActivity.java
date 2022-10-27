@@ -8,8 +8,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.groupx.simplenote.R;
-import com.groupx.simplenote.entity.Note;
-import com.groupx.simplenote.fragment.EditFolderFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         runtestFeature();
     }
 
-    private void runtestFeature(){
+    private void runtestFeature() {
 
         // Open noteDetail Activity
         Button buttonTestNote = findViewById(R.id.buttonTestNoteDetail);
@@ -49,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FolderActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open feedback activity
+        Button buttonTestFeedback = findViewById(R.id.buttonTestFeedback);
+        buttonTestFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FeedbackActivity.class);
                 startActivity(intent);
             }
         });

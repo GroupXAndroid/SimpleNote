@@ -1,8 +1,6 @@
 package com.groupx.simplenote.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +22,7 @@ public class ChoosingNoteColorFragment extends BottomSheetDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup  container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         return inflater.inflate(R.layout.layout_color, container, false);
