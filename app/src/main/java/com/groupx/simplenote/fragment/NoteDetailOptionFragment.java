@@ -18,7 +18,7 @@ import com.groupx.simplenote.activity.CreateNoteActivity;
 public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
 
     private CreateNoteActivity activity;
-    private View layoutDeleteNote;
+    private View layoutDeleteNote, layoutShareNote;
 
     public NoteDetailOptionFragment(CreateNoteActivity activity) {
         super();
@@ -59,6 +59,15 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
                             })
                             .setNegativeButton("No", null)
                             .show();
+                }
+            });
+
+            layoutShareNote = view.findViewById(R.id.layoutShareNoteDetail);
+            layoutShareNote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShareNoteFragment shareFragment = new ShareNoteFragment(activity);
+                    shareFragment.show(activity.getSupportFragmentManager(), null);
                 }
             });
         }

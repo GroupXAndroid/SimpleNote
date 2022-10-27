@@ -3,7 +3,6 @@ package com.groupx.simplenote.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -142,7 +141,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setNoteId(currentNote.getId());
         noteAccount.setAccountId(1);
-        noteAccount.setPermission(Const.Status.CREATED.toString());
+        noteAccount.setPermission(Const.StatusPermission.CREATED.toString());
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);

@@ -2,9 +2,7 @@ package com.groupx.simplenote.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,9 +20,11 @@ import java.util.List;
 public class FolderActivity extends AppCompatActivity {
 
     private EditFolderFragment editFolder;
-    public void setEditFolderFragment(EditFolderFragment fragment){
+
+    public void setEditFolderFragment(EditFolderFragment fragment) {
         this.editFolder = fragment;
     }
+
     private ImageView imageFolderAdd;
     private RecyclerView recyclerviewFolder;
     private FolderAdapter folderAdapter;
@@ -56,6 +56,7 @@ public class FolderActivity extends AppCompatActivity {
                         false)
         );
         folderAdapter = new FolderAdapter(folderList, this);
+
         recyclerviewFolder.setAdapter(folderAdapter);
 
         getFolders();
@@ -63,6 +64,9 @@ public class FolderActivity extends AppCompatActivity {
 
     private void initFolderDialog() {
         editFolder = new EditFolderFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isEditing", false);
+        editFolder.setArguments(args);
         editFolder.show(getSupportFragmentManager(), "folderEdit");
     }
 
@@ -85,10 +89,9 @@ public class FolderActivity extends AppCompatActivity {
         recyclerviewFolder.smoothScrollToPosition(0);
     }
 
-    public void deleteFolder(Folder folder){
+    public void deleteFolder(Folder folder) {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .folderDao().delete(folder);
-
         recreate();
     }
 }

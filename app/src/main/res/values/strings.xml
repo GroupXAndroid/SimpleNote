@@ -17,4 +17,5 @@
     <string name="email">Email:</string>
     <string name="comment">Comment:</string>
     <string name="send">Send</string>
+    <string name="share">Share</string>
 </resources>

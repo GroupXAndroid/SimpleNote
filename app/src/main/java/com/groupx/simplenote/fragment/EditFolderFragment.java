@@ -47,8 +47,12 @@ public class EditFolderFragment extends DialogFragment {
             edittextEditFolder = view.findViewById(R.id.edittextEditFolder);
 
             // Lấy ra argument bundle được truyền vào ở hành động nguồn gọi, cụ thể là FolderAdapter
-            alreadyFolder = (Folder) getArguments().getSerializable("editFolder");
+
             isEditing = getArguments().getBoolean("isEditing");
+            if (isEditing) {
+                alreadyFolder = (Folder) getArguments().getSerializable("editFolder");
+            }
+
             // Nếu fragment được gọi để edit thì thực hiện điền các trường đã có sẵn data
             initEditFolder(view);
 
