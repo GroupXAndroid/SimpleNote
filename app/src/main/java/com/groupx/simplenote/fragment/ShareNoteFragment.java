@@ -22,6 +22,10 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
 
     private AutoCompleteTextView atcSharingPermisson;
 
+    private final static String[] permissons = new String[]{
+            Const.Permission.EDIT, Const.Permission.VIEW
+    };
+
     public ShareNoteFragment(CreateNoteActivity activity) {
         this.activity = activity;
     }
@@ -50,10 +54,6 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
                 Toast.makeText(getContext(), item, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    private final static String[] permissons = new String[]{
-            Const.Permission.EDIT, Const.Permission.VIEW
-    };
 }
