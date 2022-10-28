@@ -18,4 +18,7 @@
     <string name="comment">Comment:</string>
     <string name="send">Send</string>
     <string name="share">Share</string>
+    <string name="permission">Permission</string>
+    <string name="email_to_share">Email to share</string>
+    <string name="share_with">Share with</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,13 @@ import com.groupx.simplenote.common.Const;
 
 public class ShareNoteFragment extends BottomSheetDialogFragment {
     private CreateNoteActivity activity;
-
+    private Button buttonShareCancel, buttonShare;
     private AutoCompleteTextView atcSharingPermisson;
+
+
+    private final static String[] permissons = new String[]{
+            Const.Permission.EDIT, Const.Permission.VIEW
+    };
 
     public ShareNoteFragment(CreateNoteActivity activity) {
         this.activity = activity;
@@ -38,6 +44,8 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         atcSharingPermisson = view.findViewById(R.id.autoCompleteNoteSharingPermission);
+        buttonShare = view.findViewById(R.id.buttonShare);
+        buttonShareCancel = view.findViewById(R.id.buttonShareCancel);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, permissons);
@@ -51,9 +59,12 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
             }
         });
 
+        buttonShareCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
-    private final static String[] permissons = new String[]{
-            Const.Permission.EDIT, Const.Permission.VIEW
-    };
 }
