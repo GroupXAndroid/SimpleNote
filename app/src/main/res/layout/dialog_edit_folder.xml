@@ -1,74 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:paddingTop="@dimen/_5sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    >
-
-    <TextView
-        android:id="@+id/textViewEditFolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Folder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="@dimen/_20ssp"/>
-
-    <EditText
-        android:id="@+id/edittextEditFolder"
-        android:minWidth="@dimen/_300sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/background_input"
-        android:hint="@string/folder_name"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:padding="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEditFolder" />
-
-    <include
-        android:id="@+id/layoutFolderDialogColorChooser"
-        layout="@layout/layout_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/edittextEditFolder"
-        />
+    android:paddingBottom="@dimen/_10sdp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutFolderDialogColorChooser"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        >
         <TextView
-            android:id="@+id/textViewFolderDialogCancel"
+            android:id="@+id/textViewEditFolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:padding="@dimen/_5sdp"
-            android:textSize="@dimen/_10ssp"
-            style="?android:borderlessButtonStyle"
-            />
-        <TextView
-            android:id="@+id/textViewFolderDialogOk"
+            android:gravity="center"
+            android:text="Folder"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textViewEditText"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEditFolder">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittextEditFolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/folder_name"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <include
+            android:id="@+id/layoutFolderDialogColorChooser"
+            layout="@layout/layout_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edittextEditFolder" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ok"
-            android:padding="@dimen/_5sdp"
-            android:textSize="@dimen/_10ssp"
-            style="?android:borderlessButtonStyle"
-            />
+
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:gravity="end"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutFolderDialogColorChooser">
+
+            <TextView
+                android:id="@+id/textViewFolderDialogCancel"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/cancel"
+                android:textSize="@dimen/_10ssp" />
+
+            <TextView
+                android:id="@+id/textViewFolderDialogOk"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/ok"
+                android:textSize="@dimen/_10ssp" />
+        </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
