@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -12,18 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/textViewEditFolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Folder"
+            android:text="@string/folder"
             android:textSize="@dimen/_20ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="@dimen/_15sdp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textViewEditText"
@@ -32,7 +32,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEditFolder">
+            app:layout_constraintTop_toBottomOf="@+id/textViewEditFolder"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittextEditFolder"
@@ -51,33 +53,36 @@
             app:layout_constraintTop_toBottomOf="@id/edittextEditFolder" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:gravity="end"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutFolderDialogColorChooser">
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            >
 
-            <TextView
-                android:id="@+id/textViewFolderDialogCancel"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/buttonFolderDialogCancel"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
                 android:text="@string/cancel"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                android:layout_weight="0.5"
+                android:layout_margin="@dimen/_5sdp"/>
 
-            <TextView
-                android:id="@+id/textViewFolderDialogOk"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/buttonFolderDialogOk"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
+                android:layout_margin="@dimen/_5sdp"
                 android:text="@string/ok"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

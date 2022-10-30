@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.SimpleNote" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/coffee_300</item>
+        <item name="colorPrimaryVariant">@color/coffee_400</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,12 +12,21 @@
 
         <!-- StatusPermission bar color. -->
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your theme here. -->
-        <item   name="materialButtonStyle">@style/Widget.App.Button</item>
+
     </style>
 
-    <style name="Widget.App.Button" parent="Widget.Material3.Button">
-        <item name="backgroundTint">@color/purple_500</item>
+    <style name="SheetDialog" parent="Theme.Material3.Light.BottomSheetDialog">
+        <!--<item name="android:windowCloseOnTouchOutside">false</item>-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">     @android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+
     </style>
 
 </resources>

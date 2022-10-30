@@ -22,7 +22,7 @@ public class EditFolderFragment extends DialogFragment {
 
     private String selectedFolderColor;
     private EditText edittextEditFolder;
-    private TextView textViewFolderDialogCancel, textViewFolderDialogOk;
+    private View buttonFolderDialogCancel, buttonFolderDialogOk;
 
     private Folder alreadyFolder;
     private boolean isEditing = false;
@@ -38,12 +38,11 @@ public class EditFolderFragment extends DialogFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        View view = getView();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (view != null) {
-            textViewFolderDialogCancel = view.findViewById(R.id.textViewFolderDialogCancel);
-            textViewFolderDialogOk = view.findViewById(R.id.textViewFolderDialogOk);
+            buttonFolderDialogCancel = view.findViewById(R.id.buttonFolderDialogCancel);
+            buttonFolderDialogOk = view.findViewById(R.id.buttonFolderDialogOk);
             edittextEditFolder = view.findViewById(R.id.edittextEditFolder);
 
             // Lấy ra argument bundle được truyền vào ở hành động nguồn gọi, cụ thể là FolderAdapter
@@ -56,13 +55,13 @@ public class EditFolderFragment extends DialogFragment {
             // Nếu fragment được gọi để edit thì thực hiện điền các trường đã có sẵn data
             initEditFolder(view);
 
-            textViewFolderDialogCancel.setOnClickListener(new View.OnClickListener() {
+            buttonFolderDialogCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getDialog().onBackPressed();
                 }
             });
-            textViewFolderDialogOk.setOnClickListener(new View.OnClickListener() {
+            buttonFolderDialogOk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (!isEditing) {
