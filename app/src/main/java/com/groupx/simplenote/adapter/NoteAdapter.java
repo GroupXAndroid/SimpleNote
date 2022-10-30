@@ -46,6 +46,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             @Override
             public void onClick(View v) {
                 noteListener.onNoteClicked(notes.get(position), position);
+
             }
         });
     }

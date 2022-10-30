@@ -39,16 +39,14 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        View view = getView();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (view != null) {
             layoutDeleteNote = view.findViewById(R.id.layoutDeleteNoteDetail);
             layoutDeleteNote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     new AlertDialog.Builder(getContext())
-                            .setIcon(android.R.drawable.ic_delete)
                             .setTitle("Delete Note")
                             .setMessage("Are you sure you want to delete?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -59,6 +57,8 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
                             })
                             .setNegativeButton("No", null)
                             .show();
+
+                    getDialog().cancel();
                 }
             });
 
@@ -68,6 +68,7 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
                 public void onClick(View v) {
                     ShareNoteFragment shareFragment = new ShareNoteFragment(activity);
                     shareFragment.show(activity.getSupportFragmentManager(), null);
+                    getDialog().cancel();
                 }
             });
         }

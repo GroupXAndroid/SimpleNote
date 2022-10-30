@@ -75,6 +75,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderView
                         EditFolderFragment editFragment = new EditFolderFragment();
                         activity.setEditFolderFragment(editFragment);
                         Bundle args = new  Bundle();
+                        args.putBoolean("isEditing", true);
                         args.putSerializable("editFolder", folderList.get(position));
 
                         editFragment.setArguments(args);
