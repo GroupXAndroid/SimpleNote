@@ -18,6 +18,7 @@ import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
@@ -120,7 +121,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         });
     }
 
-    private void saveNote() {
+    private Note saveNote() {
         String title = editTextNoteTitle.getText().toString().trim();
         String subtitle = editTextNoteSubtitle.getText().toString().trim();
         String content = editTextNoteContent.getText().toString();
@@ -137,7 +138,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 .noteDao().insert(note);
         Note currentNote =  NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().getNewestNote();
-
+        alreadyNote = currentNote;
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setNoteId(currentNote.getId());
         noteAccount.setAccountId(1);
@@ -146,9 +147,11 @@ public class CreateNoteActivity extends AppCompatActivity {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);
 
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
+//        Intent intent = new Intent();
+//        setResult(RESULT_OK, intent);
+//        finish();
+
+        return currentNote;
     }
 
     private void updateNote() {
@@ -168,8 +171,6 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().update(alreadyNote);
-
-
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -207,5 +208,18 @@ public class CreateNoteActivity extends AppCompatActivity {
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void shareNote(int accountId, String permisson){
+
+        NoteAccount noteAccount = new NoteAccount();
+        noteAccount.setAccountId(accountId);
+        noteAccount.setPermission(permisson);
+        if(alreadyNote != null ) {
+            noteAccount.setNoteId(alreadyNote.getId());
+        }
+
+        NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().insertWithNoteAccount(noteAccount);
     }
 }
