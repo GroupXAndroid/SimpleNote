@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.groupx.simplenote.R;
 
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +38,13 @@ public class SettingActivity extends AppCompatActivity {
      *
      */
     private void settingFeature(){
+        ImageView back = findViewById(R.id.imageSettingBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         settingAchievement();
         settingNotification();
         settingBackground();
@@ -53,7 +62,8 @@ public class SettingActivity extends AppCompatActivity {
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -103,14 +113,28 @@ public class SettingActivity extends AppCompatActivity {
      *
      */
     private void settingLock(){
-
+        Button btnLock = findViewById(R.id.settingLock);
+        btnLock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LockActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
      *
      */
     private void settingBackground(){
-
+        Button btnBackground = findViewById(R.id.settingBackground);
+        btnBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BackgroundActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -124,7 +148,14 @@ public class SettingActivity extends AppCompatActivity {
      *
      */
     private void settingAchievement(){
-
+        Button btnAchievement = findViewById(R.id.achievement);
+        btnAchievement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AchievementActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
