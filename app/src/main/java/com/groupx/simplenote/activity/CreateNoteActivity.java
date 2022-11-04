@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +22,7 @@ import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
 import com.groupx.simplenote.fragment.NoteDetailOptionFragment;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
@@ -33,20 +30,14 @@ public class CreateNoteActivity extends AppCompatActivity {
     imageNoteDetailOption;
     private EditText editTextNoteSubtitle, editTextNoteTitle, editTextNoteContent;
     private TextView textViewNoteDetailDatetime;
-    private LinearLayout layoutChoosingColor;
     private ConstraintLayout layoutNoteDetail;
 
     private String selectedNoteColor;
-    private Date noteSince;
-
-    private final List<Note> noteList = new ArrayList<>();
     private Note alreadyNote;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_detail);
+    private short mode;
 
+    private void findView(){
         imageNoteDetailBack = findViewById(R.id.imageNoteDetailBack);
         imageNoteDetailSave = findViewById(R.id.imageNoteDetailSave);
         imageNoteDetailColorOptionLens = findViewById(R.id.imageViewColorOptionLens);
@@ -58,11 +49,17 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         textViewNoteDetailDatetime = findViewById(R.id.textViewNoteDetailDatetime);
         layoutNoteDetail = findViewById(R.id.layoutNoteDetail);
-
         selectedNoteColor = Utils.ColorIntToString(getColor(R.color.noteColorDefault));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_note_detail);
+        findView();
+        mode = getIntent().getShortExtra("mode", Const.NoteDetailActivityMode.CREATE);
 
         Date currentTimer = new Date();
-        noteSince = currentTimer;
         StringBuilder dateBuilder = new StringBuilder("Edited ");
         dateBuilder.append(Utils.DateTimeToString(currentTimer));
         textViewNoteDetailDatetime.setText(dateBuilder);
@@ -85,15 +82,31 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+        if(mode == Const.NoteDetailActivityMode.VIEW){
+            setOnlyView();
+        }
+        if (mode == Const.NoteDetailActivityMode.VIEW || mode == Const.NoteDetailActivityMode.EDIT) {
             alreadyNote = (Note) getIntent().getSerializableExtra("note");
-            setViewOrUpdateNote();
+            setViewAndEditNote();
         }
 
+        if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+            alreadyNote = (Note) getIntent().getSerializableExtra("note");
+            setViewAndEditNote();
+        }
         initChooseColorOption();
         initOption();
     }
 
+    private void setOnlyView(){
+        imageNoteDetailSave.setVisibility(View.GONE);
+        imageNoteDetailColorOptionLens.setVisibility(View.GONE);
+        imageNoteDetailOption.setVisibility(View.GONE);
+
+        Utils.disableEditText(editTextNoteTitle);
+        Utils.disableEditText(editTextNoteSubtitle);
+        Utils.disableEditText(editTextNoteContent);
+    }
 
     private void initChooseColorOption() {
         ChoosingNoteColorFragment colorFragment = new ChoosingNoteColorFragment();
@@ -120,7 +133,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         });
     }
 
-    private void saveNote() {
+    private Note saveNote() {
         String title = editTextNoteTitle.getText().toString().trim();
         String subtitle = editTextNoteSubtitle.getText().toString().trim();
         String content = editTextNoteContent.getText().toString();
@@ -137,7 +150,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 .noteDao().insert(note);
         Note currentNote =  NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().getNewestNote();
-
+        alreadyNote = currentNote;
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setNoteId(currentNote.getId());
         noteAccount.setAccountId(1);
@@ -146,9 +159,11 @@ public class CreateNoteActivity extends AppCompatActivity {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);
 
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
+//        Intent intent = new Intent();
+//        setResult(RESULT_OK, intent);
+//        finish();
+
+        return currentNote;
     }
 
     private void updateNote() {
@@ -169,8 +184,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().update(alreadyNote);
 
-
-
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -187,11 +200,14 @@ public class CreateNoteActivity extends AppCompatActivity {
         setBackGroundNoteColor(color);
     }
 
-    private void setViewOrUpdateNote() {
-        editTextNoteTitle.setText(alreadyNote.getSubTitle());
+    private void setViewAndEditNote() {
+        editTextNoteTitle.setText(alreadyNote.getTitle());
         editTextNoteSubtitle.setText(alreadyNote.getSubTitle());
         editTextNoteContent.setText(alreadyNote.getNote());
         selectedNoteColor = alreadyNote.getColor();
+        if(selectedNoteColor == null){
+            selectedNoteColor = "#FFFFFF";
+        }
         setBackGroundNoteColor(Color.parseColor(selectedNoteColor));
 
         StringBuilder dateBuilder = new StringBuilder("Edited ");
@@ -207,5 +223,18 @@ public class CreateNoteActivity extends AppCompatActivity {
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void shareNote(int accountId, String permisson){
+
+        NoteAccount noteAccount = new NoteAccount();
+        noteAccount.setAccountId(accountId);
+        noteAccount.setPermission(permisson);
+        if(alreadyNote != null ) {
+            noteAccount.setNoteId(alreadyNote.getId());
+        }
+
+        NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().insertWithNoteAccount(noteAccount);
     }
 }

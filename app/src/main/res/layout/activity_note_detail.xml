@@ -16,17 +16,17 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_notedetail_headfooter"
         android:paddingStart="@dimen/_6sdp"
-        android:paddingTop="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
         android:paddingEnd="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageNoteDetailBack"
-            android:layout_width="@dimen/_14sdp"
-            android:layout_height="@dimen/_14sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +42,8 @@
 
             <ImageView
                 android:id="@+id/imageNoteDetailSave"
-                android:layout_width="@dimen/_14sdp"
-                android:layout_height="@dimen/_14sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_check" />
         </LinearLayout>

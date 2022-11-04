@@ -20,7 +20,7 @@ import com.groupx.simplenote.entity.NoteStatus;
 import com.groupx.simplenote.entity.Tag;
 
 @Database(entities = {Account.class, Folder.class, Note.class, NoteAccount.class,
-        NoteStatus.class, Tag.class}, version = 3, exportSchema = false)
+        NoteStatus.class, Tag.class}, version = 4, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase database;

@@ -8,6 +8,13 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.common.Const;
+import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Account;
+import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.entity.NoteAccount;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Open setting activity
+        Button buttonSwm = findViewById(R.id.buttonTestSwm);
+        buttonSwm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ShareWithMeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open setting activity
         Button buttonSetting = findViewById(R.id.btnSetting);
         buttonSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,5 +87,29 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        InsertSampleDate();
+    }
+
+    private void InsertSampleDate() {
+        Account account = new Account();
+        account.setFullName("KHuy");
+        account.setUsername("Khuymail.com");
+
+        NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao().insert(account);
+
+        Note note = new Note();
+        note.setTitle("Note with account");
+//        note.setSubTitle("Note subtitle");
+//        note.setColor("#123456");
+        note.setLastUpdate(new Date());
+        NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().insert(note);
+        note = NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().getNewestNote();
+
+        NoteAccount noteAccount = new NoteAccount();
+        noteAccount.setNoteId(note.getId());
+        noteAccount.setAccountId(1);
+        noteAccount.setPermission(Const.StatusPermission.VIEW.toString());
+        NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().insertWithNoteAccount(noteAccount);
     }
 }

@@ -32,16 +32,11 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
         return inflater.inflate(R.layout.layout_note_detail_option, container, false);
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (view != null) {
+
             layoutDeleteNote = view.findViewById(R.id.layoutDeleteNoteDetail);
             layoutDeleteNote.setOnClickListener(new View.OnClickListener() {
                 @Override

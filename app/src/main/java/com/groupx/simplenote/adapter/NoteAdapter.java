@@ -62,10 +62,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     }
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
-
         LinearLayout layoutNoteContainer;
         TextView textTitle, textSubtitle;
-
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             layoutNoteContainer = itemView.findViewById(R.id.layoutNote);

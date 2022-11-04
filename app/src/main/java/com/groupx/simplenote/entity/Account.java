@@ -1,6 +1,7 @@
 package com.groupx.simplenote.entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity
 public class Account implements Serializable {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "accountId")
     private int id;
     private String username;
     private String password;
