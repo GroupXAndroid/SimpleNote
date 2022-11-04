@@ -29,7 +29,7 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
 
 
     private final static String[] permissons = new String[]{
-            Const.Permission.EDIT, Const.Permission.VIEW
+            Const.PermissionDisplay.EDIT, Const.PermissionDisplay.VIEW
     };
 
     public ShareNoteFragment(CreateNoteActivity activity) {
@@ -89,8 +89,8 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
         }
         String permission = atcSharingPermisson.getText().toString();
         switch (permission){
-            case Const.Permission.EDIT: permission = Const.StatusPermission.EDIT.toString(); break;
-            case Const.Permission.VIEW: permission = Const.StatusPermission.VIEW.toString(); break;
+            case Const.PermissionDisplay.EDIT: permission = Const.StatusPermission.EDIT.toString(); break;
+            case Const.PermissionDisplay.VIEW: permission = Const.StatusPermission.VIEW.toString(); break;
         }
         activity.shareNote(account.getId(), permission);
     }

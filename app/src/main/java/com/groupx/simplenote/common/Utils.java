@@ -1,5 +1,8 @@
 package com.groupx.simplenote.common;
 
+import android.graphics.Color;
+import android.widget.EditText;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +24,9 @@ public class Utils {
     }
 
     public static String DateTimeToString(Date date) {
+        if(date == null){
+            return null;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM HH:mm", Locale.getDefault());
         return formatter.format(date);
     }
@@ -126,5 +132,12 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    public static void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+//        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
     }
 }
