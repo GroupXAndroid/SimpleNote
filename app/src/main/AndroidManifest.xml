@@ -20,6 +20,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Achievement"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activity.FeedbackActivity"
             android:exported="false">
             <meta-data
@@ -81,6 +88,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.BackgroundActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
