@@ -25,7 +25,7 @@ public class FolderActivity extends AppCompatActivity {
         this.editFolder = fragment;
     }
 
-    private ImageView imageFolderAdd;
+    private ImageView imageFolderAdd, imageBack;
     private RecyclerView recyclerviewFolder;
     private FolderAdapter folderAdapter;
     private final List<Folder> folderList = new ArrayList<>();
@@ -33,6 +33,7 @@ public class FolderActivity extends AppCompatActivity {
     private void findView() {
         recyclerviewFolder = findViewById(R.id.recyclerviewFolder);
         imageFolderAdd = findViewById(R.id.imageFolderAdd);
+        imageBack = findViewById(R.id.imageFolderBack);
     }
 
     @Override
@@ -41,13 +42,19 @@ public class FolderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_folder);
 
         findView();
-
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         imageFolderAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initFolderDialog();
             }
         });
+
 
         // Setup recyclerView
         recyclerviewFolder.setLayoutManager(
