@@ -23,4 +23,6 @@
     <string name="share_with">Share with</string>
     <string name="folder">Folder</string>
     <string name="setting_language">Language</string>
+    <string name="confirm">Confirm</string>
+    <string name="lock">Lock password</string>
 </resources>
