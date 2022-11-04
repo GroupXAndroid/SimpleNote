@@ -1,0 +1,20 @@
+{
+  "languages": {
+    "1": "Vietnamese",
+    "2": "English"
+  },
+  "backgrounds": {
+
+  },
+  "achievements": {
+    "1": "Beginners' progression",
+    "2": "Highly skilled",
+    "3": "Proficient",
+    "4": "Expert",
+    "5": "Strong-willed",
+    "6": "High Discipline",
+    "7": "Talented creator",
+    "8": "Impressive landmark",
+    "9": "Super hero"
+  }
+}
