@@ -57,6 +57,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Setting" />
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -89,6 +89,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        InsertSampleDate();
+        // Open register activity
+        Button buttonRegister = findViewById(R.id.btnRegister);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void InsertSampleDate() {

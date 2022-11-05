@@ -17,4 +17,7 @@ public interface AccountDao {
     Account getAccountByEmail(String email);
     @Update
     void update(Account account);
+
+    @Insert
+    void registerAccount(Account accountEntity);
 }
