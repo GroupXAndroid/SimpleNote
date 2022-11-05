@@ -19,25 +19,41 @@ import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
+import com.groupx.simplenote.entity.NoteTag;
 import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
 import com.groupx.simplenote.fragment.NoteDetailOptionFragment;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
     private ImageView imageNoteDetailBack, imageNoteDetailSave, imageNoteDetailColorOptionLens,
-    imageNoteDetailOption;
+            imageNoteDetailOption;
     private EditText editTextNoteSubtitle, editTextNoteTitle, editTextNoteContent;
     private TextView textViewNoteDetailDatetime;
     private ConstraintLayout layoutNoteDetail;
 
+
     private String selectedNoteColor;
-    private Note alreadyNote;
+    private Note alreadyNote = new Note();
+    private Set<Integer> tagIdList = new HashSet<>();
+    private List<NoteTag> oldNoteTagForUpdate = new ArrayList<>();
 
     private short mode;
 
-    private void findView(){
+    public Note getAlreadyNote() {
+        return this.alreadyNote;
+    }
+
+    public Set<Integer> getTagIdSet() {
+        return this.tagIdList;
+    }
+
+    private void findView() {
         imageNoteDetailBack = findViewById(R.id.imageNoteDetailBack);
         imageNoteDetailSave = findViewById(R.id.imageNoteDetailSave);
         imageNoteDetailColorOptionLens = findViewById(R.id.imageViewColorOptionLens);
@@ -73,16 +89,22 @@ public class CreateNoteActivity extends AppCompatActivity {
         imageNoteDetailSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveNote();
 
-                if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+                if (getIntent().getShortExtra(
+                        "mode", Const.NoteDetailActivityMode.CREATE) == Const.NoteDetailActivityMode.EDIT
+                ) {
                     updateNote();
+                } else if (
+                        getIntent().getShortExtra(
+                                "mode", Const.NoteDetailActivityMode.CREATE) == Const.NoteDetailActivityMode.CREATE
+                ) {
+                    saveNote();
                 }
                 Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
 
-        if(mode == Const.NoteDetailActivityMode.VIEW){
+        if (mode == Const.NoteDetailActivityMode.VIEW) {
             setOnlyView();
         }
         if (mode == Const.NoteDetailActivityMode.VIEW || mode == Const.NoteDetailActivityMode.EDIT) {
@@ -98,7 +120,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         initOption();
     }
 
-    private void setOnlyView(){
+    private void setOnlyView() {
         imageNoteDetailSave.setVisibility(View.GONE);
         imageNoteDetailColorOptionLens.setVisibility(View.GONE);
         imageNoteDetailOption.setVisibility(View.GONE);
@@ -122,7 +144,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         });
     }
 
-    private void initOption(){
+    private void initOption() {
         NoteDetailOptionFragment optionFragment = new NoteDetailOptionFragment(this);
 
         imageNoteDetailOption.setOnClickListener(new View.OnClickListener() {
@@ -148,22 +170,39 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insert(note);
-        Note currentNote =  NoteDatabase.getSNoteDatabase(getApplicationContext())
+        Note currentNote = NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().getNewestNote();
         alreadyNote = currentNote;
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setNoteId(currentNote.getId());
         noteAccount.setAccountId(1);
         noteAccount.setPermission(Const.StatusPermission.CREATED.toString());
-
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);
+
+        insertUpdateNoteTagId(currentNote);
 
 //        Intent intent = new Intent();
 //        setResult(RESULT_OK, intent);
 //        finish();
 
         return currentNote;
+    }
+
+    private void insertUpdateNoteTagId(Note note) {
+        if(!oldNoteTagForUpdate.isEmpty()){
+            NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().deleteAllTag(oldNoteTagForUpdate);
+        }
+        List<NoteTag> noteTagList = new ArrayList<>();
+        tagIdList.forEach(e -> {
+            NoteTag notetag = new NoteTag();
+            notetag.setTagId(e);
+            notetag.setNoteId(note.getId());
+            noteTagList.add(notetag);
+        });
+        NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().insertNoteTag(noteTagList);
     }
 
     private void updateNote() {
@@ -183,6 +222,8 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().update(alreadyNote);
+
+        insertUpdateNoteTagId(alreadyNote);
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -205,18 +246,24 @@ public class CreateNoteActivity extends AppCompatActivity {
         editTextNoteSubtitle.setText(alreadyNote.getSubTitle());
         editTextNoteContent.setText(alreadyNote.getNote());
         selectedNoteColor = alreadyNote.getColor();
-        if(selectedNoteColor == null){
+        if (selectedNoteColor == null) {
             selectedNoteColor = "#FFFFFF";
         }
         setBackGroundNoteColor(Color.parseColor(selectedNoteColor));
+
+       oldNoteTagForUpdate = NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().findNoteTagOf(alreadyNote.getId());
+        oldNoteTagForUpdate.forEach(e -> {
+            getTagIdSet().add(e.getTagId());
+        });
 
         StringBuilder dateBuilder = new StringBuilder("Edited ");
         dateBuilder.append(Utils.DateTimeToString(alreadyNote.getLastUpdate()));
         textViewNoteDetailDatetime.setText(dateBuilder);
     }
 
-    public void deleteNote(){
-        if(alreadyNote != null && getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+    public void deleteNote() {
+        if (alreadyNote != null && getIntent().getBooleanExtra("isViewOrUpdate", false)) {
             NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().deleteNote(alreadyNote);
         }
@@ -225,12 +272,12 @@ public class CreateNoteActivity extends AppCompatActivity {
         finish();
     }
 
-    public void shareNote(int accountId, String permisson){
+    public void shareNote(int accountId, String permisson) {
 
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setAccountId(accountId);
         noteAccount.setPermission(permisson);
-        if(alreadyNote != null ) {
+        if (alreadyNote != null) {
             noteAccount.setNoteId(alreadyNote.getId());
         }
 
