@@ -13,6 +13,7 @@ import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
+import com.groupx.simplenote.entity.Tag;
 
 import java.util.Date;
 
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        InsertSampleDate();
+        InsertSampleTag();
     }
 
     private void InsertSampleDate() {
@@ -111,5 +113,14 @@ public class MainActivity extends AppCompatActivity {
         noteAccount.setAccountId(1);
         noteAccount.setPermission(Const.StatusPermission.VIEW.toString());
         NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().insertWithNoteAccount(noteAccount);
+    }
+
+    private void InsertSampleTag(){
+        Tag tag = new Tag();
+        tag.setTagName("Name tag 1");
+        tag.setColor("#004d40");
+        tag.setAccountId(1);
+
+        NoteDatabase.getSNoteDatabase(getApplicationContext()).tagDao().insertTag(tag);
     }
 }

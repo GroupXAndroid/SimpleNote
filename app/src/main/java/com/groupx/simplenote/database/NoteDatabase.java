@@ -17,10 +17,11 @@ import com.groupx.simplenote.entity.Folder;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.entity.NoteStatus;
+import com.groupx.simplenote.entity.NoteTag;
 import com.groupx.simplenote.entity.Tag;
 
 @Database(entities = {Account.class, Folder.class, Note.class, NoteAccount.class,
-        NoteStatus.class, Tag.class}, version = 4, exportSchema = false)
+        NoteStatus.class, Tag.class, NoteTag.class}, version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase database;

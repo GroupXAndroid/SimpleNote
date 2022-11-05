@@ -26,4 +26,5 @@
     <string name="sharewithme">Share With Me</string>
     <string name="confirm">Confirm</string>
     <string name="lock">Lock password</string>
+    <string name="add_tag">Add tag</string>
 </resources>
