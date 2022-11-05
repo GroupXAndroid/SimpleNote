@@ -11,6 +11,7 @@ import com.groupx.simplenote.dto.NoteShareWithMeDTO;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
+import com.groupx.simplenote.entity.NoteTag;
 
 import java.util.List;
 
@@ -46,4 +47,13 @@ public interface NoteDao {
                 "AND na.permission IN (:permissions)" +
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertNoteTag(List<NoteTag> noteTagList);
+
+    @Delete
+    void deleteAllTag(List<NoteTag> noteTagList);
+
+    @Query("SELECT * FROM notetag WHERE noteId == :noteId")
+    List<NoteTag> findNoteTagOf(int noteId);
 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.adapter.NoteAdapter;
+import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.listener.NoteListener;
@@ -48,7 +49,7 @@ public class NoteListActivity extends AppCompatActivity implements NoteListener 
         noteClickedPosition = position;
         Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
         intent.putExtra("note", note);
-        intent.putExtra("isViewOrUpdate", true);
+        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
 
     }
