@@ -12,6 +12,7 @@ import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -46,4 +47,7 @@ public interface NoteDao {
                 "AND na.permission IN (:permissions)" +
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions);
+
+    @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
+    List<Note> getTodayNote(Date start, Date end);
 }
