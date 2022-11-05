@@ -89,6 +89,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Open calendar activity
+        Button btnCalendar = findViewById(R.id.btnCalendar);
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
 //        InsertSampleDate();
         InsertSampleTag();
     }
