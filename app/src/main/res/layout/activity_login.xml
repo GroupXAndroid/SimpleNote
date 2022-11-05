@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.RegisterActivity">
-
+    tools:context=".activity.LoginActivity">
     <TextView
         android:id="@+id/tvRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_20sdp"
-        android:text="Register Account"
-        android:textSize="@dimen/_20sdp"
+        android:layout_marginTop="232dp"
+        android:text="Login Account"
         android:gravity="center"
+        android:textSize="@dimen/_20sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,39 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUserName" />
-
-    <EditText
-        android:id="@+id/etAvatar"
-        android:hint="Enter Avatar path"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
-
-    <TextView
-        android:id="@+id/tvDob"
-        android:text="Select Date of birth"
-        android:background="@null"
-        android:textStyle="bold"
-        android:textSize="@dimen/_15sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAvatar" />
-
-    <EditText
-        android:id="@+id/etFullName"
-        android:hint="Enter FullName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDob" />
     <Button
         android:id="@+id/btnRegister"
         android:text="REGISTER"
@@ -81,7 +48,7 @@
         android:layout_margin="@dimen/_50sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFullName"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"/>
     <Button
         android:id="@+id/btnLogin"
         android:text="LOGIN"
@@ -91,8 +58,6 @@
         android:layout_margin="@dimen/_50sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegister"/>
-
-
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

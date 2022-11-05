@@ -20,4 +20,7 @@ public interface AccountDao {
 
     @Insert
     void registerAccount(Account accountEntity);
+
+    @Query("select * from Account where username=(:username) and password=(:password)")
+    Account login(String username, String password);
 }

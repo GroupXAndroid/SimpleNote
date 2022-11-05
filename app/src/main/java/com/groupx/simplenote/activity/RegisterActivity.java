@@ -106,12 +106,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-/*        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
-        });*/
+        });
     }
     private Boolean validateInput(Account accountEntity){
         if(accountEntity.getUsername().isEmpty()
