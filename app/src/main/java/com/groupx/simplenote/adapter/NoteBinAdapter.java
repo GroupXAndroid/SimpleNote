@@ -1,14 +1,15 @@
 package com.groupx.simplenote.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,25 +21,24 @@ import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.listener.NoteListener;
 
-import java.util.Date;
 import java.util.List;
 
-public class NoteFullAdapter extends RecyclerView.Adapter<NoteFullAdapter.NoteViewHolder> {
+public class NoteBinAdapter extends RecyclerView.Adapter<NoteBinAdapter.NoteViewHolder> {
 
     private final List<Note> notes;
     private final NoteListener noteListener;
 
-    public NoteFullAdapter(List<Note> notes, NoteListener noteListener) {
+    public NoteBinAdapter(List<Note> notes, NoteListener noteListener) {
         this.notes = notes;
         this.noteListener = noteListener;
     }
 
     @NonNull
     @Override
-    public NoteFullAdapter.NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NoteFullAdapter.NoteViewHolder(
+    public NoteBinAdapter.NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new NoteBinAdapter.NoteViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.item_note_full,
+                        R.layout.item_note_bin,
                         parent,
                         false
                 )
@@ -46,13 +46,12 @@ public class NoteFullAdapter extends RecyclerView.Adapter<NoteFullAdapter.NoteVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteFullAdapter.NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull NoteBinAdapter.NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setNote(notes.get(position));
         holder.layoutNoteContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 noteListener.onNoteClicked(notes.get(position), position);
-
             }
         });
     }
@@ -69,15 +68,15 @@ public class NoteFullAdapter extends RecyclerView.Adapter<NoteFullAdapter.NoteVi
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layoutNoteContainer;
-        TextView textTitle, textSubtitle, txtReminderTime;
-        ImageView imgFavourite;
+        TextView textTitle, textSubtitle;
+        ImageView imageViewRestore, imageViewDelete;
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             layoutNoteContainer = itemView.findViewById(R.id.layoutNote);
             textTitle = itemView.findViewById(R.id.txtTitle);
             textSubtitle = itemView.findViewById(R.id.txtSubtitle);
-            imgFavourite = itemView.findViewById(R.id.imageIconFavourite);
-            txtReminderTime = itemView.findViewById(R.id.txtReminderTime);
+            imageViewRestore = itemView.findViewById(R.id.imageViewRestore);
+            imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
 
         }
 
@@ -92,32 +91,23 @@ public class NoteFullAdapter extends RecyclerView.Adapter<NoteFullAdapter.NoteVi
                 textSubtitle.setText(note.getSubTitle());
             }
 
-            if (note.getReminderTime() == null) {
-                txtReminderTime.setVisibility(View.GONE);
-            } else {
-                txtReminderTime.setText(note.getSubTitle());
-            }
-
-            if (note.getStatusKey() == Const.NoteStatus.FAVORITE) {
-                imgFavourite.setBackgroundResource(R.drawable.ic_favorite_full);
-            } else {
-                imgFavourite.setBackgroundResource(R.drawable.ic_favourite_empty);
-            }
-
-            imgFavourite.setOnClickListener(new View.OnClickListener() {
+            imageViewRestore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (note.getStatusKey() == Const.NoteStatus.FAVORITE) {
-                        note.setStatusKey(Const.NoteStatus.NORMAL);
-                        NoteDatabase.getSNoteDatabase(view.getContext())
-                                .noteDao().update(note);
-                        imgFavourite.setBackgroundResource(R.drawable.ic_favourite_empty);
-                    } else {
-                        note.setStatusKey(Const.NoteStatus.FAVORITE);
-                        NoteDatabase.getSNoteDatabase(view.getContext())
-                                .noteDao().update(note);
-                        imgFavourite.setBackgroundResource(R.drawable.ic_favorite_full);
-                    }
+                    note.setStatusKey(Const.NoteStatus.NORMAL);
+                    NoteDatabase.getSNoteDatabase(view.getContext())
+                            .noteDao().update(note);
+
+                    Toast.makeText(view.getContext(), "Restored", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            imageViewDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NoteDatabase.getSNoteDatabase(view.getContext())
+                            .noteDao().deleteNote(note);
+                    Toast.makeText(view.getContext(), "Deleted", Toast.LENGTH_LONG).show();
                 }
             });
         }

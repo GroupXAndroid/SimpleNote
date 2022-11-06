@@ -21,7 +21,8 @@ public class LogoActivity extends AppCompatActivity {
             public void run() {
                 SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
                 boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false);
-                if(hasLoggedIn){
+//                if(hasLoggedIn){
+                if(true){
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

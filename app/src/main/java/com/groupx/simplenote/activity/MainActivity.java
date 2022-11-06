@@ -14,6 +14,7 @@ import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -105,6 +106,46 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open calendar activity
+        Button btnCalendar = findViewById(R.id.btnCalendar);
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open favourite activity
+        Button btnFavourite = findViewById(R.id.btnFavourite);
+        btnFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FavouriteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open archive activity
+        Button btnArchive = findViewById(R.id.btnArchive);
+        btnArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ArchiveActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Open bin activity
+        Button btnBin = findViewById(R.id.btnBin);
+        btnBin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BinActivity.class);
                 startActivity(intent);
             }
         });

@@ -58,7 +58,7 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
         Date start = new Date(now.getYear(), now.getMonth(), now.getDate(), 0, 0);
         Date end = new Date(now.getYear(), now.getMonth(), now.getDate(), 23, 59);
 
-        getNotes(start, end, Const.NoteStatus.NORMAL);
+        getNotes(start, end, Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -69,7 +69,7 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
 
                 Date start = new Date(selected.getYear(), selected.getMonth(), selected.getDate(), 0, 0);
                 Date end = new Date(selected.getYear(), selected.getMonth(), selected.getDate(), 23, 59);
-                getNotes(start, end, Const.NoteStatus.NORMAL);
+                getNotes(start, end, Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE);
             }
         });
 
@@ -96,10 +96,10 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
-    private void getNotes(Date start, Date end, int status) {
+    private void getNotes(Date start, Date end, int normalStatus, int favouriteStatus) {
         noteList.clear();
         noteList.addAll(NoteDatabase.getSNoteDatabase(getApplicationContext())
-                .noteDao().getTodayNote(start, end, status));
+                .noteDao().getTodayNote(start, end, normalStatus, favouriteStatus));
         noteAdapter.notifyDataSetChanged();
     }
 }

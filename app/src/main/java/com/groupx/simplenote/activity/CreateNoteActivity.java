@@ -284,4 +284,40 @@ public class CreateNoteActivity extends AppCompatActivity {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);
     }
+
+    public void favouriteNote() {
+        if (alreadyNote != null) {
+            alreadyNote.setStatusKey(Const.NoteStatus.FAVORITE);
+            NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().update(alreadyNote);
+        }
+        Toast.makeText(this, "Moved to favourite", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void archiveNote() {
+        if (alreadyNote != null) {
+            alreadyNote.setStatusKey(Const.NoteStatus.ARCHIVE);
+            NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().update(alreadyNote);
+        }
+        Toast.makeText(this, "Archived", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void moveToBin() {
+        if (alreadyNote != null) {
+            alreadyNote.setStatusKey(Const.NoteStatus.BIN);
+            NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().update(alreadyNote);
+        }
+        Toast.makeText(this, "Moved to bin", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

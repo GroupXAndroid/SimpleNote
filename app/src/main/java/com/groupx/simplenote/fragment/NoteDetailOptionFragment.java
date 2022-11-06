@@ -19,7 +19,7 @@ import com.groupx.simplenote.entity.Note;
 public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
 
     private CreateNoteActivity activity;
-    private View layoutDeleteNote, layoutShareNote, layoutAddTag, layoutAddFavourite, layoutAddArchive;
+    private View layoutDeleteNote, layoutShareNote, layoutAddTag, layoutAddFavourite, layoutAddArchive, layoutMoveToBin;
 
     public NoteDetailOptionFragment(CreateNoteActivity activity) {
         super();
@@ -82,7 +82,7 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
             layoutAddArchive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //add archive
+                    activity.archiveNote();
                 }
             });
 
@@ -90,7 +90,15 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
             layoutAddFavourite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //add favourite
+                    activity.favouriteNote();
+                }
+            });
+
+            layoutMoveToBin = view.findViewById(R.id.layoutMoveToBin);
+            layoutMoveToBin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.moveToBin();
                 }
             });
         }
