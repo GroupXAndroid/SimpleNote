@@ -49,8 +49,8 @@ public interface NoteDao {
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions);
 
-    @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
-    List<Note> getTodayNote(Date start, Date end);
+    @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end)) AND statusKey = :status")
+    List<Note> getTodayNote(Date start, Date end, int status);
     
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNoteTag(List<NoteTag> noteTagList);
