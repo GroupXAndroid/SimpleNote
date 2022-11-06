@@ -47,6 +47,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".activity.PremiumUpgradeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <!--
                 <activity
             android:name=".LoginActivity"
@@ -73,7 +80,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Achievement"
+            android:name=".activity.AchievementActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -109,7 +116,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

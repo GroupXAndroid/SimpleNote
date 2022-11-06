@@ -3,14 +3,18 @@ package com.groupx.simplenote.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.groupx.simplenote.R;
-import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
@@ -21,6 +25,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Account currentUser = new Account();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +34,88 @@ public class MainActivity extends AppCompatActivity {
         TextView tvn = findViewById(R.id.tvUserName);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
         int accId = sharedPreferences.getInt("accountId", 0);
-        if(accId != 0){
+        currentUser.setId(accId);
+        if (accId != 0) {
             tvn.setText("id = " + String.valueOf(accId));
-        }else{
+        } else {
             tvn.setText("ID NOT FOUND, MAYBE YOU NOT LOGIN");
         }
-        runtestFeature();
+
+        currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .accountDao().getAccountById(accId);
+
+        InitDrawerNavigationMenu();
+//        runtestFeature();
+    }
+
+    private void InitDrawerNavigationMenu() {
+        DrawerLayout drawerMainMenu = findViewById(R.id.drawerMainMenu);
+        findViewById(R.id.imageViewMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerMainMenu.openDrawer(GravityCompat.START);
+            }
+        });
+
+
+        NavigationView navigationViewMenu = findViewById(R.id.navViewMenu);
+        TextView textAccountUserName = navigationViewMenu.getHeaderView(0).findViewById(R.id.textAccountUserName);
+        textAccountUserName.setText(currentUser.getFullName());
+        TextView textPremium = navigationViewMenu.getHeaderView(0).findViewById(R.id.textPremium);
+        // TODO: set text premium if account is VIP
+
+
+        navigationViewMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Intent intent;
+                switch (id) {
+                    case R.id.itemTestNoteDetail:
+                        intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestNoteListView:
+                        intent = new Intent(getApplicationContext(), NoteListActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestManageFolder:
+                        intent = new Intent(getApplicationContext(), FolderActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestFeedback:
+                        intent = new Intent(getApplicationContext(), FeedbackActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestSwm:
+                        intent = new Intent(getApplicationContext(), ShareWithMeActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemSetting:
+                        intent = new Intent(getApplicationContext(), SettingActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemRegister:
+                        intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemSearchNote:
+                        intent = new Intent(getApplicationContext(), SearchActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTag:
+                        intent = new Intent(getApplicationContext(), TagActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestUpgradeScreen:
+                        intent = new Intent(getApplicationContext(), PremiumUpgradeActivity.class);
+                        startActivity(intent);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 
     private void runtestFeature() {
@@ -177,27 +259,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button buttonUpgrade = findViewById(R.id.btnTestUpgradeScreen);
+        buttonUpgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PremiumUpgradeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void InsertSampleDate() {
-        Account account = new Account();
-        account.setFullName("KHuy");
-        account.setUsername("Khuymail.com");
-
-        NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao().insert(account);
-
-        Note note = new Note();
-        note.setTitle("Note with account");
-//        note.setSubTitle("Note subtitle");
-//        note.setColor("#123456");
-        note.setLastUpdate(new Date());
-        NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().insert(note);
-        note = NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().getNewestNote();
-
-        NoteAccount noteAccount = new NoteAccount();
-        noteAccount.setNoteId(note.getId());
-        noteAccount.setAccountId(1);
-        noteAccount.setPermission(Const.StatusPermission.VIEW.toString());
-        NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().insertWithNoteAccount(noteAccount);
-    }
 }

@@ -1,6 +1,7 @@
 package com.groupx.simplenote.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.entity.NoteTag;
@@ -43,6 +45,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private Set<Integer> tagIdList = new HashSet<>();
     private List<NoteTag> oldNoteTagForUpdate = new ArrayList<>();
     private Set<Integer> accountId = new HashSet<>();
+    private Account currentUser = new Account();
 
     private short mode;
 
@@ -74,6 +77,9 @@ public class CreateNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
         findView();
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
+        currentUser.setId(sharedPreferences.getInt("accountId", 0));
+
         mode = getIntent().getShortExtra("mode", Const.NoteDetailActivityMode.CREATE);
 
         Date currentTimer = new Date();
@@ -100,11 +106,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             setOnlyView();
         }
         if (mode == Const.NoteDetailActivityMode.VIEW || mode == Const.NoteDetailActivityMode.EDIT) {
-            alreadyNote = (Note) getIntent().getSerializableExtra("note");
-            setViewAndEditNote();
-        }
-
-        if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
             alreadyNote = (Note) getIntent().getSerializableExtra("note");
             setViewAndEditNote();
         }
@@ -184,10 +185,6 @@ public class CreateNoteActivity extends AppCompatActivity {
                 .noteDao().insertWithNoteAccount(noteAccount);
 
         insertUpdateNoteTagId(currentNote);
-
-//        Intent intent = new Intent();
-//        setResult(RESULT_OK, intent);
-//        finish();
 
         return currentNote;
     }
@@ -277,6 +274,10 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     public void shareNote(int accountId, String permisson) {
+        if(accountId == currentUser.getId()){
+            Toast.makeText(this, "Cannot share for yourself", Toast.LENGTH_SHORT).show();
+            return;
+        }
         saveOrUpdate();
 
         NoteAccount noteAccount = new NoteAccount();

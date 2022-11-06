@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemTestNoteDetail"
+        android:title="NoteDetail" />
+
+    <item
+        android:id="@+id/itemTestNoteListView"
+        android:title="NotesList" />
+
+    <item
+        android:id="@+id/itemTestManageFolder"
+        android:title="ManageFolder" />
+
+    <item
+        android:id="@+id/itemTestFeedback"
+        android:title="Create Feedback" />
+
+    <item
+        android:id="@+id/itemTestSwm"
+        android:title="Share with me" />
+
+    <item
+        android:id="@+id/itemSetting"
+        android:title="Setting" />
+
+    <item
+        android:id="@+id/itemRegister"
+        android:title="Register" />
+
+    <item
+        android:id="@+id/itemSearchNote"
+        android:title="Search note" />
+
+    <item
+        android:id="@+id/itemTag"
+        android:title="Tag" />
+
+    <item
+        android:id="@+id/itemTestUpgradeScreen"
+        android:title="Upgrade Account" />
+</menu>
