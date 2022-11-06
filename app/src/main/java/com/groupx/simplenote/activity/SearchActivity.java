@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String txtSearch = etSearch.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), NoteListActivity.class);
-                intent.putExtra("txtSearch", "%" + txtSearch + "%");
+                intent.putExtra("txtSearch", txtSearch);
                 startActivity(intent);
             }
         });
