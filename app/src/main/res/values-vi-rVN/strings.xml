@@ -33,4 +33,6 @@
     <string name="language">Ngôn ngữ</string>
     <string name="notification">Thông báo</string>
     <string name="achievement">Thành tích</string>
+    <string name="tag_name">Thẻ</string>
+    <string name="tag">Thẻ</string>
 </resources>

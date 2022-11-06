@@ -33,4 +33,6 @@
     <string name="language">Language</string>
     <string name="notification">Notification</string>
     <string name="achievement">Achievement</string>
+    <string name="tag_name">Tag name</string>
+    <string name="tag">Tag</string>
 </resources>

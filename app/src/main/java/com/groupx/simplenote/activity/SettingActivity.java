@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.common.LocaleHelper;
 import com.groupx.simplenote.dao.AccountDao;
 import com.groupx.simplenote.dao.AccountDao_Impl;
 import com.groupx.simplenote.database.NoteDatabase;
@@ -13,6 +14,7 @@ import com.groupx.simplenote.entity.Account;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +42,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
+    Context context;
+    Resources resources;
     private AccountDao accountDao;
     private Account currentAccount;
     @Override
@@ -125,27 +129,16 @@ public class SettingActivity extends AppCompatActivity {
                 int selectedId = group.getCheckedRadioButtonId();
                 RadioButton selected = (RadioButton) alertLayout.findViewById(selectedId);
                 if (selected.getText() == "Vietnamese"){
-                    setLocale(SettingActivity.this, "vi");
+                    context = LocaleHelper.setLocale(SettingActivity.this, "vi");
+                    resources = context.getResources();
                 } else {
-                    setLocale(SettingActivity.this, "en");
+                    context = LocaleHelper.setLocale(SettingActivity.this, "en");
+                    resources = context.getResources();
                 }
             }
         });
         AlertDialog dialog = alert.create();
         dialog.show();
-    }
-    private void setLocale(Activity activity, String lang) {
-        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("xx-YY");
-        Locale myLocale = new Locale(lang);
-        myLocale.setDefault(myLocale);
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
-
-        config.setLocale(myLocale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-        Intent refresh = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(refresh);
     }
     /**
      *
