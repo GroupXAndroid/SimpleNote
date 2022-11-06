@@ -15,6 +15,10 @@ public interface AccountDao {
 
     @Query("SELECT * FROM ACCOUNT WHERE ACCOUNT.username == :email")
     Account getAccountByEmail(String email);
+
+    @Query("SELECT * FROM ACCOUNT WHERE ACCOUNT.accountId == :accountId")
+    Account getAccountById(int accountId);
+
     @Update
     void update(Account account);
 
