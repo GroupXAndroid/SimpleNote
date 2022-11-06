@@ -42,6 +42,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private Note alreadyNote = new Note();
     private Set<Integer> tagIdList = new HashSet<>();
     private List<NoteTag> oldNoteTagForUpdate = new ArrayList<>();
+    private Set<Integer> accountId = new HashSet<>();
 
     private short mode;
 
@@ -90,16 +91,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (getIntent().getShortExtra(
-                        "mode", Const.NoteDetailActivityMode.CREATE) == Const.NoteDetailActivityMode.EDIT
-                ) {
-                    updateNote();
-                } else if (
-                        getIntent().getShortExtra(
-                                "mode", Const.NoteDetailActivityMode.CREATE) == Const.NoteDetailActivityMode.CREATE
-                ) {
-                    saveNote();
-                }
+                saveOrUpdate();
                 Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,6 +110,17 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
         initChooseColorOption();
         initOption();
+    }
+
+    private void saveOrUpdate() {
+        if (mode == Const.NoteDetailActivityMode.EDIT
+        ) {
+            updateNote();
+        } else if (
+                mode == Const.NoteDetailActivityMode.CREATE
+        ) {
+            saveNote();
+        }
     }
 
     private void setOnlyView() {
@@ -190,7 +193,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void insertUpdateNoteTagId(Note note) {
-        if(!oldNoteTagForUpdate.isEmpty()){
+        if (!oldNoteTagForUpdate.isEmpty()) {
             NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().deleteAllTag(oldNoteTagForUpdate);
         }
@@ -251,7 +254,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
         setBackGroundNoteColor(Color.parseColor(selectedNoteColor));
 
-       oldNoteTagForUpdate = NoteDatabase.getSNoteDatabase(getApplicationContext())
+        oldNoteTagForUpdate = NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().findNoteTagOf(alreadyNote.getId());
         oldNoteTagForUpdate.forEach(e -> {
             getTagIdSet().add(e.getTagId());
@@ -263,9 +266,10 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     public void deleteNote() {
-        if (alreadyNote != null && getIntent().getBooleanExtra("isViewOrUpdate", false)) {
+        if (alreadyNote != null && mode == Const.NoteDetailActivityMode.EDIT) {
+            alreadyNote.setStatusKey(Const.NoteStatus.BIN);
             NoteDatabase.getSNoteDatabase(getApplicationContext())
-                    .noteDao().deleteNote(alreadyNote);
+                    .noteDao().update(alreadyNote);
         }
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -273,6 +277,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     public void shareNote(int accountId, String permisson) {
+        saveOrUpdate();
 
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setAccountId(accountId);

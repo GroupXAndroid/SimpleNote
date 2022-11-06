@@ -45,9 +45,9 @@ public interface NoteDao {
     @Query("SELECT n.*, a.*, na.permission  FROM noteaccount na INNER JOIN note n ON n.noteId = na.noteId" +
             "  INNER JOIN account a ON na.accountId = a.accountId" +
             "  WHERE na.accountId = :accountId " +
-                "AND na.permission IN (:permissions)" +
+                "AND na.permission IN (:permissions) AND n.statusKey IN (:noteStatus)" +
             " ORDER BY n.lastUpdate DESC")
-    List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions);
+    List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions, int[] noteStatus);
 
     @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
     List<Note> getTodayNote(Date start, Date end);
