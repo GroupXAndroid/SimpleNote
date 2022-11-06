@@ -52,7 +52,6 @@ public class NoteListActivity extends AppCompatActivity implements NoteListener 
         intent.putExtra("note", note);
         intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
-
     }
 
     private void getNotes() {

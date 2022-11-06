@@ -39,7 +39,8 @@ public class ShareWithMeActivity extends AppCompatActivity {
     private void getNoteSwm() {
         if (noteSwmList.isEmpty()) {
             noteSwmList.addAll(NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().getNoteShareForMe(1,
-                    new String[]{Const.StatusPermission.VIEW.toString(), Const.StatusPermission.EDIT.toString()}));
+                    new String[]{Const.StatusPermission.VIEW.toString(), Const.StatusPermission.EDIT.toString()},
+                    new int[] {Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE}));
             adapter.notifyDataSetChanged();
         }
     }
