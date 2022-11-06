@@ -13,7 +13,6 @@ import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
-import com.groupx.simplenote.entity.Tag;
 
 import java.util.Date;
 
@@ -89,18 +88,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Open calendar activity
-        Button btnCalendar = findViewById(R.id.btnCalendar);
-        btnCalendar.setOnClickListener(new View.OnClickListener() {
+//        InsertSampleDate();
+        // Open register activity
+        Button buttonRegister = findViewById(R.id.btnRegister);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
-//        InsertSampleDate();
-        InsertSampleTag();
+        // Open search activity
+        Button buttonSearch = findViewById(R.id.btnSearchNote);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void InsertSampleDate() {
@@ -123,14 +131,5 @@ public class MainActivity extends AppCompatActivity {
         noteAccount.setAccountId(1);
         noteAccount.setPermission(Const.StatusPermission.VIEW.toString());
         NoteDatabase.getSNoteDatabase(getApplicationContext()).noteDao().insertWithNoteAccount(noteAccount);
-    }
-
-    private void InsertSampleTag(){
-        Tag tag = new Tag();
-        tag.setTagName("Name tag 1");
-        tag.setColor("#004d40");
-        tag.setAccountId(1);
-
-        NoteDatabase.getSNoteDatabase(getApplicationContext()).tagDao().insertTag(tag);
     }
 }
