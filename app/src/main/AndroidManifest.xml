@@ -13,6 +13,20 @@
         android:theme="@style/Theme.SimpleNote"
         tools:targetApi="31">
         <activity
+            android:name=".activity.CalendarActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.ShareWithMeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activity.FeedbackActivity"
             android:exported="false">
             <meta-data

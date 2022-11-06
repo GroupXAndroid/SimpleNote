@@ -1,6 +1,7 @@
 package com.groupx.simplenote.entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 @Entity
 public class Note implements Serializable {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "noteId")
     private int id;
     private String title;
     private String subTitle;

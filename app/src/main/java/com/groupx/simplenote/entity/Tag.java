@@ -10,6 +10,7 @@ public class Tag implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private int accountId;
     private String tagName;
     private String color;
 
@@ -19,6 +20,14 @@ public class Tag implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public String getTagName() {
@@ -36,4 +45,5 @@ public class Tag implements Serializable {
     public void setColor(String color) {
         this.color = color;
     }
+
 }

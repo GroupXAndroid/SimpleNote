@@ -27,4 +27,5 @@
     <color name="iconPrimary">#52575A</color>
     <color name="textBoxGray">#DDDDDD</color>
     <color name="buttonBlack">#757575</color>
+    <color name="selectedItem">#79B5B4</color>
 </resources>

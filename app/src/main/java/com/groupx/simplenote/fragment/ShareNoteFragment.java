@@ -14,18 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputEditText;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.CreateNoteActivity;
 import com.groupx.simplenote.common.Const;
+import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Account;
 
 public class ShareNoteFragment extends BottomSheetDialogFragment {
     private CreateNoteActivity activity;
     private Button buttonShareCancel, buttonShare;
     private AutoCompleteTextView atcSharingPermisson;
+    private TextInputEditText editTextEmailSharing;
 
 
     private final static String[] permissons = new String[]{
-            Const.Permission.EDIT, Const.Permission.VIEW
+            Const.PermissionDisplay.EDIT, Const.PermissionDisplay.VIEW
     };
 
     public ShareNoteFragment(CreateNoteActivity activity) {
@@ -43,6 +47,7 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        editTextEmailSharing = view.findViewById(R.id.editTextEmailSharing);
         atcSharingPermisson = view.findViewById(R.id.autoCompleteNoteSharingPermission);
         buttonShare = view.findViewById(R.id.buttonShare);
         buttonShareCancel = view.findViewById(R.id.buttonShareCancel);
@@ -65,6 +70,29 @@ public class ShareNoteFragment extends BottomSheetDialogFragment {
                 getDialog().onBackPressed();
             }
         });
+
+        buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareNote();
+            }
+        });
+    }
+
+    private void shareNote(){
+        String email = editTextEmailSharing.getText().toString();
+        Account account = NoteDatabase.getSNoteDatabase(getContext()).accountDao()
+                .getAccountByEmail(email);
+        if(account == null){
+            editTextEmailSharing.setError("Account does not exist");
+            return;
+        }
+        String permission = atcSharingPermisson.getText().toString();
+        switch (permission){
+            case Const.PermissionDisplay.EDIT: permission = Const.StatusPermission.EDIT.toString(); break;
+            case Const.PermissionDisplay.VIEW: permission = Const.StatusPermission.VIEW.toString(); break;
+        }
+        activity.shareNote(account.getId(), permission);
     }
 
 }

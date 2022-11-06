@@ -14,11 +14,12 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.CreateNoteActivity;
+import com.groupx.simplenote.entity.Note;
 
 public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
 
     private CreateNoteActivity activity;
-    private View layoutDeleteNote, layoutShareNote;
+    private View layoutDeleteNote, layoutShareNote, layoutAddTag;
 
     public NoteDetailOptionFragment(CreateNoteActivity activity) {
         super();
@@ -32,16 +33,11 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
         return inflater.inflate(R.layout.layout_note_detail_option, container, false);
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (view != null) {
+
             layoutDeleteNote = view.findViewById(R.id.layoutDeleteNoteDetail);
             layoutDeleteNote.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,6 +64,16 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
                 public void onClick(View v) {
                     ShareNoteFragment shareFragment = new ShareNoteFragment(activity);
                     shareFragment.show(activity.getSupportFragmentManager(), null);
+                    getDialog().cancel();
+                }
+            });
+
+            layoutAddTag = view.findViewById(R.id.layoutAddTag);
+            layoutAddTag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AddTagFragment addTagFragment = new AddTagFragment(activity);
+                    addTagFragment.show(activity.getSupportFragmentManager(), null);
                     getDialog().cancel();
                 }
             });
