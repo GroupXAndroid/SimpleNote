@@ -28,4 +28,5 @@
     <color name="textBoxGray">#DDDDDD</color>
     <color name="buttonBlack">#757575</color>
     <color name="selectedItem">#79B5B4</color>
+    <color name="premium">#FFC107</color>
 </resources>
