@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="team_email">khanhhuy1110@gmail.com</string>
+    <string name="app_name">SimpleNote</string>
+    <string name="click_to_test">Bấm để Kiểm tra !!!</string>
+    <string name="title">Tiêu đề</string>
+    <string name="sub_title">Phụ đề</string>
+    <string name="datetime">Ngày giờ</string>
+    <string name="color">Màu sắc</string>
+    <string name="note">Ghi chú</string>
+    <string name="folder_name">Tên thư mục</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="edit">Sửa</string>
+    <string name="delete">Xóa</string>
+    <string name="feedback">Phản hồi</string>
+    <string name="name">Tên:</string>
+    <string name="email">Email:</string>
+    <string name="comment">Bình luận:</string>
+    <string name="send">Gửi</string>
+    <string name="share">Chia sẻ</string>
+    <string name="permission">Quyền</string>
+    <string name="email_to_share">Email để chia sẻ</string>
+    <string name="share_with">Chia sẻ với</string>
+    <string name="folder">Thư mục</string>
+    <string name="setting_language">Ngôn ngữ</string>
+    <string name="sharewithme">Chia sẻ với tôi</string>
+    <string name="confirm">Sác nhận</string>
+    <string name="lock">Khóa</string>
+    <string name="background">Hình nền</string>
+    <string name="add_tag">Thêm thẻ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="notification">Thông báo</string>
+    <string name="achievement">Thành tích</string>
+</resources>

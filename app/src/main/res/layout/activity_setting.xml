@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_weight="1"
-            android:text="Setting"
+            android:text="@string/setting"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageSettingBack"
             app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +72,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_language_5"
-            android:text="Language"
+            android:text="@string/language"
             android:textAlignment="textStart"
             android:textColor="@color/black"></Button>
 
@@ -83,7 +83,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_bell_64"
-            android:text="Notification"
+            android:text="@string/notification"
             android:textAlignment="textStart"
             android:textColor="@color/black" />
 
@@ -94,7 +94,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_lock_lock_4"
-            android:text="Lock"
+            android:text="@string/lock"
             android:textAlignment="textStart"
             android:textColor="@color/black" />
 
@@ -105,7 +105,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_image_83"
-            android:text="Background"
+            android:text="@string/background"
             android:textAlignment="textStart"
             android:textColor="@color/black" />
 
@@ -116,7 +116,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_tag_repair"
-            android:text="Folder"
+            android:text="@string/folder"
             android:textAlignment="textStart"
             android:textColor="@color/black" />
 
@@ -127,7 +127,7 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_achievement_21"
-            android:text="Achievement"
+            android:text="@string/achievement"
             android:textAlignment="textStart"
             android:textColor="@color/black" />
     </LinearLayout>

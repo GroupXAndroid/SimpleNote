@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="15dp">
     <RadioGroup
-        android:id="@+id/radio_group"
+        android:id="@+id/language_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

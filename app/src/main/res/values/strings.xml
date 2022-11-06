@@ -28,4 +28,8 @@
     <string name="lock">Lock password</string>
     <string name="background">Background</string>
     <string name="add_tag">Add tag</string>
+    <string name="setting">Setting</string>
+    <string name="language">Language</string>
+    <string name="notification">Notification</string>
+    <string name="achievement">Achievement</string>
 </resources>

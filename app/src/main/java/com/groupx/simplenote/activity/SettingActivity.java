@@ -4,11 +4,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.groupx.simplenote.R;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -78,7 +83,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 displayAlertDialog();
-                RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radio_group);
+                RadioGroup radioGroup = (RadioGroup)findViewById(R.id.language_list);
             }
         });
     }
@@ -103,12 +108,29 @@ public class SettingActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                RadioGroup group = alertLayout.findViewById(R.id.language_list);
+                int selectedId = group.getCheckedRadioButtonId();
+                RadioButton selected = (RadioButton) alertLayout.findViewById(selectedId);
+                if (selected.getText() == "Vietnamese"){
+                    setLocale(SettingActivity.this, "vi");
+                } else {
+                    setLocale(SettingActivity.this, "en");
+                }
+                finish();
+                startActivity(getIntent());
             }
         });
         AlertDialog dialog = alert.create();
         dialog.show();
     }
-
+    private void setLocale(Activity activity, String lang) {
+        Locale myLocale = new Locale(lang);
+        myLocale.setDefault(myLocale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(myLocale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
     /**
      *
      */
