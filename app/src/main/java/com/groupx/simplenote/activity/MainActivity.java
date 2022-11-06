@@ -167,6 +167,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Open reminder activity
+        Button btnReminder = findViewById(R.id.btnReminder);
+        btnReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ReminderListActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void InsertSampleDate() {

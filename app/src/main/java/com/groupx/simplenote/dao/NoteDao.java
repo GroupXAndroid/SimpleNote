@@ -60,22 +60,16 @@ public interface NoteDao {
 
     @Query("SELECT * FROM notetag WHERE noteId == :noteId")
     List<NoteTag> findNoteTagOf(int noteId);
-    
-    @Query("select * from note where title like :search ||  subTitle like :search || note like :search")
-    List<Note> searchNote(String search);
 
     @Query("SELECT * FROM note WHERE statusKey = :status")
     List<Note> getNoteByStatus(int status);
+
     @Query("select * from note where title LIKE '%' || :search || '%' or  subTitle LIKE '%' || :search || '%' or note LIKE '%' || :search || '%'")
     List<Note> searchNote(String search);
 
     @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
     List<Note> getTodayNote(Date start, Date end);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNoteTag(List<NoteTag> noteTagList);
-    @Delete
-    void deleteAllTag(List<NoteTag> noteTagList);
-    @Query("SELECT * FROM notetag WHERE noteId == :noteId")
-    List<NoteTag> findNoteTagOf(int noteId);
+    @Query("SELECT * FROM note WHERE reminderTime not null")
+    List<Note> getAllReminders();
 }

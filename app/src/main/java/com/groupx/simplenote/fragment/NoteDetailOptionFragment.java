@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.CreateNoteActivity;
+import com.groupx.simplenote.activity.CreateReminderActivity;
 import com.groupx.simplenote.entity.Note;
 
 public class NoteDetailOptionFragment extends BottomSheetDialogFragment {

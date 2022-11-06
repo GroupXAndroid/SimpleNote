@@ -95,7 +95,7 @@ public class NoteFullAdapter extends RecyclerView.Adapter<NoteFullAdapter.NoteVi
             if (note.getReminderTime() == null) {
                 txtReminderTime.setVisibility(View.GONE);
             } else {
-                txtReminderTime.setText(note.getSubTitle());
+                txtReminderTime.setText(note.getReminderTime().toString());
             }
 
             if (note.getStatusKey() == Const.NoteStatus.FAVORITE) {

@@ -82,7 +82,7 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
         imageReminderAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CreateReminderActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,7 +90,7 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
 
     @Override
     public void onNoteClicked(Note note, int position) {
-        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CreateReminderActivity.class);
         intent.putExtra("note", note);
         intent.putExtra("isViewOrUpdate", true);
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
