@@ -2,6 +2,7 @@ package com.groupx.simplenote.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,13 +56,23 @@ public class NoteListActivity extends AppCompatActivity implements NoteListener 
     }
 
     private void getNotes() {
+        String txtSearch = getIntent().getStringExtra("txtSearch");
+        List<Note> notes = new ArrayList<>();
+        if(txtSearch == null || txtSearch == "" || txtSearch.isEmpty()){
+            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().getAllMyNote();
+        }else{
+            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().searchNote(txtSearch);
+            if(notes == null || notes.size() == 0){
+                Toast.makeText(this, "NO NOTES FOUND", Toast.LENGTH_SHORT).show();
+            }
+        }
         if (noteList.size() == 0) {
-            noteList.addAll(NoteDatabase.getSNoteDatabase(getApplicationContext())
-                    .noteDao().getAllMyNote());
+            noteList.addAll(notes);
             noteAdapter.notifyDataSetChanged();
         } else {
-            noteList.add(0, NoteDatabase.getSNoteDatabase(getApplicationContext())
-                    .noteDao().getAllMyNote().get(0));
+            noteList.add(0, notes.get(0));
             noteAdapter.notifyItemInserted(0);
 
         }
