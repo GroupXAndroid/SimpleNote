@@ -11,9 +11,7 @@ import com.groupx.simplenote.dto.NoteShareWithMeDTO;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
-import com.groupx.simplenote.entity.NoteTag;
 
-import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -60,4 +58,7 @@ public interface NoteDao {
 
     @Query("SELECT * FROM notetag WHERE noteId == :noteId")
     List<NoteTag> findNoteTagOf(int noteId);
+    
+    @Query("select * from note where title like :search ||  subTitle like :search || note like :search")
+    List<Note> searchNote(String search);
 }
