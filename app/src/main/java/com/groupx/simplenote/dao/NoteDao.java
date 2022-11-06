@@ -49,7 +49,7 @@ public interface NoteDao {
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions, int[] noteStatus);
 
-    @Query("select * from note where title like :search ||  subTitle like :search || note like :search")
+    @Query("select * from note where title LIKE '%' || :search || '%' or  subTitle LIKE '%' || :search || '%' or note LIKE '%' || :search || '%'")
     List<Note> searchNote(String search);
 
     @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
