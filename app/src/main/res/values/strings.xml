@@ -27,4 +27,8 @@
     <string name="confirm">Confirm</string>
     <string name="lock">Lock password</string>
     <string name="add_tag">Add tag</string>
+    <string name="tag_name">Tag name</string>
+    <string name="tag">Tag</string>
+
+
 </resources>
