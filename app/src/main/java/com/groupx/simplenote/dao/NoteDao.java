@@ -46,4 +46,7 @@ public interface NoteDao {
                 "AND na.permission IN (:permissions)" +
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions);
+
+    @Query("select * from note where title like :search ||  subTitle like :search || note like :search")
+    List<Note> searchNote(String search);
 }

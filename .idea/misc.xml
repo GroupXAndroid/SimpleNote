@@ -3,8 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable-v24/background_color_chooser2.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable-v24/background_color_chooser5.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/background_color_chooser1.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/background_input.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_add.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_arrow_back.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_delete_outline.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_launcher_background.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_more_vert.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_person_outline.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/drawable/ic_tag_repair.xml" value="0.495" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_folder.xml" value="0.2773556231003039" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_home.xml" value="0.2773556231003039" />
         <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_login.xml" value="0.32760416666666664" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_logo.xml" value="0.2809017223910841" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_main.xml" value="0.2814083080040527" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_note_list.xml" value="0.5744791666666667" />
         <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_register.xml" value="0.32760416666666664" />
+        <entry key="..\:/Android project/GitHub/SimpleNote/app/src/main/res/layout/activity_search.xml" value="0.5734375" />
       </map>
     </option>
   </component>

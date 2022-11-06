@@ -1,6 +1,7 @@
 package com.groupx.simplenote.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,9 @@ import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 
 public class LoginActivity extends AppCompatActivity {
+
+    public static String PREFS_NAME = "MyPrefsFile";
+
     private EditText etUserName, etPassword;
     private Button btnLogin;
 
@@ -30,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 final String userName = etUserName.getText().toString();
                 final String password = etPassword.getText().toString();
                 if (userName.isEmpty() || password.isEmpty()) {
@@ -49,7 +55,10 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
+                                editor.putBoolean("hasLoggedIn", true);
+                                editor.commit();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             }
                         }
                     }).start();

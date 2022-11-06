@@ -62,6 +62,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register" />
+        <Button
+            android:id="@+id/btnSearchNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search note" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

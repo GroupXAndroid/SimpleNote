@@ -10,8 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.dao.AccountDao;
 import com.groupx.simplenote.database.NoteDatabase;
@@ -24,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -86,6 +91,24 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 accountEntity.setFullName(etFullName.getText().toString());
                 if(validateInput(accountEntity)){
+                    /*final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    firebaseAuth.createUserWithEmailAndPassword(etUserName.getText().toString(), etPassword.getText().toString()).addOnCompleteListener((task) -> {
+                       if(task.isSuccessful()){
+                           firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                               @Override
+                               public void onComplete(@NonNull Task<Void> task) {
+                                   if(task.isSuccessful()){
+                                       Toast.makeText(RegisterActivity.this, "User registered successfully. Please verify your email id", Toast.LENGTH_SHORT).show();
+                                   }else{
+                                       Toast.makeText(RegisterActivity.this, "can not send", Toast.LENGTH_SHORT).show();
+                                   }
+                               }
+                           });
+                       }else{
+                           Toast.makeText(RegisterActivity.this, "can not create", Toast.LENGTH_SHORT).show();
+                       }
+                    });*/
+
                     //insert to database
                     NoteDatabase noteDatabase = NoteDatabase.getSNoteDatabase(getApplicationContext());
                     AccountDao accountDao = noteDatabase.accountDao();

@@ -99,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Open search activity
+        Button buttonSearch = findViewById(R.id.btnSearchNote);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void InsertSampleDate() {
