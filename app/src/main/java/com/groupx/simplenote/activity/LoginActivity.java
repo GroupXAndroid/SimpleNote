@@ -18,6 +18,8 @@ import com.groupx.simplenote.entity.Account;
 public class LoginActivity extends AppCompatActivity {
 
     public static String PREFS_NAME = "MyPrefsFile";
+    public static String ACCOUNT_ID = "accountId";
+
 
     private EditText etUserName, etPassword;
     private Button btnLogin, btnRegister;
@@ -37,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                SharedPreferences sharedPreferencesAccId = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
+                SharedPreferences.Editor editorAccId = sharedPreferencesAccId.edit();
                 final String userName = etUserName.getText().toString();
                 final String password = etPassword.getText().toString();
                 if (userName.isEmpty() || password.isEmpty()) {
@@ -56,8 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
+                                Account acc = accountDao.getAccountByEmail(userName);
                                 editor.putBoolean("hasLoggedIn", true);
                                 editor.commit();
+                                editorAccId.putInt("accountId", acc.getId());
+                                editorAccId.commit();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             }

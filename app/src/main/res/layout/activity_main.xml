@@ -67,6 +67,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search note" />
+        <TextView
+            android:id="@+id/tvUserName"
+            android:text="userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
