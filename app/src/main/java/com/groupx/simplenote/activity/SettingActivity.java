@@ -35,13 +35,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
+    TextView language, notification, lock, background, folder, achievement;
     Context context;
     Resources resources;
     private AccountDao accountDao;
@@ -55,6 +60,31 @@ public class SettingActivity extends AppCompatActivity {
         this.currentAccount = accountDao.getAccountByEmail(us);
         setContentView(R.layout.activity_setting);
         settingFeature();
+        settingView();
+    }
+
+    /**
+     *
+     */
+    private void settingView(){
+        language = findViewById(R.id.settingLanguage);
+        notification = findViewById(R.id.settingNotification);
+        lock = findViewById(R.id.settingLock);
+        background = findViewById(R.id.settingBackground);
+        folder = findViewById(R.id.settingFolder);
+        achievement = findViewById(R.id.achievement);
+    }
+
+    /**
+     *
+     */
+    private void updateView(){
+        language.setText(resources.getString(R.string.language));
+        notification.setText(resources.getString(R.string.notification));
+        lock.setText(resources.getString(R.string.lock));
+        background.setText(resources.getString(R.string.background));
+        folder.setText(resources.getString(R.string.folder));
+        achievement.setText(resources.getString(R.string.achievement));
     }
 
     /**
@@ -100,17 +130,20 @@ public class SettingActivity extends AppCompatActivity {
         btnLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayAlertDialog();
-                RadioGroup radioGroup = (RadioGroup)findViewById(R.id.language_list);
+                try {
+                    displayAlertDialog();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
-    public void displayAlertDialog() {
+    public void displayAlertDialog() throws JSONException {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Language");
+        alert.setTitle("Language"+currentAccount.getSetting().getString("language"));
         alert.setView(alertLayout);
         alert.setCancelable(false);
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -121,6 +154,15 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        RadioButton vi = alertLayout.findViewById(R.id.vietnamese);
+        RadioButton en = alertLayout.findViewById(R.id.english);
+            if(currentAccount.getSetting().getString("language").equals("1")){
+                vi.setChecked(false);
+                en.setChecked(true);
+            }else {
+                en.setChecked(false);
+                vi.setChecked(true);
+            }
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
             @Override
@@ -129,12 +171,15 @@ public class SettingActivity extends AppCompatActivity {
                 int selectedId = group.getCheckedRadioButtonId();
                 RadioButton selected = (RadioButton) alertLayout.findViewById(selectedId);
                 if (selected.getText() == "Vietnamese"){
-                    context = LocaleHelper.setLocale(SettingActivity.this, "vi");
-                    resources = context.getResources();
+                    context = LocaleHelper.setLocale(SettingActivity.this, "vi-rVN");
+                    currentAccount.setLanguage(0);
                 } else {
-                    context = LocaleHelper.setLocale(SettingActivity.this, "en");
-                    resources = context.getResources();
+                    context = LocaleHelper.setLocale(SettingActivity.this, "en-rUS");
+                    currentAccount.setLanguage(1);
                 }
+                accountDao.update(currentAccount);
+                resources = context.getResources();
+                updateView();
             }
         });
         AlertDialog dialog = alert.create();

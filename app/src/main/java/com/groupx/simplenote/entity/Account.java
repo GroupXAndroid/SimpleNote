@@ -179,4 +179,49 @@ public class Account implements Serializable {
 
         this.settingJson = settingJson.toString();
     }
+
+    /**
+     * Set new system language.
+     * @param s
+     */
+    public void setLanguage(int s) {
+        JSONObject setting = getSetting();
+        try {
+            setting.put("language", s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        setSetting(setting);
+    }
+
+    /**
+     *
+     * @param key sub key of setting
+     * @return
+     */
+    public String getSetting(String key){
+        try {
+            String result = getSetting().getString(key).toString();
+            return result;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * Setup sub setting for account.
+     * @param key
+     * @param value
+     */
+    public void setSetting(String key, String value){
+        JSONObject setting = getSetting();
+        if (setting.has(key)){
+            try {
+                setting.put(key, value);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

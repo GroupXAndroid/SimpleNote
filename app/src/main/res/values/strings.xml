@@ -34,5 +34,6 @@
     <string name="achievement">Achievement</string>
     <string name="tag_name">Tag name</string>
     <string name="tag">Tag</string>
+    <string name="old_lock">Old Lock Password</string>
 
 </resources>

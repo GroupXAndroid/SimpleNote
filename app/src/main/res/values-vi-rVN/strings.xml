@@ -35,4 +35,5 @@
     <string name="achievement">Thành tích</string>
     <string name="tag_name">Thẻ</string>
     <string name="tag">Thẻ</string>
+    <string name="old_lock">Old Lock Password</string>
 </resources>
