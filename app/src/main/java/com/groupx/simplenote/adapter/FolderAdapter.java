@@ -72,7 +72,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderView
                 switch (item.getItemId()) {
                     case R.id.menuFolderEdit:
                         //handle edit click
-                        EditFolderFragment editFragment = new EditFolderFragment();
+                        EditFolderFragment editFragment = new EditFolderFragment(activity);
                         activity.setEditFolderFragment(editFragment);
                         Bundle args = new  Bundle();
                         args.putBoolean("isEditing", true);

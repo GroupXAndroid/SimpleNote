@@ -1,5 +1,6 @@
 package com.groupx.simplenote.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.adapter.FolderAdapter;
 import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Folder;
 import com.groupx.simplenote.fragment.EditFolderFragment;
 
@@ -29,6 +31,7 @@ public class FolderActivity extends AppCompatActivity {
     private RecyclerView recyclerviewFolder;
     private FolderAdapter folderAdapter;
     private final List<Folder> folderList = new ArrayList<>();
+    private Account currentUser = new Account();
 
     private void findView() {
         recyclerviewFolder = findViewById(R.id.recyclerviewFolder);
@@ -40,6 +43,9 @@ public class FolderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_folder);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
+        currentUser.setId(sharedPreferences.getInt("accountId", 0));
 
         findView();
         imageBack.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +76,7 @@ public class FolderActivity extends AppCompatActivity {
     }
 
     private void initFolderDialog() {
-        editFolder = new EditFolderFragment();
+        editFolder = new EditFolderFragment(this);
         Bundle args = new Bundle();
         args.putBoolean("isEditing", false);
         editFolder.setArguments(args);
@@ -100,5 +106,14 @@ public class FolderActivity extends AppCompatActivity {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .folderDao().delete(folder);
         recreate();
+    }
+
+    public void insertFolder(Folder folder) {
+        NoteDatabase.getSNoteDatabase(getApplicationContext()).folderDao().insert(folder);
+    }
+
+    public void updateFolder(Folder folder) {
+        NoteDatabase.getSNoteDatabase(getApplicationContext()).folderDao().update(folder);
+
     }
 }

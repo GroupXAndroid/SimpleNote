@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_15sdp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imageAvatar"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_account_circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_oval="true"
+        />
+    <View
+        android:id="@+id/viewSupporter"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="@dimen/_1sdp"
+        app:layout_constraintBottom_toBottomOf="@id/imageAvatar"
+        app:layout_constraintEnd_toEndOf="@id/imageAvatar"
+        app:layout_constraintStart_toStartOf="@id/imageAvatar"
+        app:layout_constraintTop_toTopOf="@id/imageAvatar"
+        />
+
+    <TextView
+        android:id="@+id/textAccountUserName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:text="@string/app_name"
+        android:textColor="@color/iconPrimary"
+        android:textStyle="bold"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toTopOf="@id/viewSupporter"
+        app:layout_constraintStart_toEndOf="@id/imageAvatar"
+        />
+
+    <TextView
+        android:id="@+id/textPremium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:text="Premium"
+        android:textColor="@color/premium"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
+        app:layout_constraintStart_toEndOf="@id/imageAvatar"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

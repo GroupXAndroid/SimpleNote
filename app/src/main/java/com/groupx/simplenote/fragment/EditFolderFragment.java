@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.activity.FolderActivity;
 import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
@@ -27,6 +28,12 @@ public class EditFolderFragment extends DialogFragment {
     private Folder alreadyFolder;
     private boolean isEditing = false;
     private String selectedColor = null;
+
+    private final FolderActivity activity;
+
+    public EditFolderFragment(FolderActivity activity) {
+        this.activity = activity;
+    }
 
     @Nullable
     @Override
@@ -99,8 +106,7 @@ public class EditFolderFragment extends DialogFragment {
         Folder folder = new Folder();
         folder.setFolderName(folderName);
         folder.setColor(selectedColor);
-        NoteDatabase.getSNoteDatabase(getContext()).folderDao().insert(folder);
-
+        activity.insertFolder(folder);
         reloadScreen();
     }
 
@@ -110,7 +116,7 @@ public class EditFolderFragment extends DialogFragment {
         } else {
             alreadyFolder.setFolderName(edittextEditFolder.getText().toString());
             alreadyFolder.setColor(selectedColor);
-            NoteDatabase.getSNoteDatabase(getContext()).folderDao().update(alreadyFolder);
+            activity.updateFolder(alreadyFolder);
             reloadScreen();
         }
     }
