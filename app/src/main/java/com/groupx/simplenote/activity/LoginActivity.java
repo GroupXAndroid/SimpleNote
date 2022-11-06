@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String PREFS_NAME = "MyPrefsFile";
 
     private EditText etUserName, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         etUserName = findViewById(R.id.etUserName);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }).start();
                 }
+            }
+        });
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }
