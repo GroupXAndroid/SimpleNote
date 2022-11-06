@@ -29,4 +29,8 @@
     <string name="add_tag">Add tag</string>
     <string name="favourite">Favourite</string>
     <string name="archive">Archive</string>
+    <string name="tag_name">Tag name</string>
+    <string name="tag">Tag</string>
+
+
 </resources>

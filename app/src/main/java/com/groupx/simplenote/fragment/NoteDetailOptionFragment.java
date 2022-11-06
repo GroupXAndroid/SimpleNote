@@ -44,7 +44,7 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
                 public void onClick(View v) {
                     new AlertDialog.Builder(getContext())
                             .setTitle("Delete Note")
-                            .setMessage("Are you sure you want to delete?")
+                            .setMessage("Are you sure to move this note to bin?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

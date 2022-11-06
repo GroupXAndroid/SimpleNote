@@ -33,7 +33,7 @@ import java.util.Random;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etUserName, etPassword, etAvatar, etFullName;
-    private TextView tvDob;
+    private EditText etDob;
     private Button btnRegister;
     private Button btnLogin;
 
@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etAvatar = findViewById(R.id.etAvatar);
         etFullName = findViewById(R.id.etFullName);
-        tvDob = findViewById(R.id.tvDob);
+        etDob = findViewById(R.id.etDob);
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin = findViewById(R.id.btnLogin);
         /*
@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        tvDob.setOnClickListener(new View.OnClickListener() {
+        etDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month + 1;
                         String date = year + "-" + month + "-" + day;
-                        tvDob.setText(date);
+                        etDob.setText(date);
                     }
                 }, year, month, day);
                 dialog.show();
@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                 accountEntity.setPassword(etPassword.getText().toString());
                 accountEntity.setAvatarImagePath(etAvatar.getText().toString());
                 try {
-                    accountEntity.setDob(format.parse(tvDob.getText().toString()));
+                    accountEntity.setDob(format.parse(etDob.getText().toString()));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

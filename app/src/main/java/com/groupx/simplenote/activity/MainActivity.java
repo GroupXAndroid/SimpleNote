@@ -1,9 +1,11 @@
 package com.groupx.simplenote.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +25,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        TextView tvn = findViewById(R.id.tvUserName);
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
+        int accId = sharedPreferences.getInt("accountId", 0);
+        if(accId != 0){
+            tvn.setText("id = " + String.valueOf(accId));
+        }else{
+            tvn.setText("ID NOT FOUND, MAYBE YOU NOT LOGIN");
+        }
         runtestFeature();
     }
 
@@ -106,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button buttonTag = findViewById(R.id.btnTag);
+        buttonTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TagActivity.class);
                 startActivity(intent);
             }
         });
