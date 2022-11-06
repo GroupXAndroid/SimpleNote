@@ -2,17 +2,26 @@ package com.groupx.simplenote.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
+
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.dao.AccountDao;
+import com.groupx.simplenote.dao.AccountDao_Impl;
+import com.groupx.simplenote.database.NoteDatabase;
+import com.groupx.simplenote.entity.Account;
 
 import android.app.Activity;
 import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,10 +40,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity {
-
+    private AccountDao accountDao;
+    private Account currentAccount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+        String us = sharedPreferences.getString("username", "");
+        accountDao = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao();
+        this.currentAccount = accountDao.getAccountByEmail(us);
         setContentView(R.layout.activity_setting);
         settingFeature();
     }
@@ -91,7 +105,6 @@ public class SettingActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
 
-
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Language");
         alert.setView(alertLayout);
@@ -116,20 +129,23 @@ public class SettingActivity extends AppCompatActivity {
                 } else {
                     setLocale(SettingActivity.this, "en");
                 }
-                finish();
-                startActivity(getIntent());
             }
         });
         AlertDialog dialog = alert.create();
         dialog.show();
     }
     private void setLocale(Activity activity, String lang) {
+        LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("xx-YY");
         Locale myLocale = new Locale(lang);
         myLocale.setDefault(myLocale);
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
+
         config.setLocale(myLocale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+        Intent refresh = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(refresh);
     }
     /**
      *

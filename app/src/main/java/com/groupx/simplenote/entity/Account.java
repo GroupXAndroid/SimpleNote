@@ -76,7 +76,10 @@ public class Account implements Serializable {
     }
 
     public String getSettingJson() {
-        return settingJson;
+        if (this.settingJson == null || this.settingJson.isEmpty()){
+            setSetting(getSetting());
+        }
+        return this.settingJson;
     }
 
     public void setSettingJson(String settingJson) {
@@ -88,21 +91,28 @@ public class Account implements Serializable {
      * @desc Get app settings.
      */
     public JSONObject getSetting() {
+        JSONObject settingJson;
         try {
-            return new JSONObject(this.settingJson);
-        } catch (JSONException e) {
-            List<String> achievement = new ArrayList<>();
-            JSONObject settingjson = new JSONObject();
-            try {
-                settingjson.put("notification", "0");
-                settingjson.put("lock_key", "");
-                settingjson.put("language", "1");
-                settingjson.put("background", "0");
-                settingjson.put("achievement", achievement);
-            } catch (JSONException f) {
+            if (this.settingJson != null){
+                settingJson =  new JSONObject(this.settingJson);
+                return settingJson;
             }
-            return settingjson;
+
+        } catch (JSONException e) {
+
         }
+        List<String> achievement = new ArrayList<>();
+        settingJson = new JSONObject();
+        try {
+            settingJson.put("notification", "0");
+            settingJson.put("lock_key", "");
+            settingJson.put("language", "1");
+            settingJson.put("background", "0");
+            settingJson.put("achievement", achievement);
+            settingJson.put("premium", false);
+        } catch (JSONException f) {
+        }
+        return settingJson;
     }
 
     /**
@@ -155,6 +165,13 @@ public class Account implements Serializable {
         if (settingJson.has("achievement")) {
             try {
                 setting.put("achievement", utils.makeGoodAchievement(settingJson.getJSONArray("achievement")));
+
+            } catch (JSONException e) {
+            }
+        }
+        if (settingJson.has("premium")) {
+            try {
+                setting.put("premium", settingJson.get("premium"));
 
             } catch (JSONException e) {
             }

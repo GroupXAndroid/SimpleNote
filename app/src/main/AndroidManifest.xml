@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleNote"
-        tools:targetApi="31" >
+        tools:targetApi="31"
+        android:configChanges="locale|orientation">
 <!--        <activity
             android:name=".LoginActivity"
             android:exported="true" >
@@ -37,7 +38,7 @@
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:exported="false" > >
+            android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -140,7 +141,5 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
->>>>>>> f58c883cb0341ade44eb9adf24ed84aa7075e045
     </application>
-
 </manifest>

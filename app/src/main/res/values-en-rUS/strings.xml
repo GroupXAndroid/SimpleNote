@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="team_email">khanhhuy1110@gmail.com</string>
+    <string name="app_name">SimpleNote</string>
+    <string name="click_to_test">Click to Test!!!</string>
+    <string name="title">Title</string>
+    <string name="sub_title">Sub title</string>
+    <string name="datetime">Datetime</string>
+    <string name="color">Color</string>
+    <string name="note">Note…</string>
+    <string name="folder_name">Folder name</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="feedback">FeedBack</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="comment">Comment:</string>
+    <string name="send">Send</string>
+    <string name="share">Share</string>
+    <string name="permission">Permission</string>
+    <string name="email_to_share">Email to share</string>
+    <string name="share_with">Share with</string>
+    <string name="folder">Folder</string>
+    <string name="setting_language">Language</string>
+    <string name="sharewithme">Share With Me</string>
+    <string name="confirm">Confirm</string>
+    <string name="lock">Lock password</string>
+    <string name="background">Background</string>
+    <string name="add_tag">Add tag</string>
+    <string name="setting">Setting</string>
+    <string name="language">Language</string>
+    <string name="notification">Notification</string>
+    <string name="achievement">Achievement</string>
+</resources>
