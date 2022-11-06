@@ -37,8 +37,14 @@ public class LockActivity extends AppCompatActivity {
                 lockSetPopup();
             }
         });
+        Button del = findViewById(R.id.delete_lock);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lockDelPopup();
+            }
+        });
     }
-
     private void lockSetPopup(){
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_set_lock, null);
@@ -46,6 +52,31 @@ public class LockActivity extends AppCompatActivity {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Lock password");
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+    }
+
+    private void lockDelPopup(){
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.layout_unset_lock, null);
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Unset lock password");
         alert.setView(alertLayout);
         alert.setCancelable(false);
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

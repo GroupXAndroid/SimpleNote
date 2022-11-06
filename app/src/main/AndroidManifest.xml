@@ -13,9 +13,6 @@
         android:theme="@style/Theme.SimpleNote"
         tools:targetApi="31">
         <activity
-            android:name=".Achievement"
-            android:exported="false" />
-        <activity
             android:name=".activity.FeedbackActivity"
             android:exported="false">
             <meta-data
@@ -85,6 +82,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.BackgroundActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AchievementActivity"
             android:exported="false" />
     </application>
 
