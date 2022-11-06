@@ -39,4 +39,24 @@
     <item
         android:id="@+id/itemTestUpgradeScreen"
         android:title="Upgrade Account" />
+
+    <item
+        android:id="@+id/itemTestCalendar"
+        android:title="Calendar" />
+
+    <item
+        android:id="@+id/itemTestFavourite"
+        android:title="Favorite" />
+
+    <item
+        android:id="@+id/itemTestArchive"
+        android:title="Archive" />
+
+    <item
+        android:id="@+id/itemTestBin"
+        android:title="Bin" />
+
+    <item
+        android:id="@+id/itemTestRemindersList"
+        android:title="Reminders List" />
 </menu>
