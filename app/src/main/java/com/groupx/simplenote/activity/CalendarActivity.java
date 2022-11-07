@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.adapter.NoteAdapter;
+import com.groupx.simplenote.adapter.NoteFullAdapter;
+import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.listener.NoteListener;
@@ -30,7 +32,8 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
     CalendarView calendarView;
     RecyclerView recyclerViewNoteList;
     List<Note> noteList;
-    private NoteAdapter noteAdapter;
+//    private NoteAdapter noteAdapter;
+    private NoteFullAdapter noteAdapter;
     ImageView imageBack, imageReminderAdd;
 
     @Override
@@ -48,14 +51,14 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
         );
 
         noteList = new ArrayList<>();
-        noteAdapter = new NoteAdapter(noteList, this);
+        noteAdapter = new NoteFullAdapter(noteList, this);
         recyclerViewNoteList.setAdapter(noteAdapter);
 
         Date now = Calendar.getInstance().getTime();
         Date start = new Date(now.getYear(), now.getMonth(), now.getDate(), 0, 0);
         Date end = new Date(now.getYear(), now.getMonth(), now.getDate(), 23, 59);
 
-        getNotes(start, end);
+        getNotes(start, end, Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -66,7 +69,7 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
 
                 Date start = new Date(selected.getYear(), selected.getMonth(), selected.getDate(), 0, 0);
                 Date end = new Date(selected.getYear(), selected.getMonth(), selected.getDate(), 23, 59);
-                getNotes(start, end);
+                getNotes(start, end, Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE);
             }
         });
 
@@ -79,7 +82,7 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
         imageReminderAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CreateReminderActivity.class);
                 startActivity(intent);
             }
         });
@@ -87,16 +90,22 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
 
     @Override
     public void onNoteClicked(Note note, int position) {
-        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+        Intent intent;
+        if (note.getReminderTime() != null){
+            intent = new Intent(getApplicationContext(), CreateReminderActivity.class);
+        } else {
+            intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+        }
         intent.putExtra("note", note);
-        intent.putExtra("isViewOrUpdate", true);
+        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
+
     }
 
-    private void getNotes(Date start, Date end) {
+    private void getNotes(Date start, Date end, int normalStatus, int favouriteStatus) {
         noteList.clear();
         noteList.addAll(NoteDatabase.getSNoteDatabase(getApplicationContext())
-                .noteDao().getTodayNote(start, end));
+                .noteDao().getTodayNote(start, end, normalStatus, favouriteStatus));
         noteAdapter.notifyDataSetChanged();
     }
 }
