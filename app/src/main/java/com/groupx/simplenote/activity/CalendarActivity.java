@@ -90,10 +90,16 @@ public class CalendarActivity extends AppCompatActivity implements NoteListener 
 
     @Override
     public void onNoteClicked(Note note, int position) {
-        Intent intent = new Intent(getApplicationContext(), CreateReminderActivity.class);
+        Intent intent;
+        if (note.getReminderTime() != null){
+            intent = new Intent(getApplicationContext(), CreateReminderActivity.class);
+        } else {
+            intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+        }
         intent.putExtra("note", note);
-        intent.putExtra("isViewOrUpdate", true);
+        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
+
     }
 
     private void getNotes(Date start, Date end, int normalStatus, int favouriteStatus) {

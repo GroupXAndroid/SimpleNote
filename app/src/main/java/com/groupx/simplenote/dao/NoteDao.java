@@ -72,4 +72,7 @@ public interface NoteDao {
 
     @Query("SELECT * FROM note WHERE reminderTime not null")
     List<Note> getAllReminders();
+
+    @Query("SELECT * FROM note WHERE noteId = :id")
+    Note getNoteById(int id);
 }

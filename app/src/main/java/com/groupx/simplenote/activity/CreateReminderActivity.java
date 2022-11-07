@@ -3,8 +3,11 @@ package com.groupx.simplenote.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.groupx.simplenote.AlarmBroadcast;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.common.Const;
@@ -26,7 +30,9 @@ import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.entity.NoteTag;
 import com.groupx.simplenote.fragment.ChoosingNoteColorFragment;
 import com.groupx.simplenote.fragment.NoteDetailOptionFragment;
+import com.groupx.simplenote.fragment.ReminderDetailOptionFragment;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,6 +105,8 @@ public class CreateReminderActivity extends AppCompatActivity {
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
 
+
+
         String reminderDate = (currentTimer.getDate() < 10 ? "0"+currentTimer.getDate() : currentTimer.getDate()) + "/"
                 + ((currentTimer.getMonth()+1) < 10 ? "0"+(currentTimer.getMonth()+1) : (currentTimer.getMonth()+1)) + "/" + (currentTimer.getYear()+1900);
         edtReminderDate.setText(reminderDate);
@@ -157,11 +165,25 @@ public class CreateReminderActivity extends AppCompatActivity {
         if (mode == Const.NoteDetailActivityMode.VIEW || mode == Const.NoteDetailActivityMode.EDIT) {
             alreadyNote = (Note) getIntent().getSerializableExtra("note");
             setViewAndEditNote();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            reminderDate = dateFormat.format(alreadyNote.getReminderTime());
+            edtReminderDate.setText(reminderDate);
+            reminderTime = timeFormat.format(alreadyNote.getReminderTime());
+            edtReminderTime.setText(reminderTime);
         }
 
         if (getIntent().getBooleanExtra("isViewOrUpdate", false)) {
             alreadyNote = (Note) getIntent().getSerializableExtra("note");
             setViewAndEditNote();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            reminderDate = dateFormat.format(alreadyNote.getReminderTime());
+            edtReminderDate.setText(reminderDate);
+            reminderTime = timeFormat.format(alreadyNote.getReminderTime());
+            edtReminderTime.setText(reminderTime);
         }
         initChooseColorOption();
         initOption();
@@ -200,14 +222,14 @@ public class CreateReminderActivity extends AppCompatActivity {
     }
 
     private void initOption() {
-//        NoteDetailOptionFragment optionFragment = new NoteDetailOptionFragment(this);
-//
-//        imageNoteDetailOption.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                optionFragment.show(getSupportFragmentManager(), "optionFragment");
-//            }
-//        });
+        ReminderDetailOptionFragment optionFragment = new ReminderDetailOptionFragment(this);
+
+        imageNoteDetailOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionFragment.show(getSupportFragmentManager(), "optionFragment");
+            }
+        });
     }
 
     private Note saveNote() {
@@ -244,6 +266,8 @@ public class CreateReminderActivity extends AppCompatActivity {
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);
 
+        setAlarm(alreadyNote);
+
         insertUpdateNoteTagId(currentNote);
 
 //        Intent intent = new Intent();
@@ -274,6 +298,8 @@ public class CreateReminderActivity extends AppCompatActivity {
         String subtitle = editTextNoteSubtitle.getText().toString().trim();
         String content = editTextNoteContent.getText().toString();
 
+        cancelAlarm(alreadyNote);
+
         if (alreadyNote == null) {
             alreadyNote = new Note();
             alreadyNote.setSince(new Date());
@@ -284,8 +310,19 @@ public class CreateReminderActivity extends AppCompatActivity {
         alreadyNote.setColor(selectedNoteColor);
         alreadyNote.setLastUpdate(new Date());
 
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String reminderTime = edtReminderDate.getText().toString() + " " + edtReminderTime.getText().toString();
+        try {
+            Date timeReminder = format.parse(reminderTime);
+            alreadyNote.setReminderTime(timeReminder);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().update(alreadyNote);
+
+        setAlarm(alreadyNote);
 
         insertUpdateNoteTagId(alreadyNote);
 
@@ -328,13 +365,12 @@ public class CreateReminderActivity extends AppCompatActivity {
 
     public void deleteNote() {
         if (alreadyNote != null && mode == Const.NoteDetailActivityMode.EDIT) {
+            cancelAlarm(alreadyNote);
             alreadyNote.setStatusKey(Const.NoteStatus.BIN);
             NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().update(alreadyNote);
+            Toast.makeText(this, "Moved to bin", Toast.LENGTH_LONG).show();
         }
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     public void shareNote(int accountId, String permisson) {
@@ -358,32 +394,50 @@ public class CreateReminderActivity extends AppCompatActivity {
                     .noteDao().update(alreadyNote);
         }
         Toast.makeText(this, "Moved to favourite", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     public void archiveNote() {
         if (alreadyNote != null) {
+            cancelAlarm(alreadyNote);
             alreadyNote.setStatusKey(Const.NoteStatus.ARCHIVE);
             NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().update(alreadyNote);
         }
         Toast.makeText(this, "Archived", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
-    public void moveToBin() {
-        if (alreadyNote != null) {
-            alreadyNote.setStatusKey(Const.NoteStatus.BIN);
-            NoteDatabase.getSNoteDatabase(getApplicationContext())
-                    .noteDao().update(alreadyNote);
+    private void setAlarm(Note note) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);                   //assigning alarm manager object to set alarm
+        Intent intent = new Intent(getApplicationContext(), AlarmBroadcast.class);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        intent.putExtra("noteId", note.getId());                                                       //sending data to alarm class to create channel and notification
+        intent.putExtra("time", dateFormat.format(note.getReminderTime()));
+        intent.putExtra("date", timeFormat.format(note.getReminderTime()));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        String dateandtime = dateFormat.format(note.getReminderTime()) + " " + timeFormat.format(note.getReminderTime());
+        DateFormat formatter = new SimpleDateFormat("d-M-yyyy HH:mm");
+        try {
+            Date date1 = formatter.parse(dateandtime);
+            am.setExact(AlarmManager.RTC_WAKEUP, date1.getTime(), pendingIntent);
+            Toast.makeText(getApplicationContext(), "Alarm set", Toast.LENGTH_SHORT).show();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        Toast.makeText(this, "Moved to bin", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
+        Intent intentBack = new Intent(getApplicationContext(), ReminderListActivity.class);                //this intent will be called once the setting alarm is complete
+        startActivity(intentBack);                                                                  //navigates from adding reminder activity to mainactivity
+    }
+
+    private void cancelAlarm(Note note) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);                   //assigning alarm manager object to set alarm
+        Intent intent = new Intent(getApplicationContext(), AlarmBroadcast.class);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        intent.putExtra("noteId", note.getId());                                                       //sending data to alarm class to create channel and notification
+        intent.putExtra("time", dateFormat.format(note.getReminderTime()));
+        intent.putExtra("date", timeFormat.format(note.getReminderTime()));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        am.cancel(pendingIntent);
+        Toast.makeText(getApplicationContext(), "Alarm canceled", Toast.LENGTH_SHORT).show();
     }
 }

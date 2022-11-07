@@ -61,7 +61,8 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTextTitle">
+        app:layout_constraintTop_toBottomOf="@id/txtTextTitle"
+        android:paddingBottom="@dimen/_20sdp">
     </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
