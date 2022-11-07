@@ -49,16 +49,30 @@ public interface NoteDao {
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions, int[] noteStatus);
 
+    @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end)) AND (statusKey = :normal OR statusKey = :favourite)")
+    List<Note> getTodayNote(Date start, Date end, int normal, int favourite);
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertNoteTag(List<NoteTag> noteTagList);
+
+    @Delete
+    void deleteAllTag(List<NoteTag> noteTagList);
+
+    @Query("SELECT * FROM notetag WHERE noteId == :noteId")
+    List<NoteTag> findNoteTagOf(int noteId);
+
+    @Query("SELECT * FROM note WHERE statusKey = :status")
+    List<Note> getNoteByStatus(int status);
+
     @Query("select * from note where title LIKE '%' || :search || '%' or  subTitle LIKE '%' || :search || '%' or note LIKE '%' || :search || '%'")
     List<Note> searchNote(String search);
 
     @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
     List<Note> getTodayNote(Date start, Date end);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNoteTag(List<NoteTag> noteTagList);
-    @Delete
-    void deleteAllTag(List<NoteTag> noteTagList);
-    @Query("SELECT * FROM notetag WHERE noteId == :noteId")
-    List<NoteTag> findNoteTagOf(int noteId);
+    @Query("SELECT * FROM note WHERE reminderTime not null")
+    List<Note> getAllReminders();
+
+    @Query("SELECT * FROM note WHERE noteId = :id")
+    Note getNoteById(int id);
 }

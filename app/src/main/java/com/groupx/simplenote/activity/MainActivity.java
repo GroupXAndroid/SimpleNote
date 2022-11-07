@@ -17,6 +17,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
+import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.entity.NoteAccount;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -117,6 +122,26 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.itemTestUpgradeScreen:
                         intent = new Intent(getApplicationContext(), PremiumUpgradeActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestArchive:
+                        intent = new Intent(getApplicationContext(), ArchiveActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestCalendar:
+                        intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestFavourite:
+                        intent = new Intent(getApplicationContext(), FavouriteActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestBin:
+                        intent = new Intent(getApplicationContext(), BinActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestRemindersList:
+                        intent = new Intent(getApplicationContext(), ReminderListActivity.class);
                         startActivity(intent);
                         return true;
                     default:
