@@ -36,15 +36,16 @@ public interface NoteDao {
     @Delete
     void deleteNote(Note note);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWithNoteAccount(NoteAccount noteAccount);
 
     @Query("SELECT * FROM noteaccount ORDER BY noteId LIMIT 1")
     NoteAccount getLatestNoteAccount();
 
-    @Query("SELECT n.*, a.*, na.permission  FROM noteaccount na INNER JOIN note n ON n.noteId = na.noteId" +
-            "  INNER JOIN account a ON na.accountId = a.accountId" +
-            "  WHERE na.accountId = :accountId " +
+    @Query("SELECT n.*, ac.*, na.permission  FROM noteaccount na INNER JOIN note n ON n.noteId = na.noteId" +
+            "  INNER JOIN account a ON na.accountId = a.accountId " +
+            " JOIN noteaccount nac ON nac.noteId = na.noteId JOIN account ac ON ac.accountId=nac.accountId AND nac.permission = 'CREATED'" +
+            "  WHERE a.accountId = :accountId " +
                 "AND na.permission IN (:permissions) AND n.statusKey IN (:noteStatus)" +
             " ORDER BY n.lastUpdate DESC")
     List<NoteShareWithMeDTO> getNoteShareForMe(int accountId, String[] permissions, int[] noteStatus);
