@@ -1,15 +1,10 @@
 package com.groupx.simplenote.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -36,9 +31,9 @@ public class NoteListActivity extends AppCompatActivity {
     private List<Note> noteList = new ArrayList<>();
 
     private int noteClickedPosition = -1;
-
-    private AccountDao accountDao;
     private Account currentAccount;
+    private AccountDao accountDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +43,16 @@ public class NoteListActivity extends AppCompatActivity {
         currentUser.setId(accId);
 
         rcvNoteList = findViewById(R.id.recyclerviewNote);
+        rcvNoteList.setLayoutManager(
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        );
+
+        rcvNoteList = findViewById(R.id.recyclerviewNote);
         rcvNoteList.setLayoutManager(new StaggeredGridLayoutManager(2,  StaggeredGridLayoutManager.VERTICAL));
         adapter = new NoteAdapter(noteList, this, currentAccount, accountDao);
         rcvNoteList.setAdapter(adapter);
 
-        getNotes(Const.NoteRequestCode.REQUEST_CODE_SHOW);
+//        getNotes(Const.NoteRequestCode.REQUEST_CODE_SHOW);
     }
 
 //    @Override
@@ -105,26 +105,50 @@ public class NoteListActivity extends AppCompatActivity {
 //        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
 //        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
 //    }
-    private int noteClikedPosition;
-
-    private void getNotes(int requestCode){
-        List<Note> notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
-                .noteDao().getAllMyNote(currentUser.getId(),new int[] {Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE});
-        if(requestCode == Const.NoteRequestCode.REQUEST_CODE_SHOW){
-            noteList.addAll(notes);
-            adapter.notifyDataSetChanged();
-        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_CREATE){
-            noteList.add(0, notes.get(0));
-            adapter.notifyItemInserted(0);
-            rcvNoteList.smoothScrollToPosition(0);
-        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_UPDATE){
-            noteList.remove(noteClikedPosition);
-            noteList.add(noteClikedPosition, notes.get(noteClikedPosition));
-            adapter.notifyItemChanged(noteClikedPosition);
-        }
-        else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
-            noteList.remove(noteClikedPosition);
-            adapter.notifyItemRemoved(noteClikedPosition);
-        }
-    }
+//    private int noteClikedPosition;
+//
+//    private void getNotes(int requestCode){
+//        List<Note> notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+//                .noteDao().getAllMyNote(currentUser.getId(),new int[] {Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE});
+//        if(requestCode == Const.NoteRequestCode.REQUEST_CODE_SHOW){
+//
+//    @Override
+//    public void onNoteClicked(Note note, int position) {
+//        noteClickedPosition = position;
+//        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+//        intent.putExtra("note", note);
+//        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
+//        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
+//    }
+//
+//    private void getNotes() {
+//        String txtSearch = getIntent().getStringExtra("txtSearch");
+//        List<Note> notes = new ArrayList<>();
+//        if(txtSearch == null || txtSearch == "" || txtSearch.isEmpty()){
+//            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+//                    .noteDao().getAllMyNote();
+//        }else{
+//            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+//                    .noteDao().searchNote(txtSearch);
+//            if(notes == null || notes.size() == 0){
+//                Toast.makeText(this, "NO NOTES FOUND", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//        if (noteList.size() == 0) {
+//            noteList.addAll(notes);
+//            adapter.notifyDataSetChanged();
+//        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_CREATE){
+//            noteList.add(0, notes.get(0));
+//            adapter.notifyItemInserted(0);
+//            rcvNoteList.smoothScrollToPosition(0);
+//        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_UPDATE){
+//            noteList.remove(noteClikedPosition);
+//            noteList.add(noteClikedPosition, notes.get(noteClikedPosition));
+//            adapter.notifyItemChanged(noteClikedPosition);
+//        }
+//        else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
+//            noteList.remove(noteClikedPosition);
+//            adapter.notifyItemRemoved(noteClikedPosition);
+//        }
+//    }
 }

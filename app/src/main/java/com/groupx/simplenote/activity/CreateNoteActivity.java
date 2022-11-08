@@ -1,18 +1,15 @@
 package com.groupx.simplenote.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -20,7 +17,6 @@ import com.groupx.simplenote.R;
 import com.groupx.simplenote.common.Component;
 import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.Utils;
-import com.groupx.simplenote.dao.AccountDao;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Folder;
@@ -45,8 +41,6 @@ public class CreateNoteActivity extends AppCompatActivity {
     private ConstraintLayout layoutNoteDetail;
 
 
-    private AccountDao accountDao;
-    private Account currentAccount;
     private String selectedNoteColor;
     private Note alreadyNote = new Note();
     private Set<Integer> tagIdList = new HashSet<>();
@@ -90,10 +84,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         findView();
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
         currentUser.setId(sharedPreferences.getInt("accountId", 0));
-        sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-        String us = sharedPreferences.getString("username", "");
-        accountDao = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao();
-        this.currentAccount = accountDao.getAccountByEmail(us);
 
         mode = getIntent().getShortExtra("mode", Const.NoteDetailActivityMode.CREATE);
         folder = (Folder) getIntent().getSerializableExtra("folder");
@@ -327,55 +317,14 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     public void archiveNote() {
         if (alreadyNote != null) {
-            if (currentUser.getSetting("lock_key").isEmpty()){
-                LayoutInflater inflater = getLayoutInflater();
-                View alertLayout = inflater.inflate(R.layout.layout_set_lock, null);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Action needed: Set lock password");
-                alert.setView(alertLayout);
-                alert.setCancelable(false);
-                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText iLock = alertLayout.findViewById(R.id.new_password);
-                        EditText cLock = alertLayout.findViewById(R.id.confirm_password);
-                        if (iLock.getText().toString().equals(cLock.getText().toString())){
-                            currentAccount.setSetting("lock_key", iLock.getText().toString());
-                            accountDao.update(currentAccount);
-                            alreadyNote.setStatusKey(Const.NoteStatus.ARCHIVE);
-                            NoteDatabase.getSNoteDatabase(getApplicationContext())
-                                    .noteDao().update(alreadyNote);
-                            Toast.makeText(getApplicationContext(), "Archived success!", Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(),"Archived failed!",Toast.LENGTH_SHORT).show();
-
-                        }
-                        Intent intent = new Intent();
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
-                });
-                AlertDialog dialog = alert.create();
-                dialog.show();
-            } else {
-                alreadyNote.setStatusKey(Const.NoteStatus.ARCHIVE);
-                NoteDatabase.getSNoteDatabase(getApplicationContext())
-                        .noteDao().update(alreadyNote);
-                Toast.makeText(getApplicationContext(), "Archived success!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-
+            alreadyNote.setStatusKey(Const.NoteStatus.ARCHIVE);
+            NoteDatabase.getSNoteDatabase(getApplicationContext())
+                    .noteDao().update(alreadyNote);
         }
+        Toast.makeText(this, "Archived", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void moveToBin() {

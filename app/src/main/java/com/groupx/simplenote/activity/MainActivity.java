@@ -61,12 +61,6 @@ public class MainActivity extends AppCompatActivity {
             currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao().getAccountByEmail(getSharedPreferences(LoginActivity.PREFS_NAME, 0).getString("username",""));
         }
 
-        if(currentUser.getSetting("language").equals("0")){
-            context = LocaleHelper.setLocale(getApplicationContext(), "vi");
-        } else {
-            context = LocaleHelper.setLocale(getApplicationContext(), "en");
-        }
-        resources = context.getResources();
         InitDrawerNavigationMenu();
         InitCreateNewNoteButton();
         InitRecyclerViewNote();
