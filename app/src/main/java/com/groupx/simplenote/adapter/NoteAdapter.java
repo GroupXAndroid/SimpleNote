@@ -1,6 +1,7 @@
 package com.groupx.simplenote.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.CreateNoteActivity;
 import com.groupx.simplenote.activity.MainActivity;
 import com.groupx.simplenote.common.Const;
+import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.listener.NoteListener;
 
@@ -24,9 +26,9 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
     private final List<Note> notes;
-    private final MainActivity activity;
+    private final Activity activity;
 
-    public NoteAdapter(List<Note> notes, MainActivity activity) {
+    public NoteAdapter(List<Note> notes, Activity activity) {
         this.notes = notes;
         this.activity = activity;
     }
