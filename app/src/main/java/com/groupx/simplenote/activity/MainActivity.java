@@ -1,5 +1,6 @@
 package com.groupx.simplenote.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -129,11 +130,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationViewMenu = findViewById(R.id.navViewMenu);
         TextView textAccountUserName = navigationViewMenu.getHeaderView(0).findViewById(R.id.textAccountUserName);
         textAccountUserName.setText(currentUser.getFullName());
-        TextView textPremium = navigationViewMenu.getHeaderView(0).findViewById(R.id.textPremium);
-        // TODO: set text premium if account is VIP
-
 
         navigationViewMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();

@@ -27,7 +27,7 @@ public class AddTagFragment extends DialogFragment {
 
     private RecyclerView rvNoteAddTag;
     private AddTagAdapter addTagAdapter;
-    private List<Tag> tagList;
+    private List<Tag> tagList = new ArrayList<>();
     private CreateNoteActivity activity;
 
     public AddTagFragment (CreateNoteActivity activity){
@@ -59,7 +59,7 @@ public class AddTagFragment extends DialogFragment {
 
     private void getTags(){
         if(tagList.isEmpty()) {
-            tagList.addAll(NoteDatabase.getSNoteDatabase(getContext()).tagDao().getAllTagsOfAccount(1));
+            tagList.addAll(NoteDatabase.getSNoteDatabase(getContext()).tagDao().getAllTagsOfAccount(activity.currentUser.getId()));
             addTagAdapter.notifyDataSetChanged();
         }
     }
