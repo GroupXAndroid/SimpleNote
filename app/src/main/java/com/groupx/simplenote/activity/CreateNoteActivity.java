@@ -19,6 +19,7 @@ import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.Utils;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
+import com.groupx.simplenote.entity.Folder;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 import com.groupx.simplenote.entity.NoteTag;
@@ -46,6 +47,9 @@ public class CreateNoteActivity extends AppCompatActivity {
     private List<NoteTag> oldNoteTagForUpdate = new ArrayList<>();
     private Set<Integer> accountId = new HashSet<>();
     private Account currentUser = new Account();
+    private Folder folder;
+
+    private int notePosition;
 
     private short mode;
 
@@ -81,6 +85,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         currentUser.setId(sharedPreferences.getInt("accountId", 0));
 
         mode = getIntent().getShortExtra("mode", Const.NoteDetailActivityMode.CREATE);
+        folder = (Folder) getIntent().getSerializableExtra("folder");
 
         Date currentTimer = new Date();
         StringBuilder dateBuilder = new StringBuilder("Edited ");
@@ -99,6 +104,11 @@ public class CreateNoteActivity extends AppCompatActivity {
 
                 saveOrUpdate();
                 Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+
+                Intent intent = getIntent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -172,6 +182,9 @@ public class CreateNoteActivity extends AppCompatActivity {
         note.setSince(new Date());
         note.setLastUpdate(new Date());
         note.setStatusKey(Const.NoteStatus.NORMAL);
+        if(folder != null){
+            note.setFolderId(folder.getId());
+        }
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insert(note);

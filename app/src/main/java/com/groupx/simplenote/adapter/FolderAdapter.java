@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.FolderActivity;
+import com.groupx.simplenote.activity.FolderNoteActivity;
 import com.groupx.simplenote.entity.Folder;
 import com.groupx.simplenote.fragment.EditFolderFragment;
 
@@ -51,11 +53,20 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.FolderView
 
     @Override
     public void onBindViewHolder(@NonNull FolderViewHolder holder, int position) {
+        Folder folder = folderList.get(position);
         holder.setFolder(folderList.get(position));
         holder.imageViewFolderOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initPopupMenuFolder(holder, holder.getBindingAdapterPosition(), v.getContext());
+            }
+        });
+        holder.viewFolderContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity.getApplicationContext(), FolderNoteActivity.class);
+                intent.putExtra("folder", folder);
+                activity.startActivity(intent);
             }
         });
     }

@@ -76,4 +76,7 @@ public interface NoteDao {
 
     @Query("SELECT * FROM note WHERE noteId = :id")
     Note getNoteById(int id);
+
+    @Query("SELECT * FROM note WHERE folderId = :folderId AND statusKey NOT IN (:notStatus) ORDER BY noteId DESC")
+    List<Note> getNotesByFolder(int folderId, int[] notStatus);
 }

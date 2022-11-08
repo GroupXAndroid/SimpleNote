@@ -63,13 +63,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
         LinearLayout layoutNoteContainer;
-        TextView textTitle, textSubtitle;
+        TextView textTitle, textSubtitle, textContent;
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             layoutNoteContainer = itemView.findViewById(R.id.layoutNote);
             textTitle = itemView.findViewById(R.id.textNoteTitle);
-            textSubtitle = itemView.findViewById(R.id.textNoteSubtitle);
-
+            textSubtitle = itemView.findViewById(R.id.textNoteSubTitle);
+            textContent = itemView.findViewById(R.id.textContent);
         }
 
         void setNote(Note note) {
@@ -82,6 +82,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             } else {
                 textSubtitle.setText(note.getSubTitle());
             }
+            if(note.getNote().trim().isEmpty()){
+                textContent.setVisibility(View.GONE);
+            }else {
+                textContent.setText(note.getNote().substring(0 , 100));
+            }
+
         }
     }
 }
