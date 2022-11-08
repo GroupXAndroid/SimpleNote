@@ -77,6 +77,10 @@ public class FolderNoteActivity extends AppCompatActivity {
             noteList.add(noteClikedPosition, notes.get(noteClikedPosition));
             adapter.notifyItemChanged(noteClikedPosition);
         }
+        else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
+            noteList.remove(noteClikedPosition);
+            adapter.notifyItemRemoved(noteClikedPosition);
+        }
     }
 
     @Override
@@ -84,6 +88,13 @@ public class FolderNoteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
 
+            int myRequestCode = data.getIntExtra("myRequestCode", Const.NoteRequestCode.REQUEST_CODE_EXCEPTION);
+            if(myRequestCode != Const.NoteRequestCode.REQUEST_CODE_EXCEPTION){
+                requestCode = myRequestCode;
+            }
+            if(requestCode == Const.NoteRequestCode.REQUEST_CODE_UPDATE || requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
+                noteClikedPosition = data.getIntExtra("position", 0);
+            }
             getNotes(requestCode);
         }
     }

@@ -41,6 +41,19 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/viewHeaderHome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvNoteList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+        </androidx.core.widget.NestedScrollView>
         <ImageView
             android:id="@+id/imageviewCreateNewNote"
             android:layout_width="@dimen/_45sdp"

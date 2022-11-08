@@ -49,7 +49,7 @@ public class NoteDetailOptionFragment extends BottomSheetDialogFragment {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    activity.deleteNote();
+                                    activity.moveToBin();
                                 }
                             })
                             .setNegativeButton("No", null)

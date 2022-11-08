@@ -18,8 +18,9 @@ import java.util.List;
 
 @Dao
 public interface NoteDao {
-    @Query("SELECT * FROM note ORDER BY noteId DESC")
-    List<Note> getAllMyNote();
+    @Query("SELECT * FROM note INNER JOIN NoteAccount na ON note.noteId = na.noteId WHERE na.permission = 'CREATED'" +
+            "AND na.accountId = :accountId AND note.statusKey in (:status) ORDER BY noteId DESC")
+    List<Note> getAllMyNote(int accountId, int[] status);
 
     @Query("SELECT * FROM note ORDER BY noteId DESC LIMIT 1")
     Note getNewestNote();

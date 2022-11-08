@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="@dimen/_20ssp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/_5sdp"/>
 
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_13ssp"
             android:layout_marginBottom="@dimen/_5sdp"/>
 
         <LinearLayout
@@ -38,8 +38,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
                 android:src="@drawable/ic_person_outline"
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name" />
@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textSize="@dimen/_15ssp" />
+                android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
         <TextView

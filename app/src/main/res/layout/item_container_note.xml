@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
-    android:id="@+id/layoutNoteInFolder"
+    android:id="@+id/layoutNoteContainer"
     app:cardCornerRadius="@dimen/_10sdp"
     android:elevation="@dimen/_3sdp"
     >

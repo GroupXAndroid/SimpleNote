@@ -24,6 +24,7 @@ public class Const {
     }
 
     public static class NoteRequestCode{
+        public static final int REQUEST_CODE_EXCEPTION = -1;
         public static final int REQUEST_CODE_SHOW = 0;
         public static final int REQUEST_CODE_CREATE = 1;
         public static final int REQUEST_CODE_UPDATE = 2;

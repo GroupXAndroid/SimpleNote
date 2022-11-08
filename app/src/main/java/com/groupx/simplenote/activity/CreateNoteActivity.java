@@ -49,6 +49,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private Account currentUser = new Account();
     private Folder folder;
 
+
     private int notePosition;
 
     private short mode;
@@ -86,6 +87,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         mode = getIntent().getShortExtra("mode", Const.NoteDetailActivityMode.CREATE);
         folder = (Folder) getIntent().getSerializableExtra("folder");
+        notePosition = getIntent().getIntExtra("position", 0);
 
         Date currentTimer = new Date();
         StringBuilder dateBuilder = new StringBuilder("Edited ");
@@ -238,10 +240,6 @@ public class CreateNoteActivity extends AppCompatActivity {
                 .noteDao().update(alreadyNote);
 
         insertUpdateNoteTagId(alreadyNote);
-
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     private void setBackGroundNoteColor(int color) {
@@ -282,7 +280,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().update(alreadyNote);
         }
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -312,7 +310,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                     .noteDao().update(alreadyNote);
         }
         Toast.makeText(this, "Moved to favourite", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -324,7 +322,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                     .noteDao().update(alreadyNote);
         }
         Toast.makeText(this, "Archived", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -336,7 +334,8 @@ public class CreateNoteActivity extends AppCompatActivity {
                     .noteDao().update(alreadyNote);
         }
         Toast.makeText(this, "Moved to bin", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
+        Intent intent = getIntent();
+        getIntent().putExtra("myRequestCode", Const.NoteRequestCode.REQUEST_CODE_DELETE);
         setResult(RESULT_OK, intent);
         finish();
     }

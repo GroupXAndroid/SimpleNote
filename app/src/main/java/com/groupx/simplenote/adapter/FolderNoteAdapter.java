@@ -15,11 +15,9 @@ import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.CreateNoteActivity;
 import com.groupx.simplenote.activity.FolderNoteActivity;
 import com.groupx.simplenote.common.Const;
-import com.groupx.simplenote.entity.Folder;
 import com.groupx.simplenote.entity.Note;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class FolderNoteAdapter extends RecyclerView.Adapter<FolderNoteAdapter.FolderNoteViewHolder> {
 
@@ -51,6 +49,7 @@ public class FolderNoteAdapter extends RecyclerView.Adapter<FolderNoteAdapter.Fo
                 intent.putExtra("folder", activity.currentFolder);
                 intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
                 intent.putExtra("note", note);
+                intent.putExtra("position", position);
                 activity.startActivityForResult(intent, Const.NoteRequestCode.REQUEST_CODE_UPDATE);
             }
         });
@@ -68,7 +67,7 @@ public class FolderNoteAdapter extends RecyclerView.Adapter<FolderNoteAdapter.Fo
 
         public FolderNoteViewHolder(@NonNull View itemView) {
             super(itemView);
-            layoutFolderNote = itemView.findViewById(R.id.layoutNoteInFolder);
+            layoutFolderNote = itemView.findViewById(R.id.layoutNoteContainer);
             textNoteTitle = itemView.findViewById(R.id.textNoteTitle);
             textNoteSubTitle = itemView.findViewById(R.id.textNoteSubTitle);
             textContent = itemView.findViewById(R.id.textContent);
