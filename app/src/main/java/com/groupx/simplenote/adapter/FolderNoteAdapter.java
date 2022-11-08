@@ -1,6 +1,5 @@
 package com.groupx.simplenote.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -14,43 +13,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.activity.CreateNoteActivity;
-import com.groupx.simplenote.activity.MainActivity;
+import com.groupx.simplenote.activity.FolderNoteActivity;
 import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.entity.Note;
-import com.groupx.simplenote.listener.NoteListener;
 
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
+public class FolderNoteAdapter extends RecyclerView.Adapter<FolderNoteAdapter.FolderNoteViewHolder> {
 
-    private final List<Note> notes;
-    private final MainActivity activity;
+    private List<Note> noteList;
+    private FolderNoteActivity activity;
 
-    public NoteAdapter(List<Note> notes, MainActivity activity) {
-        this.notes = notes;
+    public FolderNoteAdapter(List<Note> noteList, FolderNoteActivity activity) {
+        this.noteList = noteList;
         this.activity = activity;
     }
 
     @NonNull
     @Override
-    public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NoteViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.item_container_note,
-                        parent,
-                        false
-                )
-        );
+    public FolderNoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new FolderNoteViewHolder(LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.item_container_note,
+                parent, false
+        ));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Note note = notes.get(position);
-        holder.setNote(notes.get(position));
-        holder.layoutNoteContainer.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull FolderNoteViewHolder holder, int position) {
+        Note note = noteList.get(position);
+        holder.setNote(note);
+        holder.layoutFolderNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity.getApplicationContext(), CreateNoteActivity.class);
+                intent.putExtra("folder", activity.currentFolder);
                 intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
                 intent.putExtra("note", note);
                 intent.putExtra("position", position);
@@ -61,21 +57,17 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     @Override
     public int getItemCount() {
-        return notes.size();
+        return noteList.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
+    static class FolderNoteViewHolder extends RecyclerView.ViewHolder{
 
-    static class NoteViewHolder extends RecyclerView.ViewHolder {
-        CardView layoutNoteContainer;
+        CardView layoutFolderNote;
         TextView textNoteTitle, textNoteSubTitle,textContent;
 
-        public NoteViewHolder(@NonNull View itemView) {
+        public FolderNoteViewHolder(@NonNull View itemView) {
             super(itemView);
-            layoutNoteContainer = itemView.findViewById(R.id.layoutNoteContainer);
+            layoutFolderNote = itemView.findViewById(R.id.layoutNoteContainer);
             textNoteTitle = itemView.findViewById(R.id.textNoteTitle);
             textNoteSubTitle = itemView.findViewById(R.id.textNoteSubTitle);
             textContent = itemView.findViewById(R.id.textContent);
@@ -85,7 +77,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         void setNote(Note note){
             textNoteTitle.setText(note.getTitle());
             if (note.getColor() != null) {
-                layoutNoteContainer.setCardBackgroundColor(Color.parseColor(note.getColor()));
+                layoutFolderNote.setCardBackgroundColor(Color.parseColor(note.getColor()));
             }
             if (note.getSubTitle().trim().isEmpty()) {
                 textNoteSubTitle.setVisibility(View.GONE);
