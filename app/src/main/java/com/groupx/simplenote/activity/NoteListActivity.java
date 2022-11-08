@@ -41,7 +41,6 @@ public class NoteListActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
         int accId = sharedPreferences.getInt("accountId", 0);
         currentUser.setId(accId);
-
         rcvNoteList = findViewById(R.id.recyclerviewNote);
         rcvNoteList.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -150,5 +149,37 @@ public class NoteListActivity extends AppCompatActivity {
 //            noteList.remove(noteClikedPosition);
 //            adapter.notifyItemRemoved(noteClikedPosition);
 //        }
+//    }
+//    @Override
+//    public void onNoteClicked(Note note, int position) {
+//        noteClickedPosition = position;
+//        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+//        intent.putExtra("note", note);
+//        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
+//        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
+//    }
+//
+//    private void getNotes() {
+//        String txtSearch = getIntent().getStringExtra("txtSearch");
+//        List<Note> notes = new ArrayList<>();
+//        if(txtSearch == null || txtSearch == "" || txtSearch.isEmpty()){
+//            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+//                    .noteDao().getAllMyNote();
+//        }else{
+//            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+//                    .noteDao().searchNote(txtSearch);
+//            if(notes == null || notes.size() == 0){
+//                Toast.makeText(this, "NO NOTES FOUND", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//        if (noteList.size() == 0) {
+//            noteList.addAll(notes);
+//            noteAdapter.notifyDataSetChanged();
+//        } else {
+//            noteList.add(0, notes.get(0));
+//            noteAdapter.notifyItemInserted(0);
+//
+//        }
+//        notesRecyclerView.smoothScrollToPosition(0);
 //    }
 }
