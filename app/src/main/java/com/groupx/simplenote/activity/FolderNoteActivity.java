@@ -58,6 +58,12 @@ public class FolderNoteActivity extends AppCompatActivity {
                 startActivityForResult(intent, Const.NoteRequestCode.REQUEST_CODE_CREATE);
             }
         });
+        findViewById(R.id.imageFolderNoteBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private int noteClikedPosition;

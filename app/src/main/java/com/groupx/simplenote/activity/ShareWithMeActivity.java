@@ -2,6 +2,7 @@ package com.groupx.simplenote.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,13 @@ public class ShareWithMeActivity extends AppCompatActivity {
         adapter = new SwmNoteAdapter(noteSwmList, this);
         recyclerviewShareWithMe.setAdapter(adapter);
         getNoteSwm();
+
+        findViewById(R.id.imageShareWithMelBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void getNoteSwm() {
