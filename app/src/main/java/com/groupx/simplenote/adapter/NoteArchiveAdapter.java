@@ -91,7 +91,7 @@ public class NoteArchiveAdapter extends RecyclerView.Adapter<NoteArchiveAdapter.
             if (note.getReminderTime() == null) {
                 txtReminderTime.setVisibility(View.GONE);
             } else {
-                txtReminderTime.setText(note.getSubTitle());
+                txtReminderTime.setText(note.getReminderTime().toString());
             }
 
             imgUnarchive.setOnClickListener(new View.OnClickListener() {
