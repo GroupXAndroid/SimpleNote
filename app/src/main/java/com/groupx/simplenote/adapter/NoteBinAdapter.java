@@ -3,6 +3,7 @@ package com.groupx.simplenote.adapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.activity.BinActivity;
+import com.groupx.simplenote.activity.ReminderListActivity;
 import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Note;
