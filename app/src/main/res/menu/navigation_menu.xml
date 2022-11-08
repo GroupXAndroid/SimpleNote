@@ -59,4 +59,7 @@
     <item
         android:id="@+id/itemTestRemindersList"
         android:title="Reminders List" />
+    <item
+        android:id="@+id/itemLogout"
+        android:title="Logout" />
 </menu>
