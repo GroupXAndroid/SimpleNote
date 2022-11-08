@@ -171,6 +171,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         note.setColor(selectedNoteColor);
         note.setSince(new Date());
         note.setLastUpdate(new Date());
+        note.setStatusKey(Const.NoteStatus.NORMAL);
 
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insert(note);
@@ -179,13 +180,13 @@ public class CreateNoteActivity extends AppCompatActivity {
         alreadyNote = currentNote;
         NoteAccount noteAccount = new NoteAccount();
         noteAccount.setNoteId(currentNote.getId());
-        noteAccount.setAccountId(1);
+        noteAccount.setAccountId(currentUser.getId());
         noteAccount.setPermission(Const.StatusPermission.CREATED.toString());
         NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .noteDao().insertWithNoteAccount(noteAccount);
 
         insertUpdateNoteTagId(currentNote);
-
+        mode = Const.NoteDetailActivityMode.EDIT;
         return currentNote;
     }
 

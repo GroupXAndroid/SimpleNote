@@ -14,8 +14,8 @@ import java.util.List;
 @Dao
 public interface FolderDao {
 
-    @Query("SELECT * FROM Folder ORDER BY id DESC")
-    List<Folder> getAllMyFolder();
+    @Query("SELECT * FROM Folder WHERE accountId = :accountId ORDER BY id DESC")
+    List<Folder> getAllMyFolder(int accountId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Folder folder);

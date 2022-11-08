@@ -30,6 +30,7 @@ public class FolderActivity extends AppCompatActivity {
     private ImageView imageFolderAdd, imageBack;
     private RecyclerView recyclerviewFolder;
     private FolderAdapter folderAdapter;
+
     private final List<Folder> folderList = new ArrayList<>();
     private Account currentUser = new Account();
 
@@ -91,12 +92,12 @@ public class FolderActivity extends AppCompatActivity {
         if (folderList.size() == 0) {
             folderList.addAll(
                     NoteDatabase.getSNoteDatabase(getApplicationContext())
-                            .folderDao().getAllMyFolder()
+                            .folderDao().getAllMyFolder(currentUser.getId())
             );
             folderAdapter.notifyDataSetChanged();
         } else {
             folderList.add(0, NoteDatabase.getSNoteDatabase(getApplicationContext())
-                    .folderDao().getAllMyFolder().get(0));
+                    .folderDao().getAllMyFolder(currentUser.getId()).get(0));
             folderAdapter.notifyItemInserted(0);
         }
         recyclerviewFolder.smoothScrollToPosition(0);
@@ -109,6 +110,7 @@ public class FolderActivity extends AppCompatActivity {
     }
 
     public void insertFolder(Folder folder) {
+        folder.setAccountId(currentUser.getId());
         NoteDatabase.getSNoteDatabase(getApplicationContext()).folderDao().insert(folder);
     }
 
