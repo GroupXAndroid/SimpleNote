@@ -72,7 +72,7 @@ public interface NoteDao {
     @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
     List<Note> getTodayNote(Date start, Date end);
 
-    @Query("SELECT * FROM note WHERE reminderTime not null")
+    @Query("SELECT * FROM note WHERE reminderTime not null AND statusKey = 0")
     List<Note> getAllReminders();
 
     @Query("SELECT * FROM note WHERE noteId = :id")
