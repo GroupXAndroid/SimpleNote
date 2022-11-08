@@ -198,6 +198,10 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(getApplicationContext(), ReminderListActivity.class);
                         startActivity(intent);
                         return true;
+                    case R.id.itemLogout:
+                        intent = new Intent(getApplicationContext(), LogoutActivity.class);
+                        startActivity(intent);
+                        return true;
                     default:
                         return false;
                 }
