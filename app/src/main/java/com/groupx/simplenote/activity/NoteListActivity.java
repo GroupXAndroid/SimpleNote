@@ -29,10 +29,11 @@ import java.util.List;
 public class NoteListActivity extends AppCompatActivity {
     private final int REQUEST_CODE_UPDATE_NOTE = 2;
 
-    private RecyclerView notesRecyclerView;
-    private NoteAdapter noteAdapter;
+    private RecyclerView rcvNoteList;
+    private NoteAdapter adapter;
+    private Account currentUser = new Account();
 
-    private List<Note> noteList;
+    private List<Note> noteList = new ArrayList<>();
 
     private int noteClickedPosition = -1;
 
@@ -42,20 +43,16 @@ public class NoteListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-        String us = sharedPreferences.getString("username", "");
-        accountDao = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao();
-        this.currentAccount = accountDao.getAccountByEmail(us);
-        notesRecyclerView = findViewById(R.id.recyclerviewNote);
-        notesRecyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        );
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
+        int accId = sharedPreferences.getInt("accountId", 0);
+        currentUser.setId(accId);
 
-        noteList = new ArrayList<>();
-//        noteAdapter = new NoteAdapter(noteList, this);
-//        notesRecyclerView.setAdapter(noteAdapter);
+        rcvNoteList = findViewById(R.id.recyclerviewNote);
+        rcvNoteList.setLayoutManager(new StaggeredGridLayoutManager(2,  StaggeredGridLayoutManager.VERTICAL));
+        adapter = new NoteAdapter(noteList, this, currentAccount, accountDao);
+        rcvNoteList.setAdapter(adapter);
 
-//        getNotes();
+        getNotes(Const.NoteRequestCode.REQUEST_CODE_SHOW);
     }
 
 //    @Override
@@ -108,28 +105,26 @@ public class NoteListActivity extends AppCompatActivity {
 //        intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
 //        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
 //    }
+    private int noteClikedPosition;
 
-//    private void getNotes() {
-//        String txtSearch = getIntent().getStringExtra("txtSearch");
-//        List<Note> notes = new ArrayList<>();
-//        if(txtSearch == null || txtSearch == "" || txtSearch.isEmpty()){
-//            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
-//                    .noteDao().getAllMyNote();
-//        }else{
-//            notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
-//                    .noteDao().searchNote(txtSearch);
-//            if(notes == null || notes.size() == 0){
-//                Toast.makeText(this, "NO NOTES FOUND", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//        if (noteList.size() == 0) {
-//            noteList.addAll(notes);
-//            noteAdapter.notifyDataSetChanged();
-//        } else {
-//            noteList.add(0, notes.get(0));
-//            noteAdapter.notifyItemInserted(0);
-//
-//        }
-//        notesRecyclerView.smoothScrollToPosition(0);
-//    }
+    private void getNotes(int requestCode){
+        List<Note> notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().getAllMyNote(currentUser.getId(),new int[] {Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE});
+        if(requestCode == Const.NoteRequestCode.REQUEST_CODE_SHOW){
+            noteList.addAll(notes);
+            adapter.notifyDataSetChanged();
+        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_CREATE){
+            noteList.add(0, notes.get(0));
+            adapter.notifyItemInserted(0);
+            rcvNoteList.smoothScrollToPosition(0);
+        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_UPDATE){
+            noteList.remove(noteClikedPosition);
+            noteList.add(noteClikedPosition, notes.get(noteClikedPosition));
+            adapter.notifyItemChanged(noteClikedPosition);
+        }
+        else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
+            noteList.remove(noteClikedPosition);
+            adapter.notifyItemRemoved(noteClikedPosition);
+        }
+    }
 }

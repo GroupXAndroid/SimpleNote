@@ -1,6 +1,7 @@
 package com.groupx.simplenote.activity;
 
 import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -23,6 +24,7 @@ import com.groupx.simplenote.R;
 import com.groupx.simplenote.adapter.NoteAdapter;
 import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.LocaleHelper;
+import com.groupx.simplenote.dao.AccountDao;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
@@ -38,21 +40,20 @@ public class MainActivity extends AppCompatActivity {
     private Account currentUser = new Account();
     Context context;
     Resources resources;
+    private AccountDao accountDao;
+    private Account currentAccount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        TextView tvn = findViewById(R.id.tvUserName);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
-//        sharedPreferences.edit().remove("accountId");
-//        sharedPreferences.edit().commit();
-//        sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-//        sharedPreferences.edit().remove("username");
-//        sharedPreferences.edit().remove("hasLoggedIn");
-//        sharedPreferences.edit().commit();
         int accId = sharedPreferences.getInt("accountId", 0);
         currentUser.setId(accId);
-
+        sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+        String us = sharedPreferences.getString("username", "");
+        accountDao = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao();
+        this.currentAccount = accountDao.getAccountByEmail(us);
 
         currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .accountDao().getAccountById(accId);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private void InitRecyclerViewNote(){
         rcvNoteList = findViewById(R.id.rcvNoteList);
         rcvNoteList.setLayoutManager(new StaggeredGridLayoutManager(2,  StaggeredGridLayoutManager.VERTICAL));
-        adapter = new NoteAdapter(noteList, this);
+        adapter = new NoteAdapter(noteList, this, currentAccount, accountDao);
         rcvNoteList.setAdapter(adapter);
 
         getNotes(Const.NoteRequestCode.REQUEST_CODE_SHOW);
@@ -148,11 +149,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationViewMenu = findViewById(R.id.navViewMenu);
         TextView textAccountUserName = navigationViewMenu.getHeaderView(0).findViewById(R.id.textAccountUserName);
         textAccountUserName.setText(currentUser.getFullName());
-        TextView textPremium = navigationViewMenu.getHeaderView(0).findViewById(R.id.textPremium);
-        // TODO: set text premium if account is VIP
-
 
         navigationViewMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();

@@ -52,7 +52,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private Set<Integer> tagIdList = new HashSet<>();
     private List<NoteTag> oldNoteTagForUpdate = new ArrayList<>();
     private Set<Integer> accountId = new HashSet<>();
-    private Account currentUser = new Account();
+    public Account currentUser = new Account();
     private Folder folder;
 
 

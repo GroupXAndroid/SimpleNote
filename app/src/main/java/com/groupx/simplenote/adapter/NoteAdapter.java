@@ -2,6 +2,7 @@ package com.groupx.simplenote.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -33,11 +34,14 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
     private final List<Note> notes;
-    private final MainActivity activity;
-
-    public NoteAdapter(List<Note> notes, MainActivity activity) {
+    private final Activity activity;
+    private Account currentAccount;
+    private AccountDao accountDao;
+    public NoteAdapter(List<Note> notes, Activity activity, Account currentAccount, AccountDao accountDao) {
         this.notes = notes;
         this.activity = activity;
+        this.currentAccount = currentAccount;
+        this.accountDao = accountDao;
     }
 
     @NonNull
@@ -60,11 +64,47 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.layoutNoteContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity.getApplicationContext(), CreateNoteActivity.class);
-                intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
-                intent.putExtra("note", note);
-                intent.putExtra("position", position);
-                activity.startActivityForResult(intent, Const.NoteRequestCode.REQUEST_CODE_UPDATE);
+                if (!currentAccount.getSetting("lock_key").isEmpty() || note.getStatusKey() == 3){
+                    LayoutInflater inflater = activity.getLayoutInflater();
+                    View alertLayout = inflater.inflate(R.layout.layout_unset_lock, null);
+
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(activity.getApplicationContext());
+                    alert.setTitle("Action needed: Enter lock password");
+                    alert.setView(alertLayout);
+                    alert.setCancelable(false);
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            EditText check = alertLayout.findViewById(R.id.check_password);
+                            if (check.getText().toString().equals(currentAccount.getSetting("lock_key"))){
+                                Intent intent = new Intent(activity.getApplicationContext(), CreateNoteActivity.class);
+                                intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
+                                intent.putExtra("note", note);
+                                intent.putExtra("position", position);
+                                activity.startActivityForResult(intent, Const.NoteRequestCode.REQUEST_CODE_UPDATE);
+                            } else {
+                                Toast.makeText(activity.getApplicationContext(), "Wrong lock password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+                } else {
+                    Intent intent = new Intent(activity.getApplicationContext(), CreateNoteActivity.class);
+                    intent.putExtra("mode", Const.NoteDetailActivityMode.EDIT);
+                    intent.putExtra("note", note);
+                    intent.putExtra("position", position);
+                    activity.startActivityForResult(intent, Const.NoteRequestCode.REQUEST_CODE_UPDATE);
+                }
+
             }
         });
     }
