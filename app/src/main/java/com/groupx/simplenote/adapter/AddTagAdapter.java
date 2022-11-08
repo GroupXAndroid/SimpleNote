@@ -81,7 +81,7 @@ public class AddTagAdapter extends RecyclerView.Adapter<AddTagAdapter.AddTagView
         }
 
         void setTag(Tag tag) {
-            if (tag.getColor() != null || !tag.getColor().isEmpty()) {
+            if (!(tag.getColor() == null || tag.getColor().isEmpty())) {
                 viewTagIcon.setColorFilter(Color.parseColor(tag.getColor()));
             }
             viewTagName.setText(tag.getTagName());
