@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView tvn = findViewById(R.id.tvUserName);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
+//        sharedPreferences.edit().remove("accountId");
+//        sharedPreferences.edit().commit();
+//        sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+//        sharedPreferences.edit().remove("username");
+//        sharedPreferences.edit().remove("hasLoggedIn");
+//        sharedPreferences.edit().commit();
         int accId = sharedPreferences.getInt("accountId", 0);
         currentUser.setId(accId);
         if (accId != 0) {
@@ -38,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .accountDao().getAccountById(accId);
+        if (currentUser == null){
+            currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao().getAccountByEmail(getSharedPreferences(LoginActivity.PREFS_NAME, 0).getString("username",""));
+        }
 
         InitDrawerNavigationMenu();
 //        runtestFeature();
