@@ -18,8 +18,9 @@ import java.util.List;
 
 @Dao
 public interface NoteDao {
-    @Query("SELECT * FROM note ORDER BY noteId DESC")
-    List<Note> getAllMyNote();
+    @Query("SELECT * FROM note INNER JOIN NoteAccount na ON note.noteId = na.noteId WHERE na.permission = 'CREATED'" +
+            "AND na.accountId = :accountId AND note.statusKey in (:status) ORDER BY noteId DESC")
+    List<Note> getAllMyNote(int accountId, int[] status);
 
     @Query("SELECT * FROM note ORDER BY noteId DESC LIMIT 1")
     Note getNewestNote();
@@ -71,9 +72,12 @@ public interface NoteDao {
     @Query("SELECT * FROM note WHERE ((since between :start and :end) OR (reminderTime between :start and :end))")
     List<Note> getTodayNote(Date start, Date end);
 
-    @Query("SELECT * FROM note WHERE reminderTime not null")
+    @Query("SELECT * FROM note WHERE reminderTime not null AND statusKey = 0")
     List<Note> getAllReminders();
 
     @Query("SELECT * FROM note WHERE noteId = :id")
     Note getNoteById(int id);
+
+    @Query("SELECT * FROM note WHERE folderId = :folderId AND statusKey NOT IN (:notStatus) ORDER BY noteId DESC")
+    List<Note> getNotesByFolder(int folderId, int[] notStatus);
 }

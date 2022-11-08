@@ -11,20 +11,27 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.adapter.NoteAdapter;
+import com.groupx.simplenote.common.Const;
 import com.groupx.simplenote.common.LocaleHelper;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
 import com.groupx.simplenote.entity.NoteAccount;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        sharedPreferences.edit().commit();
         int accId = sharedPreferences.getInt("accountId", 0);
         currentUser.setId(accId);
-//        if (accId != 0) {
-//            tvn.setText("id = " + String.valueOf(accId));
-//        } else {
-//            tvn.setText("ID NOT FOUND, MAYBE YOU NOT LOGIN");
-//        }
+
 
         currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .accountDao().getAccountById(accId);
@@ -65,7 +68,58 @@ public class MainActivity extends AppCompatActivity {
         resources = context.getResources();
         InitDrawerNavigationMenu();
         InitCreateNewNoteButton();
-//        runtestFeature();
+        InitRecyclerViewNote();
+    }
+
+    private RecyclerView rcvNoteList;
+    private NoteAdapter adapter;
+    private List<Note> noteList = new ArrayList<>();
+
+    private void InitRecyclerViewNote(){
+        rcvNoteList = findViewById(R.id.rcvNoteList);
+        rcvNoteList.setLayoutManager(new StaggeredGridLayoutManager(2,  StaggeredGridLayoutManager.VERTICAL));
+        adapter = new NoteAdapter(noteList, this);
+        rcvNoteList.setAdapter(adapter);
+
+        getNotes(Const.NoteRequestCode.REQUEST_CODE_SHOW);
+    }
+
+    private int noteClikedPosition;
+    private void getNotes(int requestCode){
+        List<Note> notes = NoteDatabase.getSNoteDatabase(getApplicationContext())
+                .noteDao().getAllMyNote(currentUser.getId(),new int[] {Const.NoteStatus.NORMAL, Const.NoteStatus.FAVORITE});
+        if(requestCode == Const.NoteRequestCode.REQUEST_CODE_SHOW){
+            noteList.addAll(notes);
+            adapter.notifyDataSetChanged();
+        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_CREATE){
+            noteList.add(0, notes.get(0));
+            adapter.notifyItemInserted(0);
+            rcvNoteList.smoothScrollToPosition(0);
+        }else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_UPDATE){
+            noteList.remove(noteClikedPosition);
+            noteList.add(noteClikedPosition, notes.get(noteClikedPosition));
+            adapter.notifyItemChanged(noteClikedPosition);
+        }
+        else if(requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
+            noteList.remove(noteClikedPosition);
+            adapter.notifyItemRemoved(noteClikedPosition);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+
+            int myRequestCode = data.getIntExtra("myRequestCode", Const.NoteRequestCode.REQUEST_CODE_EXCEPTION);
+            if(myRequestCode != Const.NoteRequestCode.REQUEST_CODE_EXCEPTION){
+                requestCode = myRequestCode;
+            }
+            if(requestCode == Const.NoteRequestCode.REQUEST_CODE_UPDATE || requestCode == Const.NoteRequestCode.REQUEST_CODE_DELETE){
+                noteClikedPosition = data.getIntExtra("position", 0);
+            }
+            getNotes(requestCode);
+        }
     }
 
     private void InitCreateNewNoteButton(){
@@ -74,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
-                        startActivity(intent);
+                        intent.putExtra("mode", Const.NoteDetailActivityMode.CREATE);
+                        startActivityForResult(intent, Const.NoteRequestCode.REQUEST_CODE_CREATE);
                     }
                 }
         );
