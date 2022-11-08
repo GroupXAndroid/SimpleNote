@@ -36,4 +36,8 @@
     <string name="tag_name">Tag name</string>
     <string name="tag">Tag</string>
     <string name="old_lock">Old Lock Password</string>
+    <string name="favourite">Favourite</string>
+    <string name="archive">Archive</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

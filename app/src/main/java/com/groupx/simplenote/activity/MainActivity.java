@@ -17,6 +17,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.groupx.simplenote.R;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
+import com.groupx.simplenote.entity.Note;
+import com.groupx.simplenote.entity.NoteAccount;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView tvn = findViewById(R.id.tvUserName);
+//        TextView tvn = findViewById(R.id.tvUserName);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.ACCOUNT_ID, 0);
 //        sharedPreferences.edit().remove("accountId");
 //        sharedPreferences.edit().commit();
@@ -36,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
 //        sharedPreferences.edit().commit();
         int accId = sharedPreferences.getInt("accountId", 0);
         currentUser.setId(accId);
-        if (accId != 0) {
-            tvn.setText("id = " + String.valueOf(accId));
-        } else {
-            tvn.setText("ID NOT FOUND, MAYBE YOU NOT LOGIN");
-        }
+//        if (accId != 0) {
+//            tvn.setText("id = " + String.valueOf(accId));
+//        } else {
+//            tvn.setText("ID NOT FOUND, MAYBE YOU NOT LOGIN");
+//        }
 
         currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext())
                 .accountDao().getAccountById(accId);
@@ -49,7 +54,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         InitDrawerNavigationMenu();
+        InitCreateNewNoteButton();
 //        runtestFeature();
+    }
+
+    private void InitCreateNewNoteButton(){
+        findViewById(R.id.imageviewCreateNewNote).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
     }
 
     private void InitDrawerNavigationMenu() {
@@ -115,6 +133,26 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(getApplicationContext(), PremiumUpgradeActivity.class);
                         startActivity(intent);
                         return true;
+                    case R.id.itemTestArchive:
+                        intent = new Intent(getApplicationContext(), ArchiveActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestCalendar:
+                        intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestFavourite:
+                        intent = new Intent(getApplicationContext(), FavouriteActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestBin:
+                        intent = new Intent(getApplicationContext(), BinActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemTestRemindersList:
+                        intent = new Intent(getApplicationContext(), ReminderListActivity.class);
+                        startActivity(intent);
+                        return true;
                     default:
                         return false;
                 }
@@ -122,105 +160,105 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void runtestFeature() {
-
-        // Open noteDetail Activity
-        Button buttonTestNote = findViewById(R.id.buttonTestNoteDetail);
-        buttonTestNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Open noteList Testing Activity
-        Button buttonTestNoteList = findViewById(R.id.buttonTestNoteListView);
-        buttonTestNoteList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NoteListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Open manage folder activity
-        Button buttonTestManageFolder = findViewById(R.id.buttonTestManageFolder);
-        buttonTestManageFolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FolderActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Open feedback activity
-        Button buttonTestFeedback = findViewById(R.id.buttonTestFeedback);
-        buttonTestFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FeedbackActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Open setting activity
-        Button buttonSwm = findViewById(R.id.buttonTestSwm);
-        buttonSwm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ShareWithMeActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Open setting activity
-        Button buttonSetting = findViewById(R.id.btnSetting);
-        buttonSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-                startActivity(intent);
-            }
-        });
-
-//        InsertSampleDate();
-        // Open register activity
-        Button buttonRegister = findViewById(R.id.btnRegister);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Open search activity
-        Button buttonSearch = findViewById(R.id.btnSearchNote);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-        Button buttonTag = findViewById(R.id.btnTag);
-        buttonTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TagActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button buttonUpgrade = findViewById(R.id.btnTestUpgradeScreen);
-        buttonUpgrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PremiumUpgradeActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+//    private void runtestFeature() {
+//
+//        // Open noteDetail Activity
+//        Button buttonTestNote = findViewById(R.id.buttonTestNoteDetail);
+//        buttonTestNote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), CreateNoteActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        // Open noteList Testing Activity
+//        Button buttonTestNoteList = findViewById(R.id.buttonTestNoteListView);
+//        buttonTestNoteList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), NoteListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        // Open manage folder activity
+//        Button buttonTestManageFolder = findViewById(R.id.buttonTestManageFolder);
+//        buttonTestManageFolder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), FolderActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        // Open feedback activity
+//        Button buttonTestFeedback = findViewById(R.id.buttonTestFeedback);
+//        buttonTestFeedback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), FeedbackActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        // Open setting activity
+//        Button buttonSwm = findViewById(R.id.buttonTestSwm);
+//        buttonSwm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), ShareWithMeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        // Open setting activity
+//        Button buttonSetting = findViewById(R.id.btnSetting);
+//        buttonSetting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+////        InsertSampleDate();
+//        // Open register activity
+//        Button buttonRegister = findViewById(R.id.btnRegister);
+//        buttonRegister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        // Open search activity
+//        Button buttonSearch = findViewById(R.id.btnSearchNote);
+//        buttonSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        Button buttonTag = findViewById(R.id.btnTag);
+//        buttonTag.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), TagActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        Button buttonUpgrade = findViewById(R.id.btnTestUpgradeScreen);
+//        buttonUpgrade.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), PremiumUpgradeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
 }
