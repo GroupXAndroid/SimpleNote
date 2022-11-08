@@ -38,16 +38,4 @@
         app:layout_constraintStart_toEndOf="@id/imageAvatar"
         />
 
-    <TextView
-        android:id="@+id/textPremium"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:text="Premium"
-        android:textColor="@color/premium"
-        android:textSize="@dimen/_10ssp"
-        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
-        app:layout_constraintStart_toEndOf="@id/imageAvatar"
-        />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

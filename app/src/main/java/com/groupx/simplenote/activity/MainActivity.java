@@ -129,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationViewMenu = findViewById(R.id.navViewMenu);
         TextView textAccountUserName = navigationViewMenu.getHeaderView(0).findViewById(R.id.textAccountUserName);
         textAccountUserName.setText(currentUser.getFullName());
-        TextView textPremium = navigationViewMenu.getHeaderView(0).findViewById(R.id.textPremium);
-        // TODO: set text premium if account is VIP
 
 
         navigationViewMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -197,6 +195,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.itemTestRemindersList:
                         intent = new Intent(getApplicationContext(), ReminderListActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.itemLogout:
+                        intent = new Intent(getApplicationContext(), LogoutActivity.class);
                         startActivity(intent);
                         return true;
                     default:
