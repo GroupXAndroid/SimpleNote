@@ -26,7 +26,7 @@ public class LocaleHelper {
     }
 
     private static void persist(Context context, String language) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences preferences =                       PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(SELECTED_LANGUAGE, language);
         editor.apply();
@@ -45,7 +45,6 @@ public class LocaleHelper {
 
         return context.createConfigurationContext(configuration);
     }
-
 
     @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, String language) {

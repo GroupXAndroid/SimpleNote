@@ -45,7 +45,7 @@ public class LockActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Handler the set lock action.
      */
     public void setLock(){
         Button lock = findViewById(R.id.set_lock);
@@ -69,7 +69,7 @@ public class LockActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Update new lock key. Must be enter correct old key.
      */
     private void lockEditPopup(){
         LayoutInflater inflater = getLayoutInflater();
@@ -112,7 +112,7 @@ public class LockActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Setup new lock key.
      */
     private void lockSetPopup(){
         LayoutInflater inflater = getLayoutInflater();
@@ -148,7 +148,7 @@ public class LockActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Remove the lock key. Must enter correct lock key.
      */
     private void lockDelPopup(){
         LayoutInflater inflater = getLayoutInflater();
@@ -181,4 +181,8 @@ public class LockActivity extends AppCompatActivity {
         AlertDialog dialog = alert.create();
         dialog.show();
     }
+    /**
+     * Check your authentication to accept private asset.
+     * @return True/False
+     */
 }

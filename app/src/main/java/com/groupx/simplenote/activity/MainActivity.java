@@ -1,7 +1,9 @@
 package com.groupx.simplenote.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.groupx.simplenote.R;
+import com.groupx.simplenote.common.LocaleHelper;
 import com.groupx.simplenote.database.NoteDatabase;
 import com.groupx.simplenote.entity.Account;
 import com.groupx.simplenote.entity.Note;
@@ -26,7 +29,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private Account currentUser = new Account();
-
+    Context context;
+    Resources resources;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
             currentUser = NoteDatabase.getSNoteDatabase(getApplicationContext()).accountDao().getAccountByEmail(getSharedPreferences(LoginActivity.PREFS_NAME, 0).getString("username",""));
         }
 
+        if(currentUser.getSetting("language").equals("0")){
+            context = LocaleHelper.setLocale(getApplicationContext(), "vi");
+        } else {
+            context = LocaleHelper.setLocale(getApplicationContext(), "en");
+        }
+        resources = context.getResources();
         InitDrawerNavigationMenu();
         InitCreateNewNoteButton();
 //        runtestFeature();

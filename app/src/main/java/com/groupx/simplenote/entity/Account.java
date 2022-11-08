@@ -104,7 +104,7 @@ public class Account implements Serializable {
         List<String> achievement = new ArrayList<>();
         settingJson = new JSONObject();
         try {
-            settingJson.put("notification", "0");
+            settingJson.put("notification", "1");
             settingJson.put("lock_key", "");
             settingJson.put("language", "1");
             settingJson.put("background", "0");
@@ -223,5 +223,6 @@ public class Account implements Serializable {
                 e.printStackTrace();
             }
         }
+        setSetting(setting);
     }
 }

@@ -143,7 +143,7 @@ public class SettingActivity extends AppCompatActivity {
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Language"+currentAccount.getSetting().getString("language"));
+        alert.setTitle("Language");
         alert.setView(alertLayout);
         alert.setCancelable(false);
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -170,16 +170,20 @@ public class SettingActivity extends AppCompatActivity {
                 RadioGroup group = alertLayout.findViewById(R.id.language_list);
                 int selectedId = group.getCheckedRadioButtonId();
                 RadioButton selected = (RadioButton) alertLayout.findViewById(selectedId);
-                if (selected.getText() == "Vietnamese"){
-                    context = LocaleHelper.setLocale(SettingActivity.this, "vi-rVN");
-                    currentAccount.setLanguage(0);
+                Log.i("Language: ", selected.getText().toString());
+                if (selected.getText().toString().equals("Vietnamese")){
+                    currentAccount.setSetting("language", "0");
+                    accountDao.update(currentAccount);
+                    context = LocaleHelper.setLocale(getApplicationContext(), "vi");
+
                 } else {
-                    context = LocaleHelper.setLocale(SettingActivity.this, "en-rUS");
-                    currentAccount.setLanguage(1);
+                    currentAccount.setSetting("language", "1");
+                    accountDao.update(currentAccount);
+                    context = LocaleHelper.setLocale(getApplicationContext(), "en");
+
                 }
-                accountDao.update(currentAccount);
                 resources = context.getResources();
-                updateView();
+
             }
         });
         AlertDialog dialog = alert.create();
