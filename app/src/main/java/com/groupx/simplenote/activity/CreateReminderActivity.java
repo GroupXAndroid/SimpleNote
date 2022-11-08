@@ -369,22 +369,10 @@ public class CreateReminderActivity extends AppCompatActivity {
             alreadyNote.setStatusKey(Const.NoteStatus.BIN);
             NoteDatabase.getSNoteDatabase(getApplicationContext())
                     .noteDao().update(alreadyNote);
-            Toast.makeText(this, "Moved to bin", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Moved to bin", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ReminderListActivity.class);
+            startActivity(intent);
         }
-    }
-
-    public void shareNote(int accountId, String permisson) {
-        saveOrUpdate();
-
-        NoteAccount noteAccount = new NoteAccount();
-        noteAccount.setAccountId(accountId);
-        noteAccount.setPermission(permisson);
-        if (alreadyNote != null) {
-            noteAccount.setNoteId(alreadyNote.getId());
-        }
-
-        NoteDatabase.getSNoteDatabase(getApplicationContext())
-                .noteDao().insertWithNoteAccount(noteAccount);
     }
 
     public void favouriteNote() {
@@ -404,6 +392,8 @@ public class CreateReminderActivity extends AppCompatActivity {
                     .noteDao().update(alreadyNote);
         }
         Toast.makeText(this, "Archived", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ReminderListActivity.class);
+        startActivity(intent);
     }
 
     private void setAlarm(Note note) {
