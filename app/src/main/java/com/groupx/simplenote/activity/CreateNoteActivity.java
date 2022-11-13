@@ -107,7 +107,6 @@ public class CreateNoteActivity extends AppCompatActivity {
                 saveOrUpdate();
                 Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
 
-
                 Intent intent = getIntent();
                 setResult(RESULT_OK, intent);
                 finish();
